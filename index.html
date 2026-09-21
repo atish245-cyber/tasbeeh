@@ -75,6 +75,7 @@
       gap: 6px;
     }
 
+    /* Simple SAVED badge — clean, flashes on every save */
     .save-indicator {
       font-size: 0.7rem;
       font-weight: 600;
@@ -95,7 +96,8 @@
     .save-indicator.show { opacity: 1; }
 
     .save-indicator .dot {
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       background: #d4ffb0;
       border-radius: 50%;
       box-shadow: 0 0 6px #d4ffb0;
@@ -466,7 +468,7 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    /* ---------- FOOTER (dual-line meaning) ---------- */
+    /* ---------- FOOTER ---------- */
     .footer-row {
       display: flex;
       justify-content: center;
@@ -583,11 +585,121 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       padding-right: 4px;
       min-height: 0;
     }
 
+    .history-hint {
+      font-size: 0.72rem;
+      color: #7fa588;
+      text-align: center;
+      padding: 4px 8px 8px;
+      font-style: italic;
+      border-bottom: 1px dashed #2d5a3b;
+      margin-bottom: 4px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #12331f;
+      border: 1px solid #2d5a3b;
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #c6e6b8;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .history-item:hover {
+      background: #1a4429;
+      border-color: #589b6b;
+    }
+
+    .history-item:active {
+      transform: scale(0.98);
+      background: #22633a;
+    }
+
+    .history-item .h-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      gap: 2px;
+    }
+
+    .history-item .h-name {
+      font-weight: 600;
+      color: #e9f7d6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .history-item .h-time {
+      font-size: 0.65rem;
+      color: #7fa588;
+      white-space: nowrap;
+    }
+
+    .history-item .h-count {
+      font-weight: 700;
+      color: #9fdf9f;
+      font-variant-numeric: tabular-nums;
+      font-size: 1.05rem;
+      padding: 4px 10px;
+      background: #0b1e13;
+      border-radius: 20px;
+      border: 1px solid #2d5a3b;
+      flex-shrink: 0;
+    }
+
+    .empty-history {
+      text-align: center;
+      color: #7fa588;
+      padding: 30px 10px;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    .modal-footer {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #589b6b;
+      background: #1f4a2d;
+      color: #f0ffe0;
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.1s;
+      font-family: inherit;
+    }
+
+    .modal-btn:active { transform: scale(0.97); }
+
+    .modal-btn.primary { background: #2e7a48; border-color: #8fd49c; }
+
+    .modal-btn.danger {
+      background: #5e3a1e;
+      border-color: #bb8f5a;
+      color: #ffe6c7;
+    }
+
+    /* ---------- FORM ---------- */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -630,86 +742,6 @@
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
     }
 
-    .history-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #12331f;
-      border: 1px solid #2d5a3b;
-      border-radius: 16px;
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      color: #c6e6b8;
-      gap: 10px;
-    }
-
-    .history-item .h-name {
-      font-weight: 600;
-      color: #e9f7d6;
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .history-item .h-count {
-      font-weight: 700;
-      color: #9fdf9f;
-      font-variant-numeric: tabular-nums;
-      font-size: 1rem;
-    }
-
-    .history-item .h-time {
-      font-size: 0.65rem;
-      color: #7fa588;
-      white-space: nowrap;
-    }
-
-    .empty-history {
-      text-align: center;
-      color: #7fa588;
-      padding: 30px 10px;
-      font-style: italic;
-      font-size: 0.9rem;
-    }
-
-    .modal-footer {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .modal-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid #589b6b;
-      background: #1f4a2d;
-      color: #f0ffe0;
-      -webkit-tap-highlight-color: transparent;
-      transition: all 0.1s;
-      font-family: inherit;
-    }
-
-    .modal-btn:active { transform: scale(0.97); }
-
-    .modal-btn.primary { background: #2e7a48; border-color: #8fd49c; }
-
-    .modal-btn.danger {
-      background: #5e3a1e;
-      border-color: #bb8f5a;
-      color: #ffe6c7;
-    }
-
     /* Scrollbar */
     .modal-body::-webkit-scrollbar,
     .dhikr-dropdown::-webkit-scrollbar { width: 6px; }
@@ -717,6 +749,36 @@
     .dhikr-dropdown::-webkit-scrollbar-track { background: transparent; }
     .modal-body::-webkit-scrollbar-thumb,
     .dhikr-dropdown::-webkit-scrollbar-thumb { background: #2d5a3b; border-radius: 3px; }
+
+    /* ---------- TOAST ---------- */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #2e7a48;
+      color: #f0ffe0;
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #8fd49c;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 200;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      max-width: 90vw;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
 
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 420px) {
@@ -808,7 +870,7 @@
         </button>
       </div>
 
-      <!-- Footer: English meaning + Bangla meaning (two lines) -->
+      <!-- Footer: English meaning + Bangla meaning -->
       <div class="footer-row">
         <div class="dhikr-translation">
           <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
@@ -822,10 +884,12 @@
   <div id="historyModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
-        <span class="modal-title">📜 Session History</span>
+        <span class="modal-title">📜 Saved Sessions</span>
         <button id="closeHistoryBtn" class="modal-close" aria-label="Close">✕</button>
       </div>
-      <div id="historyList" class="modal-body history-list"></div>
+      <div id="historyList" class="modal-body">
+        <!-- populated by JS -->
+      </div>
       <div class="modal-footer">
         <button id="clearHistoryBtn" class="modal-btn danger">Clear All</button>
         <button id="closeHistoryBtn2" class="modal-btn">Close</button>
@@ -869,78 +933,34 @@
     </div>
   </div>
 
+  <!-- Toast notification -->
+  <div id="toast" class="toast">
+    <span>✓</span> <span id="toastText">Saved</span>
+  </div>
+
   <script>
     (function(){
       'use strict';
 
       // ========== STORAGE KEYS ==========
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v5',
-        ACTIVE: 'tasbeeh_active_v5',
-        HISTORY: 'tasbeeh_history_v5'
+        DHIKRS: 'tasbeeh_dhikrs_v6',
+        ACTIVE: 'tasbeeh_active_v6',
+        HISTORY: 'tasbeeh_history_v6'
       };
 
       const MAX_COUNT = 999999;
       const MAX_HISTORY = 50;
 
-      // ========== DEFAULT DHIKRS (English + Bangla meanings) ==========
+      // ========== DEFAULT DHIKRS ==========
       const DEFAULT_DHIKRS = [
-        {
-          id: 'subhanallah',
-          name: 'Subhanallah',
-          arabic: 'سُبْحَانَ ٱللَّٰهِ',
-          translation: 'Glory be to Allah',
-          translationBn: 'আল্লাহ পবিত্র, মহান',
-          count: 0, target: 33
-        },
-        {
-          id: 'alhamdulillah',
-          name: 'Alhamdulillah',
-          arabic: 'ٱلْحَمْدُ لِلَّٰهِ',
-          translation: 'All praise is for Allah',
-          translationBn: 'সকল প্রশংসা আল্লাহর জন্য',
-          count: 0, target: 33
-        },
-        {
-          id: 'allahuakbar',
-          name: 'Allahu Akbar',
-          arabic: 'ٱللَّٰهُ أَكْبَرُ',
-          translation: 'Allah is the Greatest',
-          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',
-          count: 0, target: 34
-        },
-        {
-          id: 'lailahaillallah',
-          name: 'La ilaha illallah',
-          arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',
-          translation: 'There is no god but Allah',
-          translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',
-          count: 0, target: 100
-        },
-        {
-          id: 'astaghfirullah',
-          name: 'Astaghfirullah',
-          arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',
-          translation: 'I seek forgiveness from Allah',
-          translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',
-          count: 0, target: 100
-        },
-        {
-          id: 'salawat',
-          name: 'Salawat (Durood)',
-          arabic: 'صَلَّى ٱللَّٰهُ عَلَيْهِ وَسَلَّمَ',
-          translation: 'Peace be upon him',
-          translationBn: 'নবীর উপর শান্তি বর্ষিত হোক',
-          count: 0, target: 100
-        },
-        {
-          id: 'lahawla',
-          name: 'La hawla wa la quwwata',
-          arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ',
-          translation: 'No power except with Allah',
-          translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',
-          count: 0, target: 100
-        }
+        { id: 'subhanallah',     name: 'Subhanallah',           arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',              translationBn: 'আল্লাহ পবিত্র, মহান',              count: 0, target: 33  },
+        { id: 'alhamdulillah',   name: 'Alhamdulillah',         arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',        translationBn: 'সকল প্রশংসা আল্লাহর জন্য',          count: 0, target: 33  },
+        { id: 'allahuakbar',     name: 'Allahu Akbar',          arabic: 'ٱللَّٰهُ أَكْبَرُ',                       translation: 'Allah is the Greatest',          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',                count: 0, target: 34  },
+        { id: 'lailahaillallah', name: 'La ilaha illallah',     arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',      translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',        count: 0, target: 100 },
+        { id: 'astaghfirullah',  name: 'Astaghfirullah',        arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',  translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',         count: 0, target: 100 },
+        { id: 'salawat',         name: 'Salawat (Durood)',      arabic: 'صَلَّى ٱللَّٰهُ عَلَيْهِ وَسَلَّمَ',       translation: 'Peace be upon him',              translationBn: 'নবীর উপর শান্তি বর্ষিত হোক',         count: 0, target: 100 },
+        { id: 'lahawla',         name: 'La hawla wa la quwwata', arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',   translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই', count: 0, target: 100 }
       ];
 
       // ========== STATE ==========
@@ -982,6 +1002,9 @@
       const cancelDhikrBtn = $('cancelDhikrBtn');
       const saveDhikrBtn = $('saveDhikrBtn');
 
+      const toast = $('toast');
+      const toastText = $('toastText');
+
       let editingDhikrId = null;
 
       // ========== HELPERS ==========
@@ -998,6 +1021,22 @@
         if (isNaN(n) || n < 1) return 1;
         if (n > MAX_COUNT) return MAX_COUNT;
         return n;
+      }
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toastText.textContent = msg;
+        toast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+      }
+
+      // ========== SAVE INDICATOR ==========
+      let saveTimeout = null;
+      function showSaveIndicator() {
+        saveIndicator.classList.add('show');
+        if (saveTimeout) clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => saveIndicator.classList.remove('show'), 1200);
       }
 
       // ========== STORAGE ==========
@@ -1019,9 +1058,19 @@
         }
       }
 
+      // Show indicator immediately, debounce the actual write
+      let saveDebounceTimer = null;
       function saveDebounced() {
-        if (saveDebounced.timer) clearTimeout(saveDebounced.timer);
-        saveDebounced.timer = setTimeout(saveAll, 400);
+        showSaveIndicator();
+        if (saveDebounceTimer) clearTimeout(saveDebounceTimer);
+        saveDebounceTimer = setTimeout(() => {
+          try {
+            localStorage.setItem(KEYS.DHIKRS, JSON.stringify(dhikrs));
+            localStorage.setItem(KEYS.ACTIVE, activeId);
+          } catch (e) {
+            console.warn('Save failed:', e);
+          }
+        }, 400);
       }
 
       function loadAll() {
@@ -1038,14 +1087,28 @@
                 d.target = sanitizeTarget(d.target);
                 if (d.count > MAX_COUNT) d.count = MAX_COUNT;
                 if (d.count < 0) d.count = 0;
-                // Ensure Bangla translation field exists
                 if (typeof d.translationBn !== 'string') d.translationBn = '';
               });
             }
           }
 
           if (!dhikrs.length) {
-            dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
+            const oldV5 = localStorage.getItem('tasbeeh_dhikrs_v5');
+            if (oldV5) {
+              try {
+                const parsed = JSON.parse(oldV5);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                  dhikrs = parsed.filter(d => d && d.id && typeof d.count === 'number');
+                  dhikrs.forEach(d => {
+                    d.target = sanitizeTarget(d.target);
+                    if (typeof d.translationBn !== 'string') d.translationBn = '';
+                  });
+                }
+              } catch (e) {}
+            }
+            if (!dhikrs.length) {
+              dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
+            }
           }
 
           if (rawActive && dhikrs.some(d => d.id === rawActive)) {
@@ -1057,7 +1120,11 @@
           if (rawHistory) {
             const parsed = JSON.parse(rawHistory);
             if (Array.isArray(parsed)) {
-              history = parsed.filter(h => h && typeof h.count === 'number' && typeof h.timestamp === 'number').slice(0, MAX_HISTORY);
+              history = parsed.filter(h =>
+                h && typeof h.count === 'number' &&
+                typeof h.timestamp === 'number' &&
+                typeof h.dhikrId === 'string'
+              ).slice(0, MAX_HISTORY);
             }
           }
         } catch (e) {
@@ -1065,14 +1132,6 @@
           dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
           activeId = dhikrs[0].id;
         }
-      }
-
-      // ========== SAVE INDICATOR ==========
-      let saveTimeout = null;
-      function showSaveIndicator() {
-        saveIndicator.classList.add('show');
-        if (saveTimeout) clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(() => saveIndicator.classList.remove('show'), 1200);
       }
 
       // ========== UI RENDER ==========
@@ -1083,10 +1142,7 @@
         countDisplay.textContent = d.count;
         targetInput.value = d.target;
         dhikrSelectedText.textContent = d.name;
-
-        // English meaning on first line
         dhikrTranslationEn.textContent = d.translation || '';
-        // Bangla meaning on second line
         dhikrTranslationBn.textContent = d.translationBn || '';
 
         if (d.target > 0) {
@@ -1219,6 +1275,8 @@
         if (!confirm(`Delete "${d.name}" and its saved count (${d.count})?`)) return;
 
         dhikrs = dhikrs.filter(x => x.id !== id);
+        history = history.filter(h => h.dhikrId !== id);
+        saveHistory();
         if (activeId === id) activeId = dhikrs[0].id;
         saveAll();
         updateUI();
@@ -1258,7 +1316,7 @@
           setTimeout(() => countDisplay.classList.remove('pulse'), 200);
           return;
         }
-        addHistoryEntry(d);
+        upsertHistoryEntry(d);
         d.count = 0;
         updateUI();
         countDisplay.classList.add('pulse');
@@ -1282,9 +1340,11 @@
       }
 
       // ========== HISTORY ==========
-      function addHistoryEntry(dhikr) {
+      function upsertHistoryEntry(dhikr) {
         if (!dhikr || dhikr.count <= 0) return;
+        history = history.filter(h => h.dhikrId !== dhikr.id);
         history.unshift({
+          dhikrId: dhikr.id,
           name: dhikr.name,
           count: dhikr.count,
           timestamp: Date.now()
@@ -1295,34 +1355,71 @@
 
       function renderHistory() {
         historyList.innerHTML = '';
+
         if (!history.length) {
           const e = document.createElement('div');
           e.className = 'empty-history';
-          e.textContent = 'No saved sessions yet.';
+          e.textContent = 'No saved sessions yet. Tap 💾 Save to store a session.';
           historyList.appendChild(e);
           return;
         }
+
+        const hint = document.createElement('div');
+        hint.className = 'history-hint';
+        hint.textContent = '👆 Tap a session to restore its count';
+        historyList.appendChild(hint);
+
         history.forEach(item => {
           const div = document.createElement('div');
           div.className = 'history-item';
+          div.title = 'Tap to restore this count';
+
+          const info = document.createElement('div');
+          info.className = 'h-info';
 
           const name = document.createElement('span');
           name.className = 'h-name';
           name.textContent = item.name;
 
-          const countEl = document.createElement('span');
-          countEl.className = 'h-count';
-          countEl.textContent = item.count;
-
           const time = document.createElement('span');
           time.className = 'h-time';
           time.textContent = formatTime(item.timestamp);
 
-          div.appendChild(name);
+          info.appendChild(name);
+          info.appendChild(time);
+
+          const countEl = document.createElement('span');
+          countEl.className = 'h-count';
+          countEl.textContent = item.count;
+
+          div.appendChild(info);
           div.appendChild(countEl);
-          div.appendChild(time);
+
+          div.addEventListener('click', () => {
+            restoreHistoryEntry(item);
+          });
+
           historyList.appendChild(div);
         });
+      }
+
+      function restoreHistoryEntry(item) {
+        const d = dhikrs.find(x => x.id === item.dhikrId);
+        if (!d) {
+          showToast('Dhikr no longer exists');
+          return;
+        }
+
+        if (activeId !== d.id) {
+          activeId = d.id;
+        }
+
+        d.count = Math.min(item.count, MAX_COUNT);
+        updateUI();
+        saveAll();
+        closeHistory();
+        showToast(`Restored: ${d.name} → ${d.count}`);
+        if (navigator.vibrate) navigator.vibrate(20);
       }
 
       function formatTime(ts) {
@@ -1401,6 +1498,11 @@
             d.translation = translation;
             d.translationBn = translationBn;
             d.target = targetVal;
+            const h = history.find(x => x.dhikrId === d.id);
+            if (h) {
+              h.name = name;
+              saveHistory();
+            }
           }
         } else {
           const newDhikr = {
@@ -1430,11 +1532,12 @@
       saveSessionBtn.addEventListener('click', () => {
         const d = getActive();
         if (!d || d.count <= 0) {
-          alert('Nothing to save yet.');
+          showToast('Nothing to save yet');
           return;
         }
-        addHistoryEntry(d);
+        upsertHistoryEntry(d);
         showSaveIndicator();
+        showToast(`Saved: ${d.name} → ${d.count}`);
         if (navigator.vibrate) navigator.vibrate(15);
       });
 
