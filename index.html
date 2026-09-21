@@ -47,7 +47,7 @@
       padding: 20px 16px 24px;
       box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       max-height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -134,11 +134,12 @@
       justify-content: space-between;
       background: #12331f;
       border: 1px solid #3f6b4b;
-      border-radius: 40px;
+      border-radius: 24px;
       padding: 10px 16px;
       cursor: pointer;
       transition: all 0.15s;
       gap: 8px;
+      min-height: 62px;
     }
 
     .dhikr-select-display:active {
@@ -146,9 +147,18 @@
       transform: scale(0.99);
     }
 
-    .dhikr-selected-text {
+    .dhikr-select-center {
       flex: 1;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .dhikr-selected-text {
       font-size: 0.92rem;
       font-weight: 600;
       color: #e9f7d6;
@@ -156,12 +166,29 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.2;
+    }
+
+    .dhikr-selected-arabic {
+      font-size: 1.1rem;
+      color: #9fdf9f;
+      font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
+      direction: rtl;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.3;
+      min-height: 1.3em;
     }
 
     .dhikr-select-arrow {
       color: #9fdf9f;
       font-size: 0.8rem;
       transition: transform 0.2s;
+      flex-shrink: 0;
     }
 
     .dhikr-select-display.open .dhikr-select-arrow {
@@ -302,26 +329,82 @@
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
-    /* ---------- COUNT ---------- */
+    /* ---------- COUNT CONTAINER ---------- */
+    .count-wrap {
+      width: 100%;
+      height: 180px;
+      padding: 4px 12px;
+      margin: 8px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: background 0.15s ease, transform 0.1s ease,
+                  box-shadow 0.4s ease;
+      -webkit-tap-highlight-color: transparent;
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+
+    .count-wrap:active {
+      background: rgba(159, 223, 159, 0.12);
+      transform: scale(0.99);
+    }
+
+    .count-wrap.target-reached {
+      background: rgba(46, 122, 72, 0.15);
+      box-shadow: 0 0 24px rgba(159, 223, 159, 0.4),
+                  inset 0 0 20px rgba(159, 223, 159, 0.15);
+      animation: targetGlow 2.2s ease-in-out infinite;
+    }
+
+    @keyframes targetGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(159, 223, 159, 0.35),
+                    inset 0 0 18px rgba(159, 223, 159, 0.12);
+      }
+      50% {
+        box-shadow: 0 0 34px rgba(159, 223, 159, 0.6),
+                    inset 0 0 24px rgba(159, 223, 159, 0.22);
+      }
+    }
+
+    /* ---------- COUNT DISPLAY ---------- */
     .count-display {
-      font-size: clamp(4rem, 18vw, 6.5rem);
-      font-weight: 800;
+      font-size: clamp(6rem, 26vw, 11rem);
+      font-weight: 900;
       text-align: center;
       color: #e9f7d6;
-      text-shadow: 0 0 12px #a3e0a0, 0 8px 0 #0a1f12;
-      letter-spacing: 2px;
+      text-shadow: 0 0 26px #a3e0a0, 0 14px 0 #0a1f12;
+      letter-spacing: 1px;
       line-height: 1;
-      margin: 2px 0 8px;
-      word-break: break-word;
-      transition: transform 0.1s ease;
+      word-break: keep-all;
+      transition: font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.1s ease,
+                  color 0.4s ease;
       font-variant-numeric: tabular-nums;
-      cursor: pointer;
+      white-space: nowrap;
+      display: inline-block;
+      max-width: 100%;
+      pointer-events: none;
     }
 
     .count-display.pulse {
-      transform: scale(1.06);
-      text-shadow: 0 0 22px #d4ffb0, 0 8px 0 #0a1f12;
+      transform: scale(1.05);
+      text-shadow: 0 0 45px #d4ffb0, 0 14px 0 #0a1f12;
     }
+
+    .count-display.target-reached {
+      color: #f4ffd4;
+      text-shadow: 0 0 30px #d4ffb0, 0 14px 0 #0a1f12;
+    }
+
+    .count-display[data-len="3"] { font-size: clamp(4.8rem, 20vw, 9rem); }
+    .count-display[data-len="4"] { font-size: clamp(3.6rem, 15vw, 7rem); }
+    .count-display[data-len="5"] { font-size: clamp(2.8rem, 12vw, 5.6rem); }
+    .count-display[data-len="6"] { font-size: clamp(2.3rem, 10vw, 4.6rem); }
 
     /* ---------- TARGET ROW ---------- */
     .target-row {
@@ -355,7 +438,7 @@
     }
 
     .target-input {
-      width: 140px;
+      width: 150px;
       max-width: 100%;
       padding: 6px 10px;
       font-size: 1.15rem;
@@ -510,6 +593,149 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    /* ---------- CONGRATULATIONS OVERLAY ---------- */
+    .congrats-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .congrats-overlay.show {
+      opacity: 1;
+    }
+
+    /* === Floating hearts layer === */
+    .heart-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 160;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 2rem;
+      line-height: 1;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 8px rgba(255, 120, 180, 0.9));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Different colors/sizes for variety */
+    .floating-heart.h-pink { color: #ff8fc7; }
+    .floating-heart.h-red { color: #ff5a7a; }
+    .floating-heart.h-peach { color: #ffb3c1; }
+    .floating-heart.h-lav { color: #e0b0ff; }
+
+    /* Individual heart animations — floating and blowing around */
+    @keyframes floatHeart1 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(40px, -220px) scale(1.1) rotate(20deg); opacity: 1; }
+      100% { transform: translate(-30px, -520px) scale(0.7) rotate(-25deg); opacity: 0; }
+    }
+    @keyframes floatHeart2 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(-60px, -260px) scale(1.2) rotate(-30deg); opacity: 1; }
+      100% { transform: translate(50px, -560px) scale(0.6) rotate(35deg); opacity: 0; }
+    }
+    @keyframes floatHeart3 {
+      0%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(80px, -180px) scale(1) rotate(15deg); opacity: 1; }
+      100% { transform: translate(-70px, -500px) scale(0.5) rotate(-40deg); opacity: 0; }
+    }
+    @keyframes floatHeart4 {
+      0%   { transform: translate(0, 0) scale(0.35) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(-90px, -300px) scale(1.15) rotate(25deg); opacity: 1; }
+      100% { transform: translate(60px, -600px) scale(0.65) rotate(-20deg); opacity: 0; }
+    }
+    @keyframes floatHeart5 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(120px, -200px) scale(1.05) rotate(-18deg); opacity: 1; }
+      100% { transform: translate(-100px, -540px) scale(0.55) rotate(45deg); opacity: 0; }
+    }
+
+    .congrats-card {
+      background: linear-gradient(145deg, #2e7a48 0%, #1a4a2e 100%);
+      border: 2px solid #ffb3c1;
+      border-radius: 32px;
+      padding: 32px 28px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7),
+                  0 0 60px rgba(255, 143, 199, 0.6),
+                  inset 0 0 40px rgba(255, 143, 199, 0.15);
+      transform: scale(0.7);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .congrats-overlay.show .congrats-card {
+      transform: scale(1);
+    }
+
+    .congrats-emoji {
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: bounceEmoji 1.1s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 143, 199, 0.9));
+    }
+
+    @keyframes bounceEmoji {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.08); }
+    }
+
+    .congrats-title {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5),
+                   0 0 30px rgba(255, 180, 210, 0.9);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .congrats-subtitle {
+      font-size: 1.05rem;
+      color: #ffe6f0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .congrats-detail {
+      font-size: 0.9rem;
+      color: #ffffff;
+      font-weight: 500;
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .congrats-detail strong {
+      color: #ffb3c1;
+      font-weight: 800;
     }
 
     /* ---------- MODALS ---------- */
@@ -788,20 +1014,31 @@
       .target-label { font-size: 0.8rem; }
       .target-input { width: 120px; font-size: 1.05rem; padding: 6px 8px; }
       .dhikr-selected-text { font-size: 0.85rem; }
+      .dhikr-selected-arabic { font-size: 1rem; }
       .dhikr-translation { font-size: 0.75rem; padding: 6px 12px; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.75rem; }
+      .count-wrap { height: 150px; }
+      .congrats-card { padding: 26px 20px; }
+      .congrats-emoji { font-size: 3.5rem; }
+      .congrats-title { font-size: 1.9rem; }
+      .congrats-subtitle { font-size: 0.95rem; }
+      .congrats-detail { font-size: 0.8rem; }
+      .floating-heart { font-size: 1.7rem; }
     }
 
     @media (max-width: 340px) {
       .target-input { width: 105px; font-size: 0.95rem; }
       .target-label { font-size: 0.72rem; }
+      .dhikr-selected-text { font-size: 0.78rem; }
+      .dhikr-selected-arabic { font-size: 0.92rem; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.7rem; }
+      .count-wrap { height: 130px; }
     }
 
     @media (max-height: 700px) {
-      .count-display { font-size: clamp(3.5rem, 16vw, 5.5rem); margin: 0 0 6px; }
+      .count-wrap { height: 140px; margin: 4px 0 10px; }
       .target-row { margin: 6px 0 12px; padding: 6px 12px; }
       .progress-ring { margin: 4px 0 10px; }
       .button-grid { margin: 10px 0 4px; }
@@ -824,7 +1061,10 @@
       <!-- Dhikr Selector -->
       <div class="dhikr-selector">
         <div id="dhikrSelectDisplay" class="dhikr-select-display">
-          <span id="dhikrSelectedText" class="dhikr-selected-text">Subhanallah</span>
+          <div class="dhikr-select-center">
+            <span id="dhikrSelectedText" class="dhikr-selected-text">Subhanallah</span>
+            <span id="dhikrSelectedArabic" class="dhikr-selected-arabic">سُبْحَانَ ٱللَّٰهِ</span>
+          </div>
           <span class="dhikr-select-arrow">▼</span>
         </div>
         <div id="dhikrDropdown" class="dhikr-dropdown">
@@ -832,8 +1072,10 @@
         </div>
       </div>
 
-      <!-- Main count display -->
-      <div id="countDisplay" class="count-display">0</div>
+      <!-- Count wrapper — FIXED size, clickable to increment -->
+      <div id="countWrap" class="count-wrap" title="Tap to count">
+        <div id="countDisplay" class="count-display">0</div>
+      </div>
 
       <!-- Target row -->
       <div class="target-row">
@@ -869,13 +1111,26 @@
         </button>
       </div>
 
-      <!-- Footer: English meaning + Bangla meaning -->
+      <!-- Footer -->
       <div class="footer-row">
         <div class="dhikr-translation">
           <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
           <span id="dhikrTranslationBn" class="bn">আল্লাহ পবিত্র, মহান</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING HEARTS LAYER ================= -->
+  <div id="heartLayer" class="heart-layer"></div>
+
+  <!-- ================= CONGRATULATIONS OVERLAY ================= -->
+  <div id="congratsOverlay" class="congrats-overlay">
+    <div class="congrats-card">
+      <div class="congrats-emoji">💖</div>
+      <div class="congrats-title">MashaAllah!</div>
+      <div class="congrats-subtitle">You did it! 🌸</div>
+      <div class="congrats-detail">You completed <strong id="congratsCount">33</strong> × <span id="congratsDhikr">Subhanallah</span></div>
     </div>
   </div>
 
@@ -943,9 +1198,9 @@
 
       // ========== STORAGE KEYS ==========
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v7',
-        ACTIVE: 'tasbeeh_active_v7',
-        HISTORY: 'tasbeeh_history_v7'
+        DHIKRS: 'tasbeeh_dhikrs_v10',
+        ACTIVE: 'tasbeeh_active_v10',
+        HISTORY: 'tasbeeh_history_v10'
       };
 
       const MAX_COUNT = 999999;
@@ -953,74 +1208,28 @@
 
       // ========== DEFAULT DHIKRS ==========
       const DEFAULT_DHIKRS = [
-        {
-          id: 'subhanallah',
-          name: 'Subhanallah',
-          arabic: 'سُبْحَانَ ٱللَّٰهِ',
-          translation: 'Glory be to Allah',
-          translationBn: 'আল্লাহ পবিত্র, মহান',
-          count: 0, target: 33
-        },
-        {
-          id: 'alhamdulillah',
-          name: 'Alhamdulillah',
-          arabic: 'ٱلْحَمْدُ لِلَّٰهِ',
-          translation: 'All praise is for Allah',
-          translationBn: 'সকল প্রশংসা আল্লাহর জন্য',
-          count: 0, target: 33
-        },
-        {
-          id: 'allahuakbar',
-          name: 'Allahu Akbar',
-          arabic: 'ٱللَّٰهُ أَكْبَرُ',
-          translation: 'Allah is the Greatest',
-          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',
-          count: 0, target: 34
-        },
-        {
-          id: 'lailahaillallah',
-          name: 'La ilaha illallah',
-          arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',
-          translation: 'There is no god but Allah',
-          translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',
-          count: 0, target: 100
-        },
-        {
-          id: 'astaghfirullah',
-          name: 'Astaghfirullah',
-          arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',
-          translation: 'I seek forgiveness from Allah',
-          translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',
-          count: 0, target: 100
-        },
-        {
-          id: 'salawat',
-          name: 'Allahumma Salli Ala Muhammad',
-          arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',
-          translation: 'O Allah, send blessings upon Muhammad',
-          translationBn: 'হে আল্লাহ, মুহাম্মদের উপর blessings বর্ষণ করুন',
-          count: 0, target: 100
-        },
-        {
-          id: 'lahawla',
-          name: 'La hawla wa la quwwata',
-          arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ',
-          translation: 'No power except with Allah',
-          translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',
-          count: 0, target: 100
-        }
+        { id: 'subhanallah',     name: 'Subhanallah',                 arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',                       translationBn: 'আল্লাহ পবিত্র, মহান',                       count: 0, target: 33  },
+        { id: 'alhamdulillah',   name: 'Alhamdulillah',               arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',                 translationBn: 'সকল প্রশংসা আল্লাহর জন্য',                 count: 0, target: 33  },
+        { id: 'allahuakbar',     name: 'Allahu Akbar',                arabic: 'ٱللَّٰهُ أَكْبَرُ',                       translation: 'Allah is the Greatest',                   translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',                       count: 0, target: 34  },
+        { id: 'lailahaillallah', name: 'La ilaha illallah',           arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',               translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',             count: 0, target: 100 },
+        { id: 'astaghfirullah',  name: 'Astaghfirullah',              arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',           translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',               count: 0, target: 100 },
+        { id: 'salawat',         name: 'Allahumma Salli Ala Muhammad', arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',       translation: 'O Allah, send blessings upon Muhammad',    translationBn: 'হে আল্লাহ, মুহাম্মদের উপর রহমত বর্ষণ করুন', count: 0, target: 100 },
+        { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100 }
       ];
 
       // ========== STATE ==========
       let dhikrs = [];
       let activeId = null;
       let history = [];
+      let congratsShownFor = null; // {dhikrId, target} — prevent repeat celebration
 
       // ========== DOM ==========
       const $ = id => document.getElementById(id);
       const dhikrSelectDisplay = $('dhikrSelectDisplay');
       const dhikrSelectedText = $('dhikrSelectedText');
+      const dhikrSelectedArabic = $('dhikrSelectedArabic');
       const dhikrDropdown = $('dhikrDropdown');
+      const countWrap = $('countWrap');
       const countDisplay = $('countDisplay');
       const targetInput = $('targetInput');
       const progressFill = $('progressFill');
@@ -1032,6 +1241,11 @@
       const historyBtn = $('historyBtn');
       const dhikrTranslationEn = $('dhikrTranslationEn');
       const dhikrTranslationBn = $('dhikrTranslationBn');
+
+      const congratsOverlay = $('congratsOverlay');
+      const congratsCount = $('congratsCount');
+      const congratsDhikr = $('congratsDhikr');
+      const heartLayer = $('heartLayer');
 
       const historyModal = $('historyModal');
       const historyList = $('historyList');
@@ -1140,24 +1354,15 @@
           }
 
           if (!dhikrs.length) {
-            const oldV6 = localStorage.getItem('tasbeeh_dhikrs_v6');
-            if (oldV6) {
+            const oldV9 = localStorage.getItem('tasbeeh_dhikrs_v9');
+            if (oldV9) {
               try {
-                const parsed = JSON.parse(oldV6);
+                const parsed = JSON.parse(oldV9);
                 if (Array.isArray(parsed) && parsed.length > 0) {
                   dhikrs = parsed.filter(d => d && d.id && typeof d.count === 'number');
                   dhikrs.forEach(d => {
                     d.target = sanitizeTarget(d.target);
                     if (typeof d.translationBn !== 'string') d.translationBn = '';
-                  });
-                  // Update old Salawat entry to new one
-                  dhikrs.forEach(d => {
-                    if (d.id === 'salawat') {
-                      d.name = 'Allahumma Salli Ala Muhammad';
-                      d.arabic = 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ';
-                      d.translation = 'O Allah, send blessings upon Muhammad';
-                      d.translationBn = 'হে আল্লাহ, মুহাম্মদের উপর blessings বর্ষণ করুন';
-                    }
                   });
                 }
               } catch (e) {}
@@ -1190,14 +1395,116 @@
         }
       }
 
+      // ========== CELEBRATION ==========
+      let heartInterval = null;
+      let heartTimeouts = [];
+
+      function spawnFloatingHeart() {
+        const heart = document.createElement('div');
+        const variants = ['h-pink', 'h-red', 'h-peach', 'h-lav'];
+        const anims = ['floatHeart1', 'floatHeart2', 'floatHeart3', 'floatHeart4', 'floatHeart5'];
+
+        heart.className = 'floating-heart ' + variants[Math.floor(Math.random() * variants.length)];
+
+        // Use mix of heart and sparkle emojis
+        const emojis = ['❤️', '💖', '💗', '💓', '💕', '🌸', '✨', '💝'];
+        heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        // Random start position along the bottom of the screen
+        const startX = Math.random() * 100; // vw
+        const startY = 90 + Math.random() * 10; // bottom area
+
+        heart.style.left = startX + 'vw';
+        heart.style.top = startY + 'vh';
+        heart.style.fontSize = (1.4 + Math.random() * 1.6) + 'rem';
+
+        const animName = anims[Math.floor(Math.random() * anims.length)];
+        const duration = 3.5 + Math.random() * 2.5; // 3.5–6 seconds
+
+        heart.style.animation = `${animName} ${duration}s ease-out forwards`;
+
+        // Optional horizontal drift via CSS variable (used by animation)
+        heartLayer.appendChild(heart);
+
+        // Auto-remove after animation completes
+        const timeout = setTimeout(() => {
+          if (heart.parentNode) heart.parentNode.removeChild(heart);
+        }, duration * 1000 + 200);
+        heartTimeouts.push(timeout);
+      }
+
+      function startHeartRain() {
+        stopHeartRain();
+        // Burst of hearts initially
+        for (let i = 0; i < 14; i++) {
+          setTimeout(spawnFloatingHeart, i * 90);
+        }
+        // Continue spawning for a few seconds
+        let count = 0;
+        heartInterval = setInterval(() => {
+          if (count >= 20) {
+            stopHeartRain();
+            return;
+          }
+          spawnFloatingHeart();
+          count++;
+        }, 260);
+      }
+
+      function stopHeartRain() {
+        if (heartInterval) {
+          clearInterval(heartInterval);
+          heartInterval = null;
+        }
+        heartTimeouts.forEach(t => clearTimeout(t));
+        heartTimeouts = [];
+      }
+
+      let congratsTimer = null;
+      let congratsHideTimer = null;
+
+      function showCongratulations(dhikr) {
+        // Set content
+        congratsCount.textContent = dhikr.target;
+        congratsDhikr.textContent = dhikr.name;
+
+        // Show overlay
+        congratsOverlay.classList.add('show');
+
+        // Start floating hearts
+        startHeartRain();
+
+        // Vibration pattern for celebration
+        if (navigator.vibrate) {
+          navigator.vibrate([40, 60, 40, 60, 80]);
+        }
+
+        // Hide after 3.5 seconds
+        if (congratsHideTimer) clearTimeout(congratsHideTimer);
+        congratsHideTimer = setTimeout(() => {
+          congratsOverlay.classList.remove('show');
+          stopHeartRain();
+        }, 3500);
+      }
+
       // ========== UI RENDER ==========
       function updateUI() {
         const d = getActive();
         if (!d) return;
 
         countDisplay.textContent = d.count;
+
+        // Auto-shrink font based on digit count (container stays same)
+        const len = String(d.count).length;
+        if (len >= 3) {
+          countDisplay.setAttribute('data-len', String(Math.min(len, 6)));
+        } else {
+          countDisplay.removeAttribute('data-len');
+        }
+
         targetInput.value = d.target;
         dhikrSelectedText.textContent = d.name;
+        dhikrSelectedArabic.textContent = d.arabic || '';
         dhikrTranslationEn.textContent = d.translation || '';
         dhikrTranslationBn.textContent = d.translationBn || '';
 
@@ -1209,11 +1516,17 @@
           progressFill.style.width = '0%';
         }
 
-        if (d.count >= d.target && d.target > 0) {
+        // Target reached state — visual highlight
+        const reached = d.count >= d.target && d.target > 0;
+        if (reached) {
+          countWrap.classList.add('target-reached');
+          countDisplay.classList.add('target-reached');
           targetInput.style.background = '#3b8b4b';
           targetInput.style.color = '#fff9e6';
           targetInput.style.borderColor = '#dcf5c0';
         } else {
+          countWrap.classList.remove('target-reached');
+          countDisplay.classList.remove('target-reached');
           targetInput.style.background = '#1f4f30';
           targetInput.style.color = '#dcf5c0';
           targetInput.style.borderColor = '#6fa87f';
@@ -1317,6 +1630,8 @@
       function switchDhikr(id) {
         if (id === activeId) return;
         activeId = id;
+        // Reset the "congrats shown" state so celebration fires once per new dhikr
+        congratsShownFor = null;
         updateUI();
         saveAll();
       }
@@ -1343,10 +1658,22 @@
         const d = getActive();
         if (!d) return;
         if (d.count < MAX_COUNT) d.count++;
+
+        const wasBelowTarget = (d.count - 1) < d.target;
+        const nowAtTarget = d.count >= d.target;
+
         updateUI();
         pulseDisplay();
         saveDebounced();
         if (navigator.vibrate) navigator.vibrate(10);
+
+        // Trigger celebration once when crossing the target threshold
+        if (wasBelowTarget && nowAtTarget && d.target > 0) {
+          if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
+            congratsShownFor = { dhikrId: d.id, target: d.target };
+            showCongratulations(d);
+          }
+        }
       }
 
       function decrement() {
@@ -1354,6 +1681,10 @@
         if (!d) return;
         if (d.count > 0) {
           d.count--;
+          // If dropped below target, allow celebration to fire again if they hit it again
+          if (d.count < d.target) {
+            congratsShownFor = null;
+          }
           updateUI();
           countDisplay.classList.add('pulse');
           setTimeout(() => countDisplay.classList.remove('pulse'), 100);
@@ -1374,6 +1705,7 @@
         }
         upsertHistoryEntry(d);
         d.count = 0;
+        congratsShownFor = null;
         updateUI();
         countDisplay.classList.add('pulse');
         setTimeout(() => countDisplay.classList.remove('pulse'), 200);
@@ -1391,6 +1723,10 @@
         if (!d) return;
         d.target = sanitizeTarget(targetInput.value);
         targetInput.value = d.target;
+        // Reset celebration flag if target changed
+        if (congratsShownFor && congratsShownFor.target !== d.target) {
+          congratsShownFor = null;
+        }
         updateUI();
         saveAll();
       }
@@ -1471,6 +1807,7 @@
         }
 
         d.count = Math.min(item.count, MAX_COUNT);
+        congratsShownFor = null;
         updateUI();
         saveAll();
         closeHistory();
@@ -1574,6 +1911,7 @@
           activeId = newDhikr.id;
         }
 
+        congratsShownFor = null;
         saveAll();
         updateUI();
         closeDhikrModal();
@@ -1583,7 +1921,7 @@
       incrementBtn.addEventListener('click', increment);
       decrementBtn.addEventListener('click', decrement);
       resetBtn.addEventListener('click', resetCounter);
-      countDisplay.addEventListener('click', increment);
+      countWrap.addEventListener('click', increment);
 
       saveSessionBtn.addEventListener('click', () => {
         const d = getActive();
