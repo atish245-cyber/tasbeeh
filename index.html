@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tasbeeh">
-  <title>তাসবীহ — যিকির কাউন্টার</title>
+  <title>Tasbeeh — Dhikr Counter</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -466,7 +466,7 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    /* ---------- FOOTER ---------- */
+    /* ---------- FOOTER (dual-line meaning) ---------- */
     .footer-row {
       display: flex;
       justify-content: center;
@@ -479,17 +479,36 @@
       font-weight: 500;
       color: #c6e6b8;
       background: #12331f;
-      padding: 6px 16px;
-      border-radius: 30px;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-size: 0.82rem;
       border: 1px solid #3f6b4b;
+      max-width: 100%;
+      text-align: center;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow: hidden;
+    }
+
+    .dhikr-translation .en {
+      color: #c6e6b8;
+      font-weight: 500;
+      font-size: 0.82rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 100%;
-      text-align: center;
-      font-family: 'Noto Sans Bengali', 'Kalpurush', 'Segoe UI', sans-serif;
-      line-height: 1.4;
+    }
+
+    .dhikr-translation .bn {
+      color: #9fdf9f;
+      font-weight: 500;
+      font-size: 0.82rem;
+      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* ---------- MODALS ---------- */
@@ -580,6 +599,7 @@
       font-weight: 600;
       color: #b6d7b0;
       letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .form-input, .form-textarea {
@@ -608,13 +628,6 @@
       font-size: 1.3rem;
       line-height: 1.6;
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
-    }
-
-    .form-textarea.ltr {
-      direction: ltr;
-      text-align: left;
-      font-size: 0.92rem;
-      font-family: inherit;
     }
 
     .history-list {
@@ -714,13 +727,16 @@
       .target-label { font-size: 0.8rem; }
       .target-input { width: 120px; font-size: 1.05rem; padding: 6px 8px; }
       .dhikr-selected-text { font-size: 0.85rem; }
-      .dhikr-translation { font-size: 0.72rem; padding: 5px 12px; }
+      .dhikr-translation { font-size: 0.75rem; padding: 6px 12px; }
+      .dhikr-translation .en,
+      .dhikr-translation .bn { font-size: 0.75rem; }
     }
 
     @media (max-width: 340px) {
       .target-input { width: 105px; font-size: 0.95rem; }
       .target-label { font-size: 0.72rem; }
-      .dhikr-translation { font-size: 0.68rem; padding: 4px 10px; }
+      .dhikr-translation .en,
+      .dhikr-translation .bn { font-size: 0.7rem; }
     }
 
     @media (max-height: 700px) {
@@ -738,16 +754,16 @@
     <div class="counter-card">
       <!-- Top bar -->
       <div class="top-bar">
-        <button id="historyBtn" class="top-btn" title="সেশন ইতিহাস">📜 ইতিহাস</button>
+        <button id="historyBtn" class="top-btn" title="View session history">📜 History</button>
         <div id="saveIndicator" class="save-indicator">
-          <span class="dot"></span> সংরক্ষিত
+          <span class="dot"></span> SAVED
         </div>
       </div>
 
       <!-- Dhikr Selector -->
       <div class="dhikr-selector">
         <div id="dhikrSelectDisplay" class="dhikr-select-display">
-          <span id="dhikrSelectedText" class="dhikr-selected-text">সুবহানাল্লাহ</span>
+          <span id="dhikrSelectedText" class="dhikr-selected-text">Subhanallah</span>
           <span class="dhikr-select-arrow">▼</span>
         </div>
         <div id="dhikrDropdown" class="dhikr-dropdown">
@@ -760,7 +776,7 @@
 
       <!-- Target row -->
       <div class="target-row">
-        <span class="target-label">🎯 লক্ষ্য</span>
+        <span class="target-label">🎯 Target</span>
         <div class="target-input-wrap">
           <input id="targetInput" class="target-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" aria-label="Target count" />
         </div>
@@ -775,26 +791,29 @@
 
       <!-- Action buttons -->
       <div class="button-grid">
-        <button id="incrementBtn" class="btn btn-primary" title="গণনা (ট্যাপ বা স্পেস)">
-          <span class="btn-icon">📿</span> +১
+        <button id="incrementBtn" class="btn btn-primary" title="Count (tap or press space)">
+          <span class="btn-icon">📿</span> +1
         </button>
-        <button id="decrementBtn" class="btn btn-secondary" title="কমান">
-          <span class="btn-icon">−</span> -১
+        <button id="decrementBtn" class="btn btn-secondary" title="Decrease count">
+          <span class="btn-icon">−</span> -1
         </button>
       </div>
 
       <div class="button-grid" style="margin-top: 6px;">
-        <button id="saveSessionBtn" class="btn btn-secondary" title="এই সেশন সংরক্ষণ করুন">
-          <span class="btn-icon">💾</span> সংরক্ষণ
+        <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session">
+          <span class="btn-icon">💾</span> Save
         </button>
-        <button id="resetBtn" class="btn btn-warning" title="রিসেট">
-          <span class="btn-icon">↺</span> রিসেট
+        <button id="resetBtn" class="btn btn-warning" title="Reset this dhikr's counter">
+          <span class="btn-icon">↺</span> Reset
         </button>
       </div>
 
-      <!-- Footer translation -->
+      <!-- Footer: English meaning + Bangla meaning (two lines) -->
       <div class="footer-row">
-        <span id="dhikrTranslation" class="dhikr-translation">আল্লাহ পবিত্র, মহান</span>
+        <div class="dhikr-translation">
+          <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
+          <span id="dhikrTranslationBn" class="bn">আল্লাহ পবিত্র, মহান</span>
+        </div>
       </div>
     </div>
   </div>
@@ -803,13 +822,13 @@
   <div id="historyModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
-        <span class="modal-title">📜 সেশন ইতিহাস</span>
+        <span class="modal-title">📜 Session History</span>
         <button id="closeHistoryBtn" class="modal-close" aria-label="Close">✕</button>
       </div>
       <div id="historyList" class="modal-body history-list"></div>
       <div class="modal-footer">
-        <button id="clearHistoryBtn" class="modal-btn danger">সব মুছুন</button>
-        <button id="closeHistoryBtn2" class="modal-btn">বন্ধ করুন</button>
+        <button id="clearHistoryBtn" class="modal-btn danger">Clear All</button>
+        <button id="closeHistoryBtn2" class="modal-btn">Close</button>
       </div>
     </div>
   </div>
@@ -818,30 +837,34 @@
   <div id="dhikrModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
-        <span id="dhikrModalTitle" class="modal-title">➕ নতুন দুআ যোগ করুন</span>
+        <span id="dhikrModalTitle" class="modal-title">➕ Add New Dhikr</span>
         <button id="closeDhikrBtn" class="modal-close" aria-label="Close">✕</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label class="form-label" for="dhikrNameInput">নাম (বাংলা / ইংরেজি)</label>
-          <input id="dhikrNameInput" class="form-input" type="text" maxlength="40" placeholder="যেমন: সুবহানাল্লাহ" />
+          <label class="form-label" for="dhikrNameInput">Name (English)</label>
+          <input id="dhikrNameInput" class="form-input" type="text" maxlength="40" placeholder="e.g. Subhanallah" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="dhikrArabicInput">আরবি লেখা (ঐচ্ছিক)</label>
+          <label class="form-label" for="dhikrArabicInput">Arabic Text (optional)</label>
           <textarea id="dhikrArabicInput" class="form-textarea" maxlength="120" placeholder="سُبْحَانَ ٱللَّٰهِ"></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" for="dhikrTranslationInput">বাংলা অর্থ (ঐচ্ছিক)</label>
-          <input id="dhikrTranslationInput" class="form-input" type="text" maxlength="80" placeholder="আল্লাহ পবিত্র, মহান" />
+          <label class="form-label" for="dhikrTranslationInput">English Meaning</label>
+          <input id="dhikrTranslationInput" class="form-input" type="text" maxlength="80" placeholder="Glory be to Allah" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="dhikrTargetInput">ডিফল্ট লক্ষ্য (সর্বোচ্চ ৬ ডিজিট)</label>
+          <label class="form-label" for="dhikrTranslationBnInput">Bangla Meaning</label>
+          <input id="dhikrTranslationBnInput" class="form-input" type="text" maxlength="80" placeholder="আল্লাহ পবিত্র, মহান" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="dhikrTargetInput">Default Target (up to 6 digits)</label>
           <input id="dhikrTargetInput" class="form-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" />
         </div>
       </div>
       <div class="modal-footer">
-        <button id="cancelDhikrBtn" class="modal-btn">বাতিল</button>
-        <button id="saveDhikrBtn" class="modal-btn primary">সংরক্ষণ</button>
+        <button id="cancelDhikrBtn" class="modal-btn">Cancel</button>
+        <button id="saveDhikrBtn" class="modal-btn primary">Save</button>
       </div>
     </div>
   </div>
@@ -852,63 +875,70 @@
 
       // ========== STORAGE KEYS ==========
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v4_bn',
-        ACTIVE: 'tasbeeh_active_v4_bn',
-        HISTORY: 'tasbeeh_history_v4_bn'
+        DHIKRS: 'tasbeeh_dhikrs_v5',
+        ACTIVE: 'tasbeeh_active_v5',
+        HISTORY: 'tasbeeh_history_v5'
       };
 
       const MAX_COUNT = 999999;
       const MAX_HISTORY = 50;
 
-      // ========== DEFAULT DHIKRS (with Bengali meanings) ==========
+      // ========== DEFAULT DHIKRS (English + Bangla meanings) ==========
       const DEFAULT_DHIKRS = [
         {
           id: 'subhanallah',
-          name: 'সুবহানাল্লাহ',
+          name: 'Subhanallah',
           arabic: 'سُبْحَانَ ٱللَّٰهِ',
-          translation: 'আল্লাহ পবিত্র, মহান',
+          translation: 'Glory be to Allah',
+          translationBn: 'আল্লাহ পবিত্র, মহান',
           count: 0, target: 33
         },
         {
           id: 'alhamdulillah',
-          name: 'আলহামদুলিল্লাহ',
+          name: 'Alhamdulillah',
           arabic: 'ٱلْحَمْدُ لِلَّٰهِ',
-          translation: 'সকল প্রশংসা আল্লাহর জন্য',
+          translation: 'All praise is for Allah',
+          translationBn: 'সকল প্রশংসা আল্লাহর জন্য',
           count: 0, target: 33
         },
         {
           id: 'allahuakbar',
-          name: 'আল্লাহু আকবার',
+          name: 'Allahu Akbar',
           arabic: 'ٱللَّٰهُ أَكْبَرُ',
-          translation: 'আল্লাহ সর্বশ্রেষ্ঠ',
+          translation: 'Allah is the Greatest',
+          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',
           count: 0, target: 34
         },
         {
           id: 'lailahaillallah',
-          name: 'লা ইলাহা ইল্লাল্লাহ',
+          name: 'La ilaha illallah',
           arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',
-          translation: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',
+          translation: 'There is no god but Allah',
+          translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',
           count: 0, target: 100
         },
         {
           id: 'astaghfirullah',
-          name: 'আস্তাগফিরুল্লাহ',
+          name: 'Astaghfirullah',
           arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',
-          translation: 'আমি আল্লাহর কাছে ক্ষমা চাই',
+          translation: 'I seek forgiveness from Allah',
+          translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',
           count: 0, target: 100
         },
         {
           id: 'salawat',
-          name: 'সালাওয়াত (দরুদ)',
+          name: 'Salawat (Durood)',
           arabic: 'صَلَّى ٱللَّٰهُ عَلَيْهِ وَسَلَّمَ',
-          translation: 'নবীর উপর শান্তি বর্ষিত হোক',
+          translation: 'Peace be upon him',
+          translationBn: 'নবীর উপর শান্তি বর্ষিত হোক',
           count: 0, target: 100
         },
         {
           id: 'lahawla',
-          name: 'লা হাওলা ওয়ালা কুওয়াতা',
+          name: 'La hawla wa la quwwata',
           arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ',
-          translation: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',
+          translation: 'No power except with Allah',
+          translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',
           count: 0, target: 100
         }
       ];
@@ -932,7 +962,8 @@
       const saveSessionBtn = $('saveSessionBtn');
       const saveIndicator = $('saveIndicator');
       const historyBtn = $('historyBtn');
-      const dhikrTranslation = $('dhikrTranslation');
+      const dhikrTranslationEn = $('dhikrTranslationEn');
+      const dhikrTranslationBn = $('dhikrTranslationBn');
 
       const historyModal = $('historyModal');
       const historyList = $('historyList');
@@ -945,6 +976,7 @@
       const dhikrNameInput = $('dhikrNameInput');
       const dhikrArabicInput = $('dhikrArabicInput');
       const dhikrTranslationInput = $('dhikrTranslationInput');
+      const dhikrTranslationBnInput = $('dhikrTranslationBnInput');
       const dhikrTargetInput = $('dhikrTargetInput');
       const closeDhikrBtn = $('closeDhikrBtn');
       const cancelDhikrBtn = $('cancelDhikrBtn');
@@ -1006,6 +1038,8 @@
                 d.target = sanitizeTarget(d.target);
                 if (d.count > MAX_COUNT) d.count = MAX_COUNT;
                 if (d.count < 0) d.count = 0;
+                // Ensure Bangla translation field exists
+                if (typeof d.translationBn !== 'string') d.translationBn = '';
               });
             }
           }
@@ -1049,7 +1083,11 @@
         countDisplay.textContent = d.count;
         targetInput.value = d.target;
         dhikrSelectedText.textContent = d.name;
-        dhikrTranslation.textContent = d.translation || d.arabic || '';
+
+        // English meaning on first line
+        dhikrTranslationEn.textContent = d.translation || '';
+        // Bangla meaning on second line
+        dhikrTranslationBn.textContent = d.translationBn || '';
 
         if (d.target > 0) {
           let percent = (d.count / d.target) * 100;
@@ -1109,7 +1147,7 @@
           const del = document.createElement('button');
           del.className = 'dhikr-option-delete';
           del.textContent = '🗑';
-          del.title = 'মুছুন';
+          del.title = 'Delete this dhikr';
           del.addEventListener('click', (e) => {
             e.stopPropagation();
             deleteDhikr(d.id);
@@ -1138,7 +1176,7 @@
 
         const addBtn = document.createElement('div');
         addBtn.className = 'dhikr-add-btn';
-        addBtn.innerHTML = '<span>➕</span> নতুন দুআ যোগ করুন';
+        addBtn.innerHTML = '<span>➕</span> Add New Dhikr';
         addBtn.addEventListener('click', () => {
           openAddDhikr();
           closeDropdown();
@@ -1173,12 +1211,12 @@
 
       function deleteDhikr(id) {
         if (dhikrs.length <= 1) {
-          alert('অন্তত একটি দুআ থাকতে হবে।');
+          alert('You need at least one dhikr.');
           return;
         }
         const d = dhikrs.find(x => x.id === id);
         if (!d) return;
-        if (!confirm(`"${d.name}" এবং এর সংরক্ষিত গণনা (${d.count}) মুছে ফেলবেন?`)) return;
+        if (!confirm(`Delete "${d.name}" and its saved count (${d.count})?`)) return;
 
         dhikrs = dhikrs.filter(x => x.id !== id);
         if (activeId === id) activeId = dhikrs[0].id;
@@ -1260,7 +1298,7 @@
         if (!history.length) {
           const e = document.createElement('div');
           e.className = 'empty-history';
-          e.textContent = 'এখনো কোনো সেশন সংরক্ষিত হয়নি।';
+          e.textContent = 'No saved sessions yet.';
           historyList.appendChild(e);
           return;
         }
@@ -1291,9 +1329,9 @@
         const d = new Date(ts);
         const now = new Date();
         if (d.toDateString() === now.toDateString()) {
-          return d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+          return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
-        return d.toLocaleDateString('bn-BD', { month: 'short', day: 'numeric' });
+        return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
       }
 
       function openHistory() {
@@ -1305,7 +1343,7 @@
       }
       function clearHistory() {
         if (!history.length) return;
-        if (confirm('সব সংরক্ষিত সেশন মুছে ফেলবেন?')) {
+        if (confirm('Clear all saved sessions?')) {
           history = [];
           saveHistory();
           renderHistory();
@@ -1315,10 +1353,11 @@
       // ========== ADD / EDIT DHIKR ==========
       function openAddDhikr() {
         editingDhikrId = null;
-        dhikrModalTitle.textContent = '➕ নতুন দুআ যোগ করুন';
+        dhikrModalTitle.textContent = '➕ Add New Dhikr';
         dhikrNameInput.value = '';
         dhikrArabicInput.value = '';
         dhikrTranslationInput.value = '';
+        dhikrTranslationBnInput.value = '';
         dhikrTargetInput.value = 33;
         dhikrModal.classList.add('show');
         setTimeout(() => dhikrNameInput.focus(), 100);
@@ -1328,10 +1367,11 @@
         const d = dhikrs.find(x => x.id === id);
         if (!d) return;
         editingDhikrId = id;
-        dhikrModalTitle.textContent = '✏️ দুআ সম্পাদনা করুন';
+        dhikrModalTitle.textContent = '✏️ Edit Dhikr';
         dhikrNameInput.value = d.name;
         dhikrArabicInput.value = d.arabic || '';
         dhikrTranslationInput.value = d.translation || '';
+        dhikrTranslationBnInput.value = d.translationBn || '';
         dhikrTargetInput.value = d.target;
         dhikrModal.classList.add('show');
       }
@@ -1344,12 +1384,13 @@
       function saveDhikrFromModal() {
         const name = dhikrNameInput.value.trim();
         if (!name) {
-          alert('দুআর একটি নাম লিখুন।');
+          alert('Please enter a name for the dhikr.');
           dhikrNameInput.focus();
           return;
         }
         const arabic = dhikrArabicInput.value.trim();
         const translation = dhikrTranslationInput.value.trim();
+        const translationBn = dhikrTranslationBnInput.value.trim();
         const targetVal = sanitizeTarget(dhikrTargetInput.value);
 
         if (editingDhikrId) {
@@ -1358,6 +1399,7 @@
             d.name = name;
             d.arabic = arabic;
             d.translation = translation;
+            d.translationBn = translationBn;
             d.target = targetVal;
           }
         } else {
@@ -1366,6 +1408,7 @@
             name,
             arabic,
             translation,
+            translationBn,
             count: 0,
             target: targetVal
           };
@@ -1387,7 +1430,7 @@
       saveSessionBtn.addEventListener('click', () => {
         const d = getActive();
         if (!d || d.count <= 0) {
-          alert('সংরক্ষণ করার মতো কিছু নেই।');
+          alert('Nothing to save yet.');
           return;
         }
         addHistoryEntry(d);
@@ -1459,6 +1502,7 @@
         if (document.activeElement === dhikrNameInput ||
             document.activeElement === dhikrArabicInput ||
             document.activeElement === dhikrTranslationInput ||
+            document.activeElement === dhikrTranslationBnInput ||
             document.activeElement === dhikrTargetInput) return;
 
         if (historyModal.classList.contains('show')) {
