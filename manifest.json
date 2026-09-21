@@ -1,96 +1,40 @@
 {
-  "name": "Tasbeeh — Dhikr Counter",
-  "short_name": "Tasbeeh",
-  "description": "A beautiful digital Tasbeeh counter with Arabic dhikr, English and Bangla meanings, session history, and target tracking. Count your daily zikr with ease.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0d2b1c",
-  "theme_color": "#0d2b1c",
-  "lang": "en",
+  "background_color": "#ffffff",
+  "description": "A beautiful digital Tasbeeh counter with Arabic dhikr, English and Bangla meanings, session history, and target tracking.",
   "dir": "ltr",
-  "categories": ["lifestyle", "utilities", "education"],
+  "display": "standalone",
+  "name": "Tasbeeh",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Tasbeeh",
+  "start_url": "/",
+  "theme_color": "#0d2b1c",
   "icons": [
     {
-  "src": "icons/icon-512-maskable.png",
-  "sizes": "512x512",
-  "type": "image/png",
-  "purpose": "maskable"
-    }
-    {
-      "src": "icons/icon-48.png",
-      "sizes": "48x48",
+      "src": "https://atish245-cyber.github.io/tasbeeh/icons/icon-192.png",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "isSquare": true,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 192,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": true
     },
     {
-      "src": "icons/icon-256.png",
-      "sizes": "256x256",
+      "src": "https://atish245-cyber.github.io/tasbeeh/icons/icon-512.png",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Start Counting",
-      "short_name": "Count",
-      "description": "Jump straight into the Tasbeeh counter",
-      "url": "./index.html?action=count",
-      "icons": [
-        {
-          "src": "icons/icon-96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "View History",
-      "short_name": "History",
-      "description": "See your saved sessions",
-      "url": "./index.html?action=history",
-      "icons": [
-        {
-          "src": "icons/icon-96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "isSquare": true,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 512,
+      "is512x512": true,
+      "is256x256": false,
+      "is192x192": false
     }
   ]
 }
