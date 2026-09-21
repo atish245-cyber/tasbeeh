@@ -75,7 +75,6 @@
       gap: 6px;
     }
 
-    /* Simple SAVED badge — clean, flashes on every save */
     .save-indicator {
       font-size: 0.7rem;
       font-weight: 600;
@@ -944,9 +943,9 @@
 
       // ========== STORAGE KEYS ==========
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v6',
-        ACTIVE: 'tasbeeh_active_v6',
-        HISTORY: 'tasbeeh_history_v6'
+        DHIKRS: 'tasbeeh_dhikrs_v7',
+        ACTIVE: 'tasbeeh_active_v7',
+        HISTORY: 'tasbeeh_history_v7'
       };
 
       const MAX_COUNT = 999999;
@@ -954,13 +953,62 @@
 
       // ========== DEFAULT DHIKRS ==========
       const DEFAULT_DHIKRS = [
-        { id: 'subhanallah',     name: 'Subhanallah',           arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',              translationBn: 'আল্লাহ পবিত্র, মহান',              count: 0, target: 33  },
-        { id: 'alhamdulillah',   name: 'Alhamdulillah',         arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',        translationBn: 'সকল প্রশংসা আল্লাহর জন্য',          count: 0, target: 33  },
-        { id: 'allahuakbar',     name: 'Allahu Akbar',          arabic: 'ٱللَّٰهُ أَكْبَرُ',                       translation: 'Allah is the Greatest',          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',                count: 0, target: 34  },
-        { id: 'lailahaillallah', name: 'La ilaha illallah',     arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',      translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',        count: 0, target: 100 },
-        { id: 'astaghfirullah',  name: 'Astaghfirullah',        arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',  translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',         count: 0, target: 100 },
-        { id: 'salawat',         name: 'Salawat (Durood)',      arabic: 'صَلَّى ٱللَّٰهُ عَلَيْهِ وَسَلَّمَ',       translation: 'Peace be upon him',              translationBn: 'নবীর উপর শান্তি বর্ষিত হোক',         count: 0, target: 100 },
-        { id: 'lahawla',         name: 'La hawla wa la quwwata', arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',   translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই', count: 0, target: 100 }
+        {
+          id: 'subhanallah',
+          name: 'Subhanallah',
+          arabic: 'سُبْحَانَ ٱللَّٰهِ',
+          translation: 'Glory be to Allah',
+          translationBn: 'আল্লাহ পবিত্র, মহান',
+          count: 0, target: 33
+        },
+        {
+          id: 'alhamdulillah',
+          name: 'Alhamdulillah',
+          arabic: 'ٱلْحَمْدُ لِلَّٰهِ',
+          translation: 'All praise is for Allah',
+          translationBn: 'সকল প্রশংসা আল্লাহর জন্য',
+          count: 0, target: 33
+        },
+        {
+          id: 'allahuakbar',
+          name: 'Allahu Akbar',
+          arabic: 'ٱللَّٰهُ أَكْبَرُ',
+          translation: 'Allah is the Greatest',
+          translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',
+          count: 0, target: 34
+        },
+        {
+          id: 'lailahaillallah',
+          name: 'La ilaha illallah',
+          arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',
+          translation: 'There is no god but Allah',
+          translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',
+          count: 0, target: 100
+        },
+        {
+          id: 'astaghfirullah',
+          name: 'Astaghfirullah',
+          arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',
+          translation: 'I seek forgiveness from Allah',
+          translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',
+          count: 0, target: 100
+        },
+        {
+          id: 'salawat',
+          name: 'Allahumma Salli Ala Muhammad',
+          arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',
+          translation: 'O Allah, send blessings upon Muhammad',
+          translationBn: 'হে আল্লাহ, মুহাম্মদের উপর blessings বর্ষণ করুন',
+          count: 0, target: 100
+        },
+        {
+          id: 'lahawla',
+          name: 'La hawla wa la quwwata',
+          arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ',
+          translation: 'No power except with Allah',
+          translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',
+          count: 0, target: 100
+        }
       ];
 
       // ========== STATE ==========
@@ -1058,7 +1106,6 @@
         }
       }
 
-      // Show indicator immediately, debounce the actual write
       let saveDebounceTimer = null;
       function saveDebounced() {
         showSaveIndicator();
@@ -1093,15 +1140,24 @@
           }
 
           if (!dhikrs.length) {
-            const oldV5 = localStorage.getItem('tasbeeh_dhikrs_v5');
-            if (oldV5) {
+            const oldV6 = localStorage.getItem('tasbeeh_dhikrs_v6');
+            if (oldV6) {
               try {
-                const parsed = JSON.parse(oldV5);
+                const parsed = JSON.parse(oldV6);
                 if (Array.isArray(parsed) && parsed.length > 0) {
                   dhikrs = parsed.filter(d => d && d.id && typeof d.count === 'number');
                   dhikrs.forEach(d => {
                     d.target = sanitizeTarget(d.target);
                     if (typeof d.translationBn !== 'string') d.translationBn = '';
+                  });
+                  // Update old Salawat entry to new one
+                  dhikrs.forEach(d => {
+                    if (d.id === 'salawat') {
+                      d.name = 'Allahumma Salli Ala Muhammad';
+                      d.arabic = 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ';
+                      d.translation = 'O Allah, send blessings upon Muhammad';
+                      d.translationBn = 'হে আল্লাহ, মুহাম্মদের উপর blessings বর্ষণ করুন';
+                    }
                   });
                 }
               } catch (e) {}
