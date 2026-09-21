@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d2b1c">
@@ -17,7 +15,7 @@
   <!-- ===== Manifest ===== -->
   <link rel="manifest" href="manifest.json">
 
-  <!-- ===== Apple Touch Icon ===== -->
+  <!-- ===== Icons ===== -->
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
@@ -29,34 +27,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- ===== Service Worker Registration ===== -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
-        .then((reg) => {
-          console.log('✓ Service Worker registered:', reg.scope);
-        })
-        .catch((err) => {
-          console.warn('✗ Service Worker registration failed:', err);
-        });
-    });
-  }
-</script>
-
-  <!-- ... your existing <style> block stays here ... -->
-
-    
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0d2b1c">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Tasbeeh">
-  <title>Tasbeeh — Dhikr Counter</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -679,13 +649,11 @@
       pointer-events: none;
     }
 
-    /* Different colors/sizes for variety */
     .floating-heart.h-pink { color: #ff8fc7; }
     .floating-heart.h-red { color: #ff5a7a; }
     .floating-heart.h-peach { color: #ffb3c1; }
     .floating-heart.h-lav { color: #e0b0ff; }
 
-    /* Individual heart animations — floating and blowing around */
     @keyframes floatHeart1 {
       0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
       10%  { opacity: 1; }
@@ -1452,27 +1420,23 @@
 
         heart.className = 'floating-heart ' + variants[Math.floor(Math.random() * variants.length)];
 
-        // Use mix of heart and sparkle emojis
         const emojis = ['❤️', '💖', '💗', '💓', '💕', '🌸', '✨', '💝'];
         heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-        // Random start position along the bottom of the screen
-        const startX = Math.random() * 100; // vw
-        const startY = 90 + Math.random() * 10; // bottom area
+        const startX = Math.random() * 100;
+        const startY = 90 + Math.random() * 10;
 
         heart.style.left = startX + 'vw';
         heart.style.top = startY + 'vh';
         heart.style.fontSize = (1.4 + Math.random() * 1.6) + 'rem';
 
         const animName = anims[Math.floor(Math.random() * anims.length)];
-        const duration = 3.5 + Math.random() * 2.5; // 3.5–6 seconds
+        const duration = 3.5 + Math.random() * 2.5;
 
         heart.style.animation = `${animName} ${duration}s ease-out forwards`;
 
-        // Optional horizontal drift via CSS variable (used by animation)
         heartLayer.appendChild(heart);
 
-        // Auto-remove after animation completes
         const timeout = setTimeout(() => {
           if (heart.parentNode) heart.parentNode.removeChild(heart);
         }, duration * 1000 + 200);
@@ -1481,11 +1445,9 @@
 
       function startHeartRain() {
         stopHeartRain();
-        // Burst of hearts initially
         for (let i = 0; i < 14; i++) {
           setTimeout(spawnFloatingHeart, i * 90);
         }
-        // Continue spawning for a few seconds
         let count = 0;
         heartInterval = setInterval(() => {
           if (count >= 20) {
@@ -1506,26 +1468,20 @@
         heartTimeouts = [];
       }
 
-      let congratsTimer = null;
       let congratsHideTimer = null;
 
       function showCongratulations(dhikr) {
-        // Set content
         congratsCount.textContent = dhikr.target;
         congratsDhikr.textContent = dhikr.name;
 
-        // Show overlay
         congratsOverlay.classList.add('show');
 
-        // Start floating hearts
         startHeartRain();
 
-        // Vibration pattern for celebration
         if (navigator.vibrate) {
           navigator.vibrate([40, 60, 40, 60, 80]);
         }
 
-        // Hide after 3.5 seconds
         if (congratsHideTimer) clearTimeout(congratsHideTimer);
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
@@ -1540,7 +1496,6 @@
 
         countDisplay.textContent = d.count;
 
-        // Auto-shrink font based on digit count (container stays same)
         const len = String(d.count).length;
         if (len >= 3) {
           countDisplay.setAttribute('data-len', String(Math.min(len, 6)));
@@ -1562,7 +1517,6 @@
           progressFill.style.width = '0%';
         }
 
-        // Target reached state — visual highlight
         const reached = d.count >= d.target && d.target > 0;
         if (reached) {
           countWrap.classList.add('target-reached');
@@ -1676,7 +1630,6 @@
       function switchDhikr(id) {
         if (id === activeId) return;
         activeId = id;
-        // Reset the "congrats shown" state so celebration fires once per new dhikr
         congratsShownFor = null;
         updateUI();
         saveAll();
@@ -1713,7 +1666,6 @@
         saveDebounced();
         if (navigator.vibrate) navigator.vibrate(10);
 
-        // Trigger celebration once when crossing the target threshold
         if (wasBelowTarget && nowAtTarget && d.target > 0) {
           if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
             congratsShownFor = { dhikrId: d.id, target: d.target };
@@ -1727,7 +1679,6 @@
         if (!d) return;
         if (d.count > 0) {
           d.count--;
-          // If dropped below target, allow celebration to fire again if they hit it again
           if (d.count < d.target) {
             congratsShownFor = null;
           }
@@ -1769,7 +1720,6 @@
         if (!d) return;
         d.target = sanitizeTarget(targetInput.value);
         targetInput.value = d.target;
-        // Reset celebration flag if target changed
         if (congratsShownFor && congratsShownFor.target !== d.target) {
           congratsShownFor = null;
         }
@@ -2096,6 +2046,17 @@
       renderDropdown();
 
     })();
+  </script>
+
+  <!-- ========== SERVICE WORKER REGISTRATION ========== -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then((reg) => console.log('✓ Service Worker registered:', reg.scope))
+          .catch((err) => console.warn('✗ Service Worker registration failed:', err));
+      });
+    }
   </script>
 </body>
 </html>
