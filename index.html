@@ -5,24 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d2b1c">
 
-  <!-- ===== PWA Meta Tags ===== -->
-  <meta name="description" content="A beautiful digital Tasbeeh counter with Arabic dhikr, English and Bangla meanings, session history, and target tracking.">
+  <meta name="description" content="A beautiful digital Tasbeeh counter with Arabic dhikr, daily duas, English and Bangla meanings, session history, and target tracking.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tasbeeh">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <!-- ===== Manifest ===== -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- ===== Icons ===== -->
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <title>Tasbeeh — Dhikr Counter</title>
 
-  <!-- ===== Fonts ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -47,55 +42,119 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(145deg, #0b2a1e 0%, #1a4a2e 100%);
+      background: #06231a;
       font-family: 'Segoe UI', Roboto, 'Noto Sans Bengali', 'Kalpurush', system-ui, -apple-system, sans-serif;
       padding: 12px;
       padding-top: max(12px, env(safe-area-inset-top));
       padding-bottom: max(12px, env(safe-area-inset-bottom));
       margin: 0;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(159, 223, 159, 0.18), transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(46, 122, 72, 0.28), transparent 60%),
+        linear-gradient(180deg, #0b2a1e 0%, #06231a 100%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.14;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><defs><pattern id='p' x='0' y='0' width='120' height='120' patternUnits='userSpaceOnUse'><g fill='none' stroke='%23bbf0bb' stroke-width='1.1'><path d='M60 10 L75 30 L100 30 L85 50 L95 75 L60 58 L25 75 L35 50 L20 30 L45 30 Z'/><path d='M60 25 L70 38 L88 38 L78 50 L85 68 L60 56 L35 68 L42 50 L32 38 L50 38 Z'/><circle cx='60' cy='48' r='5' fill='%23bbf0bb' opacity='0.6'/><circle cx='60' cy='48' r='10' fill='none' stroke='%23bbf0bb' opacity='0.4'/><path d='M0 0 L15 0 M0 15 L0 0 M120 0 L105 0 M120 15 L120 0 M0 120 L15 120 M0 105 L0 120 M120 120 L105 120 M120 105 L120 120'/></g></pattern></defs><rect width='240' height='240' fill='url(%23p)'/></svg>");
+      background-size: 240px 240px;
+      background-repeat: repeat;
+      pointer-events: none;
     }
 
     .tasbeeh-container {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(13, 43, 28, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: 48px;
       padding: 20px 16px 24px;
-      box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 55px -20px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
       width: 100%;
       max-width: 480px;
       max-height: 100dvh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      z-index: 1;
     }
 
     .counter-card {
-      background: #0d2b1c;
+      background: rgba(13, 43, 28, 0.95);
       border-radius: 40px;
       padding: 20px 16px 22px;
-      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.35);
       border: 1px solid #3b6e4b;
       position: relative;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      overflow: hidden;
     }
 
-    /* ---------- TOP BAR ---------- */
+    .counter-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.15;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='xMidYMid slice'><g fill='none' stroke='%239fdf9f' stroke-width='1.2'><path d='M200 80 Q 130 120 130 200 L 130 320 L 270 320 L 270 200 Q 270 120 200 80 Z'/><path d='M200 100 Q 145 135 145 205 L 145 315 L 255 315 L 255 205 Q 255 135 200 100 Z'/><path d='M200 60 L 200 80 M 200 55 L 210 70 L 200 65 L 190 70 Z' fill='%239fdf9f' opacity='0.7'/><circle cx='200' cy='55' r='4' fill='%239fdf9f' opacity='0.9'/><path d='M40 320 L 40 200 Q 40 170 60 160 M 40 320 L 90 320'/><path d='M360 320 L 360 200 Q 360 170 340 160 M 360 320 L 310 320'/><path d='M120 320 L 120 250 M 280 320 L 280 250'/><line x1='40' y1='340' x2='360' y2='340'/><line x1='30' y1='360' x2='370' y2='360'/><path d='M200 160 L 190 175 L 200 190 L 210 175 Z' fill='%239fdf9f' opacity='0.5'/></g></svg>");
+      background-size: cover;
+      background-position: center 20%;
+      background-repeat: no-repeat;
+    }
+
+    .counter-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba(212, 255, 176, 0.12), transparent 70%),
+        radial-gradient(ellipse 90% 50% at 50% 100%, rgba(46, 122, 72, 0.18), transparent 70%);
+    }
+
+    .counter-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
     .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
       min-height: 26px;
-      gap: 6px;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-left {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .save-indicator {
       font-size: 0.7rem;
       font-weight: 600;
       color: #9fdf9f;
-      background: rgba(31, 79, 48, 0.9);
+      background: rgba(31, 79, 48, 0.95);
       padding: 3px 10px;
       border-radius: 20px;
       border: 1px solid #589b6b;
@@ -111,15 +170,14 @@
     .save-indicator.show { opacity: 1; }
 
     .save-indicator .dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       background: #d4ffb0;
       border-radius: 50%;
       box-shadow: 0 0 6px #d4ffb0;
     }
 
     .top-btn {
-      background: rgba(31, 79, 48, 0.6);
+      background: rgba(31, 79, 48, 0.85);
       border: 1px solid #589b6b;
       color: #c6e6b8;
       padding: 4px 10px;
@@ -132,23 +190,47 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
+      backdrop-filter: blur(4px);
     }
 
-    .top-btn:active { transform: scale(0.95); background: rgba(59, 139, 75, 0.8); }
+    .top-btn:active { transform: scale(0.95); background: rgba(59, 139, 75, 0.95); }
 
-    /* ---------- DHIKR SELECTOR ---------- */
+    .sound-btn {
+      background: rgba(31, 79, 48, 0.85);
+      border: 1px solid #589b6b;
+      color: #c6e6b8;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .sound-btn:active { transform: scale(0.95); }
+    .sound-btn.muted {
+      background: rgba(94, 58, 30, 0.85);
+      border-color: #bb8f5a;
+      color: #ffd9a0;
+    }
+
     .dhikr-selector {
       position: relative;
       margin-bottom: 8px;
+      z-index: 30;
     }
 
     .dhikr-select-display {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #12331f;
+      background: rgba(18, 51, 31, 0.92);
       border: 1px solid #3f6b4b;
       border-radius: 24px;
       padding: 10px 16px;
@@ -156,10 +238,11 @@
       transition: all 0.15s;
       gap: 8px;
       min-height: 62px;
+      backdrop-filter: blur(6px);
     }
 
     .dhikr-select-display:active {
-      background: #1a4429;
+      background: rgba(26, 68, 41, 0.95);
       transform: scale(0.99);
     }
 
@@ -211,7 +294,6 @@
       transform: rotate(180deg);
     }
 
-    /* ---------- DHIKR DROPDOWN ---------- */
     .dhikr-dropdown {
       position: absolute;
       top: calc(100% + 6px);
@@ -221,7 +303,7 @@
       border: 1px solid #3f6b4b;
       border-radius: 20px;
       box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9);
-      z-index: 20;
+      z-index: 40;
       max-height: 320px;
       overflow-y: auto;
       padding: 6px;
@@ -246,7 +328,6 @@
       cursor: pointer;
       transition: background 0.15s;
       gap: 8px;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .dhikr-option:hover { background: #1a4429; }
@@ -257,10 +338,7 @@
       box-shadow: inset 0 0 0 1px #8fd49c;
     }
 
-    .dhikr-option-info {
-      flex: 1;
-      min-width: 0;
-    }
+    .dhikr-option-info { flex: 1; min-width: 0; }
 
     .dhikr-option-name {
       font-size: 0.88rem;
@@ -314,7 +392,6 @@
       opacity: 0.6;
       transition: opacity 0.15s, background 0.15s;
       flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .dhikr-option-delete:hover { opacity: 1; background: rgba(94, 58, 30, 0.5); }
@@ -339,13 +416,11 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
-    /* ---------- COUNT CONTAINER ---------- */
     .count-wrap {
       width: 100%;
       height: 180px;
@@ -357,9 +432,7 @@
       overflow: hidden;
       cursor: pointer;
       border-radius: 20px;
-      transition: background 0.15s ease, transform 0.1s ease,
-                  box-shadow 0.4s ease;
-      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.4s ease;
       background: rgba(255, 255, 255, 0.02);
       position: relative;
     }
@@ -387,7 +460,6 @@
       }
     }
 
-    /* ---------- COUNT DISPLAY ---------- */
     .count-display {
       font-size: clamp(6rem, 26vw, 11rem);
       font-weight: 900;
@@ -397,9 +469,7 @@
       letter-spacing: 1px;
       line-height: 1;
       word-break: keep-all;
-      transition: font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                  transform 0.1s ease,
-                  color 0.4s ease;
+      transition: font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s ease, color 0.4s ease;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
       display: inline-block;
@@ -422,18 +492,18 @@
     .count-display[data-len="5"] { font-size: clamp(2.8rem, 12vw, 5.6rem); }
     .count-display[data-len="6"] { font-size: clamp(2.3rem, 10vw, 4.6rem); }
 
-    /* ---------- TARGET ROW ---------- */
     .target-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #0f2e1d;
+      background: rgba(15, 46, 29, 0.95);
       padding: 8px 12px;
       border-radius: 60px;
       margin: 8px 0 16px;
       box-shadow: inset 0 2px 6px #00000055, 0 2px 4px #00000033;
       border: 1px solid #2d5a3b;
       gap: 6px;
+      backdrop-filter: blur(6px);
     }
 
     .target-label {
@@ -470,7 +540,6 @@
       transition: all 0.15s;
       -webkit-appearance: none;
       -moz-appearance: textfield;
-      letter-spacing: 0.5px;
     }
 
     .target-input:focus {
@@ -486,7 +555,6 @@
     }
     .target-input[type=number] { -moz-appearance: textfield; }
 
-    /* ---------- PROGRESS ---------- */
     .progress-ring {
       display: flex;
       justify-content: center;
@@ -511,7 +579,6 @@
       box-shadow: 0 0 8px #bbf0bb;
     }
 
-    /* ---------- BUTTONS ---------- */
     .button-grid {
       display: flex;
       flex-wrap: wrap;
@@ -539,7 +606,6 @@
       gap: 6px;
       border: 1px solid #589b6b;
       text-shadow: 0 2px 0 #0b1f11;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .btn:active {
@@ -566,7 +632,6 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    /* ---------- FOOTER ---------- */
     .footer-row {
       display: flex;
       justify-content: center;
@@ -578,7 +643,7 @@
     .dhikr-translation {
       font-weight: 500;
       color: #c6e6b8;
-      background: #12331f;
+      background: rgba(18, 51, 31, 0.95);
       padding: 8px 16px;
       border-radius: 20px;
       font-size: 0.82rem;
@@ -590,6 +655,7 @@
       flex-direction: column;
       gap: 3px;
       overflow: hidden;
+      backdrop-filter: blur(6px);
     }
 
     .dhikr-translation .en {
@@ -611,7 +677,6 @@
       text-overflow: ellipsis;
     }
 
-    /* ---------- CONGRATULATIONS OVERLAY ---------- */
     .congrats-overlay {
       position: fixed;
       inset: 0;
@@ -626,11 +691,8 @@
       overflow: hidden;
     }
 
-    .congrats-overlay.show {
-      opacity: 1;
-    }
+    .congrats-overlay.show { opacity: 1; }
 
-    /* === Floating hearts layer === */
     .heart-layer {
       position: fixed;
       inset: 0;
@@ -693,18 +755,14 @@
       text-align: center;
       max-width: 360px;
       width: 100%;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7),
-                  0 0 60px rgba(255, 143, 199, 0.6),
-                  inset 0 0 40px rgba(255, 143, 199, 0.15);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 143, 199, 0.6), inset 0 0 40px rgba(255, 143, 199, 0.15);
       transform: scale(0.7);
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       z-index: 2;
     }
 
-    .congrats-overlay.show .congrats-card {
-      transform: scale(1);
-    }
+    .congrats-overlay.show .congrats-card { transform: scale(1); }
 
     .congrats-emoji {
       font-size: 4.5rem;
@@ -723,8 +781,7 @@
       font-size: 2.4rem;
       font-weight: 900;
       color: #ffffff;
-      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5),
-                   0 0 30px rgba(255, 180, 210, 0.9);
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 180, 210, 0.9);
       margin-bottom: 8px;
       letter-spacing: 0.5px;
     }
@@ -747,18 +804,14 @@
       margin-top: 4px;
     }
 
-    .congrats-detail strong {
-      color: #ffb3c1;
-      font-weight: 800;
-    }
+    .congrats-detail strong { color: #ffb3c1; font-weight: 800; }
 
-    /* ---------- MODALS ---------- */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -784,6 +837,8 @@
       box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
       transform: translateY(20px);
       transition: transform 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .modal-overlay.show .modal { transform: translateY(0); }
@@ -793,6 +848,9 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 16px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
     }
 
     .modal-title {
@@ -814,19 +872,485 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
     }
 
     .modal-close:active { background: #2b6e40; }
 
-    .modal-body {
+    .duas-modal {
+      height: 85vh;
+      max-height: 85vh;
+      padding: 0;
+      overflow: hidden;
+      background: #0a241a;
+    }
+
+    .duas-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 90% 45% at 50% 0%, rgba(212, 255, 176, 0.22), transparent 60%),
+        radial-gradient(ellipse 100% 55% at 50% 100%, rgba(46, 122, 72, 0.35), transparent 65%),
+        linear-gradient(180deg, #0d3021 0%, #06231a 55%, #041a12 100%);
+      pointer-events: none;
+    }
+
+    .duas-bg-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.20;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><defs><pattern id='tile' x='0' y='0' width='100' height='100' patternUnits='userSpaceOnUse'><g fill='none' stroke='%23d4ffb0' stroke-width='1'><path d='M50 5 L65 25 L90 25 L75 45 L85 70 L50 54 L15 70 L25 45 L10 25 L35 25 Z'/><path d='M50 20 L60 35 L78 35 L67 48 L74 65 L50 53 L26 65 L33 48 L22 35 L40 35 Z'/><circle cx='50' cy='42' r='4' fill='%23d4ffb0' opacity='0.55'/><path d='M0 50 L8 50 M100 50 L92 50 M50 0 L50 8 M50 100 L50 92'/><circle cx='0' cy='0' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='100' cy='0' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='0' cy='100' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='100' cy='100' r='3' fill='%23d4ffb0' opacity='0.5'/></g></pattern></defs><rect width='200' height='200' fill='url(%23tile)'/></svg>");
+      background-size: 140px 140px;
+      background-repeat: repeat;
+      pointer-events: none;
+    }
+
+    .duas-bg-mosque {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42%;
+      z-index: 2;
+      opacity: 0.28;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' preserveAspectRatio='xMidYMax meet'><g fill='%239fdf9f'><path d='M400 60 Q 320 120 320 220 L 320 400 L 480 400 L 480 220 Q 480 120 400 60 Z'/><path d='M400 90 Q 340 140 340 225 L 340 400 L 460 400 L 460 225 Q 460 140 400 90 Z' fill='%230d3021'/><circle cx='400' cy='55' r='6'/><path d='M400 40 L 400 55 M 394 48 L 400 42 L 406 48' fill='%239fdf9f' stroke='%239fdf9f' stroke-width='2'/><path d='M180 200 L 180 400 L 240 400 L 240 200 Q 240 160 210 140 Q 180 160 180 200 Z'/><path d='M560 200 L 560 400 L 620 400 L 620 200 Q 620 160 590 140 Q 560 160 560 200 Z'/><path d='M100 260 L 100 400 L 160 400 L 160 260 Q 160 240 130 230 Q 100 240 100 260 Z'/><path d='M640 260 L 640 400 L 700 400 L 700 260 Q 700 240 670 230 Q 640 240 640 260 Z'/><rect x='0' y='380' width='800' height='20'/></g></svg>");
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      filter: drop-shadow(0 -10px 30px rgba(159, 223, 159, 0.35));
+    }
+
+    .duas-bg-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(212, 255, 176, 0.10), transparent 55%);
+    }
+
+    .duas-content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 22px 20px;
+      overflow: hidden;
+    }
+
+    .duas-view {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+      gap: 8px;
+    }
+
+    .duas-view[hidden] { display: none; }
+
+    .duas-view-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2d5a3b;
+    }
+
+    .duas-search {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      color: #e9f7d6;
+      background: rgba(13, 43, 28, 0.92);
+      border: 1px solid #3f6b4b;
+      border-radius: 14px;
+      outline: none;
+      font-family: inherit;
+      flex-shrink: 0;
+      backdrop-filter: blur(6px);
+    }
+
+    .duas-search:focus {
+      border-color: #8fd49c;
+      box-shadow: 0 0 0 3px rgba(143, 212, 156, 0.2);
+    }
+
+    .duas-search::placeholder { color: #7fa588; }
+
+    .duas-list {
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 8px;
       padding-right: 4px;
       min-height: 0;
+      flex: 1 1 auto;
+    }
+
+    .dua-category-card {
+      background: rgba(13, 43, 28, 0.92);
+      border: 1px solid #2d5a3b;
+      border-radius: 18px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .dua-category-card:hover {
+      background: rgba(26, 68, 41, 0.95);
+      border-color: #589b6b;
+      transform: translateY(-2px);
+    }
+
+    .dua-category-card:active {
+      transform: scale(0.98);
+      background: rgba(34, 99, 58, 0.95);
+    }
+
+    .dua-category-card-info { flex: 1; min-width: 0; }
+
+    .dua-category-card-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #e9f7d6;
+      margin-bottom: 3px;
+    }
+
+    .dua-category-card-count {
+      font-size: 0.72rem;
+      color: #7fa588;
+    }
+
+    .dua-category-card-badge {
+      background: rgba(46, 122, 72, 0.9);
+      color: #d4ffb0;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #589b6b;
+      flex-shrink: 0;
+    }
+
+    .dua-item {
+      background: rgba(13, 43, 28, 0.92);
+      border: 1px solid #2d5a3b;
+      border-radius: 16px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .dua-item:hover {
+      background: rgba(26, 68, 41, 0.95);
+      border-color: #589b6b;
+    }
+
+    .dua-item:active {
+      transform: scale(0.99);
+      background: rgba(34, 99, 58, 0.95);
+    }
+
+    .dua-item-info { flex: 1; min-width: 0; }
+
+    .dua-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #e9f7d6;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .dua-item-subtitle {
+      font-size: 0.7rem;
+      color: #7fa588;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dua-item-arrow {
+      color: #9fdf9f;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .empty-duas {
+      text-align: center;
+      color: #7fa588;
+      padding: 30px 10px;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    .dua-back-btn {
+      background: rgba(13, 43, 28, 0.9);
+      border: 1px solid #589b6b;
+      color: #c6e6b8;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(4px);
+      flex-shrink: 0;
+    }
+
+    .dua-back-btn:active { background: #2b6e40; }
+
+    .dua-detail-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #dcf5c0;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dua-detail-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 4px;
+    }
+
+    .dua-progress {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9fdf9f;
+      font-weight: 600;
+      padding: 2px 0;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .dua-progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .dua-progress-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2d5a3b;
+      transition: all 0.2s;
+    }
+
+    .dua-progress-dot.active {
+      background: #9fdf9f;
+      box-shadow: 0 0 6px #9fdf9f;
+      transform: scale(1.2);
+    }
+
+    .dua-progress-dot.visited { background: #589b6b; }
+
+    .dua-detail-arabic {
+      font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
+      font-size: 1.35rem;
+      color: #e9f7d6;
+      text-align: right;
+      direction: rtl;
+      line-height: 1.9;
+      padding: 14px 16px;
+      background: rgba(13, 43, 28, 0.95);
+      border: 1px solid #2d5a3b;
+      border-radius: 14px;
+      white-space: pre-line;
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .dua-detail-meaning-en {
+      font-size: 0.85rem;
+      color: #c6e6b8;
+      line-height: 1.5;
+      padding: 8px 12px;
+      background: rgba(13, 43, 28, 0.92);
+      border-radius: 10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .dua-detail-meaning-bn {
+      font-size: 0.9rem;
+      color: #9fdf9f;
+      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
+      line-height: 1.6;
+      padding: 8px 12px;
+      background: rgba(13, 43, 28, 0.92);
+      border-radius: 10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .dua-detail-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .dua-detail-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #9fdf9f;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .dua-listen-small {
+      background: rgba(31, 79, 48, 0.9);
+      border: 1px solid #589b6b;
+      color: #9fdf9f;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .dua-listen-small:hover { background: rgba(46, 122, 72, 0.95); }
+    .dua-listen-small:active { transform: scale(0.95); }
+    .dua-listen-small.playing {
+      background: #2e7a48;
+      border-color: #bbf0bb;
+      color: #f4ffd4;
+      box-shadow: 0 0 8px rgba(143, 212, 156, 0.5);
+    }
+
+    .dua-detail-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dua-listen-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .dua-listen-btn {
+      flex: 1 1 0;
+      min-width: 140px;
+      background: rgba(31, 79, 48, 0.9);
+      border: 1px solid #589b6b;
+      color: #e9f7d6;
+      padding: 12px 12px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      font-family: inherit;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .dua-listen-btn:hover { background: rgba(46, 122, 72, 0.95); }
+    .dua-listen-btn:active { transform: scale(0.97); }
+
+    .dua-listen-btn.playing {
+      background: #2e7a48;
+      border-color: #bbf0bb;
+      box-shadow: 0 0 12px rgba(143, 212, 156, 0.6);
+      color: #f4ffd4;
+    }
+
+    .dua-nav {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      padding-top: 8px;
+      border-top: 1px solid #2d5a3b;
+    }
+
+    .dua-nav-btn {
+      flex: 1;
+      background: rgba(31, 79, 48, 0.9);
+      border: 1px solid #589b6b;
+      color: #e9f7d6;
+      padding: 12px 8px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      backdrop-filter: blur(6px);
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .dua-nav-btn:hover { background: rgba(46, 122, 72, 0.95); }
+    .dua-nav-btn:active { transform: scale(0.97); }
+
+    .dua-nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      background: rgba(13, 43, 28, 0.7);
+    }
+
+    .dua-nav-btn.primary {
+      background: #2e7a48;
+      border-color: #8fd49c;
+      box-shadow: 0 4px 0 #164a26;
+    }
+
+    .dua-nav-btn.primary:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #164a26;
+    }
+
+    .dua-nav-btn.primary:disabled {
+      box-shadow: none;
+      transform: none;
     }
 
     .history-hint {
@@ -852,65 +1376,54 @@
       gap: 10px;
       cursor: pointer;
       transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    .history-item:hover {
-      background: #1a4429;
-      border-color: #589b6b;
-    }
-
-    .history-item:active {
-      transform: scale(0.98);
-      background: #22633a;
-    }
+    .history-item:hover { background: #1a4429; border-color: #589b6b; }
+    .history-item:active { transform: scale(0.98); background: #22633a; }
 
     .history-item .h-info {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-width: 0;
-      gap: 2px;
+      display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px;
     }
 
     .history-item .h-name {
-      font-weight: 600;
-      color: #e9f7d6;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-weight: 600; color: #e9f7d6;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
     .history-item .h-time {
-      font-size: 0.65rem;
-      color: #7fa588;
-      white-space: nowrap;
+      font-size: 0.65rem; color: #7fa588; white-space: nowrap;
     }
 
     .history-item .h-count {
-      font-weight: 700;
-      color: #9fdf9f;
-      font-variant-numeric: tabular-nums;
-      font-size: 1.05rem;
-      padding: 4px 10px;
-      background: #0b1e13;
-      border-radius: 20px;
-      border: 1px solid #2d5a3b;
-      flex-shrink: 0;
+      font-weight: 700; color: #9fdf9f;
+      font-variant-numeric: tabular-nums; font-size: 1.05rem;
+      padding: 4px 10px; background: #0b1e13;
+      border-radius: 20px; border: 1px solid #2d5a3b; flex-shrink: 0;
     }
 
     .empty-history {
-      text-align: center;
-      color: #7fa588;
-      padding: 30px 10px;
-      font-style: italic;
-      font-size: 0.9rem;
+      text-align: center; color: #7fa588; padding: 30px 10px;
+      font-style: italic; font-size: 0.9rem;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+      min-height: 0;
+      position: relative;
+      z-index: 2;
     }
 
     .modal-footer {
       margin-top: 16px;
       display: flex;
       gap: 10px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
     }
 
     .modal-btn {
@@ -923,34 +1436,21 @@
       border: 1px solid #589b6b;
       background: #1f4a2d;
       color: #f0ffe0;
-      -webkit-tap-highlight-color: transparent;
       transition: all 0.1s;
       font-family: inherit;
     }
 
     .modal-btn:active { transform: scale(0.97); }
-
     .modal-btn.primary { background: #2e7a48; border-color: #8fd49c; }
-
     .modal-btn.danger {
-      background: #5e3a1e;
-      border-color: #bb8f5a;
-      color: #ffe6c7;
+      background: #5e3a1e; border-color: #bb8f5a; color: #ffe6c7;
     }
 
-    /* ---------- FORM ---------- */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
 
     .form-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #b6d7b0;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      font-size: 0.78rem; font-weight: 600; color: #b6d7b0;
+      letter-spacing: 0.5px; text-transform: uppercase;
     }
 
     .form-input, .form-textarea {
@@ -981,15 +1481,21 @@
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
     }
 
-    /* Scrollbar */
     .modal-body::-webkit-scrollbar,
-    .dhikr-dropdown::-webkit-scrollbar { width: 6px; }
-    .modal-body::-webkit-scrollbar-track,
-    .dhikr-dropdown::-webkit-scrollbar-track { background: transparent; }
-    .modal-body::-webkit-scrollbar-thumb,
-    .dhikr-dropdown::-webkit-scrollbar-thumb { background: #2d5a3b; border-radius: 3px; }
+    .dhikr-dropdown::-webkit-scrollbar,
+    .duas-list::-webkit-scrollbar,
+    .dua-detail-body::-webkit-scrollbar { width: 6px; }
 
-    /* ---------- TOAST ---------- */
+    .modal-body::-webkit-scrollbar-track,
+    .dhikr-dropdown::-webkit-scrollbar-track,
+    .duas-list::-webkit-scrollbar-track,
+    .dua-detail-body::-webkit-scrollbar-track { background: transparent; }
+
+    .modal-body::-webkit-scrollbar-thumb,
+    .dhikr-dropdown::-webkit-scrollbar-thumb,
+    .duas-list::-webkit-scrollbar-thumb,
+    .dua-detail-body::-webkit-scrollbar-thumb { background: #2d5a3b; border-radius: 3px; }
+
     .toast {
       position: fixed;
       bottom: 30px;
@@ -1019,7 +1525,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 420px) {
       .tasbeeh-container { padding: 14px 10px 18px; border-radius: 36px; }
       .counter-card { padding: 16px 12px 20px; }
@@ -1039,6 +1544,11 @@
       .congrats-subtitle { font-size: 0.95rem; }
       .congrats-detail { font-size: 0.8rem; }
       .floating-heart { font-size: 1.7rem; }
+      .top-btn { font-size: 0.65rem; padding: 3px 8px; }
+      .sound-btn { font-size: 0.65rem; padding: 3px 7px; }
+      .dua-detail-arabic { font-size: 1.15rem; line-height: 1.8; }
+      .dua-nav-btn { font-size: 0.78rem; padding: 10px 6px; }
+      .dua-listen-btn { font-size: 0.75rem; padding: 9px 8px; min-width: 110px; }
     }
 
     @media (max-width: 340px) {
@@ -1058,21 +1568,25 @@
       .button-grid { margin: 10px 0 4px; }
       .btn { padding: 14px 6px; }
       .footer-row { margin-top: 8px; }
+      .duas-modal { height: 88vh; max-height: 88vh; }
     }
   </style>
 </head>
 <body>
   <div class="tasbeeh-container">
     <div class="counter-card">
-      <!-- Top bar -->
       <div class="top-bar">
-        <button id="historyBtn" class="top-btn" title="View session history">📜 History</button>
+        <div class="top-bar-left">
+          <button id="historyBtn" class="top-btn" title="View session history">📜 History</button>
+          <button id="duasBtn" class="top-btn" title="Daily Duas">🤲 Duas</button>
+          <button id="soundToggleBtn" class="sound-btn" title="Toggle sound">🔊</button>
+        </div>
         <div id="saveIndicator" class="save-indicator">
           <span class="dot"></span> SAVED
         </div>
       </div>
 
-      <!-- Dhikr Selector -->
+      <!-- Dhikr selector: stopPropagation on all touch + click events -->
       <div class="dhikr-selector">
         <div id="dhikrSelectDisplay" class="dhikr-select-display">
           <div class="dhikr-select-center">
@@ -1081,17 +1595,13 @@
           </div>
           <span class="dhikr-select-arrow">▼</span>
         </div>
-        <div id="dhikrDropdown" class="dhikr-dropdown">
-          <!-- populated by JS -->
-        </div>
+        <div id="dhikrDropdown" class="dhikr-dropdown"></div>
       </div>
 
-      <!-- Count wrapper -->
       <div id="countWrap" class="count-wrap" title="Tap to count">
         <div id="countDisplay" class="count-display">0</div>
       </div>
 
-      <!-- Target row -->
       <div class="target-row">
         <span class="target-label">🎯 Target</span>
         <div class="target-input-wrap">
@@ -1099,14 +1609,12 @@
         </div>
       </div>
 
-      <!-- Progress bar -->
       <div class="progress-ring">
         <div class="ring-track">
           <div id="progressFill" class="ring-fill" style="width: 0%;"></div>
         </div>
       </div>
 
-      <!-- Action buttons -->
       <div class="button-grid">
         <button id="incrementBtn" class="btn btn-primary" title="Count (tap or press space)">
           <span class="btn-icon">📿</span> +1
@@ -1125,7 +1633,6 @@
         </button>
       </div>
 
-      <!-- Footer -->
       <div class="footer-row">
         <div class="dhikr-translation">
           <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
@@ -1135,16 +1642,92 @@
     </div>
   </div>
 
-  <!-- Floating hearts -->
   <div id="heartLayer" class="heart-layer"></div>
 
-  <!-- Congratulations overlay -->
   <div id="congratsOverlay" class="congrats-overlay">
     <div class="congrats-card">
       <div class="congrats-emoji">💖</div>
       <div class="congrats-title">MashaAllah!</div>
       <div class="congrats-subtitle">You did it! 🌸</div>
       <div class="congrats-detail">You completed <strong id="congratsCount">33</strong> × <span id="congratsDhikr">Subhanallah</span></div>
+    </div>
+  </div>
+
+  <!-- ========== DAILY DUAS MODAL ========== -->
+  <div id="duasModal" class="modal-overlay">
+    <div class="modal duas-modal">
+      <div class="duas-bg"></div>
+      <div class="duas-bg-pattern"></div>
+      <div class="duas-bg-mosque"></div>
+      <div class="duas-bg-overlay"></div>
+
+      <div class="duas-content">
+        <div class="modal-header">
+          <span class="modal-title">🤲 Daily Duas</span>
+          <button id="closeDuasBtn" class="modal-close" aria-label="Close">✕</button>
+        </div>
+
+        <div id="duasCategoriesView" class="duas-view">
+          <input type="text" id="duasSearchInput" class="duas-search" placeholder="🔍 Search duas..." />
+          <div id="duasCategoriesContainer" class="duas-list"></div>
+        </div>
+
+        <div id="duasInCategoryView" class="duas-view" hidden>
+          <div class="duas-view-header">
+            <button id="backToCategoriesBtn" class="dua-back-btn">← Categories</button>
+            <span id="categoryTitle" class="dua-detail-title">Category</span>
+          </div>
+          <div id="duasInCategoryContainer" class="duas-list"></div>
+        </div>
+
+        <div id="duaDetailView" class="duas-view" hidden>
+          <div class="duas-view-header">
+            <button id="duaBackBtn" class="dua-back-btn">← Back</button>
+            <span id="duaDetailTitle" class="dua-detail-title">Dua</span>
+          </div>
+
+          <div class="dua-progress" id="duaProgress">
+            <span id="duaProgressText">Dua 1 of 1</span>
+            <div class="dua-progress-dots" id="duaProgressDots"></div>
+          </div>
+
+          <div class="dua-detail-body">
+            <div class="dua-detail-section">
+              <div class="dua-detail-label-row">
+                <div class="dua-detail-label">Arabic</div>
+                <button class="dua-listen-small" data-listen="arabic" title="Listen to Arabic">🔊 Listen</button>
+              </div>
+              <div id="duaDetailArabic" class="dua-detail-arabic"></div>
+            </div>
+
+            <div class="dua-detail-section">
+              <div class="dua-detail-label-row">
+                <div class="dua-detail-label">English Meaning</div>
+                <button class="dua-listen-small" data-listen="en" title="Listen to English meaning">🔊 Listen</button>
+              </div>
+              <div id="duaDetailEn" class="dua-detail-meaning-en"></div>
+            </div>
+
+            <div class="dua-detail-section">
+              <div class="dua-detail-label-row">
+                <div class="dua-detail-label">বাংলা অর্থ</div>
+              </div>
+              <div id="duaDetailBn" class="dua-detail-meaning-bn"></div>
+            </div>
+
+            <div class="dua-listen-row">
+              <button id="listenAllBtn" class="dua-listen-btn" data-listen="all">🔊 Listen to Full Dua</button>
+              <button id="stopListenBtn" class="dua-listen-btn" data-listen="stop" style="display:none;">⏹ Stop</button>
+            </div>
+          </div>
+
+          <div class="dua-nav">
+            <button id="prevDuaBtn" class="dua-nav-btn">← Previous</button>
+            <button id="nextDuaBtn" class="dua-nav-btn primary">Next →</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -1199,7 +1782,6 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="toast">
     <span>✓</span> <span id="toastText">Saved</span>
   </div>
@@ -1208,18 +1790,16 @@
     (function(){
       'use strict';
 
-      // ========== STORAGE KEYS ==========
-      // Bumped to v11 so your existing data migrates to the new list
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v11',
-        ACTIVE: 'tasbeeh_active_v11',
-        HISTORY: 'tasbeeh_history_v11'
+        DHIKRS: 'tasbeeh_dhikrs_v13',
+        ACTIVE: 'tasbeeh_active_v13',
+        HISTORY: 'tasbeeh_history_v13',
+        SOUND: 'tasbeeh_sound_v1'
       };
 
       const MAX_COUNT = 999999;
       const MAX_HISTORY = 50;
 
-      // ========== DEFAULT DHIKRS (with Rabbi Zidni Ilma added) ==========
       const DEFAULT_DHIKRS = [
         { id: 'subhanallah',     name: 'Subhanallah',                 arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',                       translationBn: 'আল্লাহ পবিত্র, মহান',                       count: 0, target: 33  },
         { id: 'alhamdulillah',   name: 'Alhamdulillah',               arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',                 translationBn: 'সকল প্রশংসা আল্লাহর জন্য',                 count: 0, target: 33  },
@@ -1231,13 +1811,69 @@
         { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100 }
       ];
 
-      // ========== STATE ==========
+      const DAILY_DUAS = [
+        { category: '😴 Sleep & Waking', title: 'Before Sleeping', arabic: 'بِاسْمِكَ ٱللَّٰهُمَّ أَمُوتُ وَأَحْيَا', translit: 'Bismika Allahumma amootu wa ahya', en: 'In Your name, O Allah, I die and I live.', bn: 'হে আল্লাহ, আপনার নামেই আমি মরি ও বাঁচি।' },
+        { category: '😴 Sleep & Waking', title: 'Upon Waking Up', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ ٱلنُّشُورُ', translit: 'Alhamdulillahi alladhi ahyana ba\'da ma amatana wa ilayhin-nushur', en: 'All praise is for Allah who gave us life after death, and to Him is the resurrection.', bn: 'সকল প্রশংসা আল্লাহর, যিনি মৃত্যুর পর আমাদের জীবন দান করেছেন এবং তাঁর কাছেই ফিরে যেতে হবে।' },
+        {
+          category: '😴 Sleep & Waking',
+          title: 'Ayatul Kursi (Full)',
+          arabic: 'ٱللَّٰهُ لَا إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ',
+          translit: 'Allahu la ilaha illa Huwal-Hayyul-Qayyum. La ta\'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa\'u \'indahu illa bi-idhnih. Ya\'lamu ma bayna aydihim wa ma khalfahum. Wa la yuhituna bi shay\'in min \'ilmihi illa bima sha\'. Wasi\'a kursiyyuhus-samawati wal-ard. Wa la ya\'uduhu hifzuhuma. Wa Huwal-\'Aliyyul-\'Azim.',
+          en: 'Allah — there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is before them and what will be after them, and they encompass nothing of His knowledge except what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.',
+          bn: 'আল্লাহ, তিনি ছাড়া কোনো উপাস্য নেই। তিনি চিরঞ্জীব, সবকিছুর ধারক। তাঁকে তন্দ্রা ও নিদ্রা স্পর্শ করে না। আসমান ও জমিনে যা কিছু আছে সবই তাঁর। কে আছে যে তাঁর অনুমতি ছাড়া তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পিছনে যা কিছু আছে। তারা তাঁর জ্ঞানের কিছুই আয়ত্ত করতে পারে না, তবে তিনি যতটুকু চান। তাঁর কুরসি আসমান ও জমিন পরিব্যাপ্ত করে আছে, আর তা রক্ষণাবেক্ষণ তাঁর জন্য কষ্টকর নয়। তিনিই সুউচ্চ, মহান।'
+        },
+
+        { category: '🍽️ Eating & Drinking', title: 'Before Eating', arabic: 'بِسْمِ ٱللَّٰهِ وَعَلَىٰ بَرَكَةِ ٱللَّٰهِ', translit: 'Bismillahi wa \'ala barakatillah', en: 'In the name of Allah and with the blessings of Allah.', bn: 'আল্লাহর নামে এবং আল্লাহর বরকতের সাথে।' },
+        { category: '🍽️ Eating & Drinking', title: 'After Eating', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ', translit: 'Alhamdulillahi alladhi at\'amana wa saqana wa ja\'alana muslimin', en: 'All praise is for Allah who fed us, gave us drink, and made us Muslims.', bn: 'সকল প্রশংসা আল্লাহর, যিনি আমাদের খাওয়ালেন, পান করালেন এবং মুসলিম বানালেন।' },
+        { category: '🍽️ Eating & Drinking', title: 'When Forgetting Bismillah', arabic: 'بِسْمِ ٱللَّٰهِ أَوَّلَهُ وَآخِرَهُ', translit: 'Bismillahi awwalahu wa akhirahu', en: 'In the name of Allah at the beginning and at the end.', bn: 'আল্লাহর নামে শুরুতে এবং শেষে।' },
+        { category: '🍽️ Eating & Drinking', title: 'After Drinking Milk', arabic: 'ٱللَّٰهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ', translit: 'Allahumma barik lana fihi wa zidna minhu', en: 'O Allah, bless it for us and give us more of it.', bn: 'হে আল্লাহ, এতে আমাদের জন্য বরকত দিন এবং আরও বাড়িয়ে দিন।' },
+
+        { category: '🚿 Bathroom', title: 'Before Entering Toilet', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْخُبُثِ وَٱلْخَبَائِثِ', translit: 'Allahumma inni a\'udhu bika minal-khubuthi wal-khaba\'ith', en: 'O Allah, I seek refuge with You from the male and female devils.', bn: 'হে আল্লাহ, আমি পুরুষ ও নারী শয়তান থেকে আপনার আশ্রয় চাই।' },
+        { category: '🚿 Bathroom', title: 'After Leaving Toilet', arabic: 'غُفْرَانَكَ', translit: 'Ghufranak', en: 'I seek Your forgiveness.', bn: 'আমি আপনার ক্ষমা প্রার্থনা করি।' },
+
+        { category: '🕌 Wudu & Prayer', title: 'Before Wudu', arabic: 'بِسْمِ ٱللَّٰهِ', translit: 'Bismillah', en: 'In the name of Allah.', bn: 'আল্লাহর নামে।' },
+        { category: '🕌 Wudu & Prayer', title: 'After Wudu', arabic: 'أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ', translit: 'Ash-hadu an la ilaha illallah wa ash-hadu anna Muhammadan \'abduhu wa rasuluh', en: 'I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.', bn: 'আমি সাক্ষ্য দিচ্ছি যে, আল্লাহ ছাড়া কোনো উপাস্য নেই এবং মুহাম্মদ (সা.) তাঁর বান্দা ও রাসূল।' },
+        { category: '🕌 Wudu & Prayer', title: 'Entering the Mosque', arabic: 'ٱللَّٰهُمَّ ٱفْتَحْ لِى أَبْوَابَ رَحْمَتِكَ', translit: 'Allahumma iftah li abwaba rahmatik', en: 'O Allah, open the gates of Your mercy for me.', bn: 'হে আল্লাহ, আমার জন্য আপনার রহমতের দরজা খুলে দিন।' },
+        { category: '🕌 Wudu & Prayer', title: 'Leaving the Mosque', arabic: 'ٱللَّٰهُمَّ إِنِّى أَسْأَلُكَ مِنْ فَضْلِكَ', translit: 'Allahumma inni as\'aluka min fadlik', en: 'O Allah, I ask You from Your bounty.', bn: 'হে আল্লাহ, আমি আপনার অনুগ্রহ প্রার্থনা করি।' },
+
+        { category: '🏠 Home & Travel', title: 'Entering Home', arabic: 'بِسْمِ ٱللَّٰهِ وَلَجْنَا وَبِسْمِ ٱللَّٰهِ خَرَجْنَا وَعَلَىٰ رَبِّنَا تَوَكَّلْنَا', translit: 'Bismillahi walajna wa bismillahi kharajna wa \'ala Rabbina tawakkalna', en: 'In the name of Allah we enter, in the name of Allah we leave, and upon our Lord we rely.', bn: 'আল্লাহর নামে আমরা প্রবেশ করলাম, আল্লাহর নামেই বের হলাম এবং আমাদের রবের উপরই ভরসা করলাম।' },
+        { category: '🏠 Home & Travel', title: 'Leaving Home', arabic: 'بِسْمِ ٱللَّٰهِ تَوَكَّلْتُ عَلَى ٱللَّٰهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translit: 'Bismillahi tawakkaltu \'alallah, wa la hawla wa la quwwata illa billah', en: 'In the name of Allah, I place my trust in Allah. There is no might nor power except with Allah.', bn: 'আল্লাহর নামে, আল্লাহর উপরই ভরসা করলাম। আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও ক্ষমতা নেই।' },
+        { category: '🏠 Home & Travel', title: 'Travel Dua', arabic: 'سُبْحَٰنَ ٱلَّذِى سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُۥ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنقَلِبُونَ', translit: 'Subhanal-ladhi sakhkhara lana hadha wa ma kunna lahu muqrinin, wa inna ila Rabbina lamunqalibun', en: 'Glory to Him who has subjected this to us, and to our Lord we shall surely return.', bn: 'পবিত্র সেই সত্তা, যিনি এটিকে আমাদের অধীন করে দিয়েছেন, নিশ্চয়ই আমরা আমাদের রবের কাছে ফিরে যাব।' },
+
+        { category: '🛡️ Distress & Protection', title: 'When in Difficulty', arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ ٱلْعَظِيمُ ٱلْحَلِيمُ', translit: 'La ilaha illallahul-\'Azimul-Halim', en: 'There is no god but Allah, the Mighty, the Forbearing.', bn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি মহান ও সহনশীল।' },
+        { category: '🛡️ Distress & Protection', title: 'For Anxiety & Sorrow', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْهَمِّ وَٱلْحَزَنِ', translit: 'Allahumma inni a\'udhu bika minal-hammi wal-hazan', en: 'O Allah, I seek refuge with You from anxiety and sorrow.', bn: 'হে আল্লাহ, আমি দুশ্চিন্তা ও দুঃখ থেকে আপনার আশ্রয় চাই।' },
+        { category: '🛡️ Distress & Protection', title: 'Seeking Forgiveness', arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ رَبِّى مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ', translit: 'Astaghfirullaha Rabbi min kulli dhanbin wa atubu ilayh', en: 'I seek forgiveness from Allah, my Lord, for every sin, and I turn to Him in repentance.', bn: 'আমি আমার রব আল্লাহর কাছে সব গুনাহের জন্য ক্ষমা চাই এবং তাঁর কাছে তওবা করছি।' },
+
+        { category: '✨ Praise & Gratitude', title: 'When Something Good Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى بِنِعْمَتِهِ تَتِمُّ ٱلصَّالِحَاتُ', translit: 'Alhamdulillahi alladhi bi ni\'matihi tatimmus-salihat', en: 'All praise is for Allah by whose favor good things are accomplished.', bn: 'সকল প্রশংসা আল্লাহর, যাঁর নিয়ামতে সকল কল্যাণ সম্পন্ন হয়।' },
+        { category: '✨ Praise & Gratitude', title: 'When Something Bad Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ عَلَىٰ كُلِّ حَالٍ', translit: 'Alhamdulillahi \'ala kulli hal', en: 'All praise is for Allah in every situation.', bn: 'সব অবস্থায় আল্লাহর প্রশংসা।' },
+        { category: '✨ Praise & Gratitude', title: 'When Praised by Someone', arabic: 'ٱللَّٰهُمَّ لَا تُؤَاخِذْنِى بِمَا يَقُولُونَ وَٱغْفِرْ لِى مَا لَا يَعْلَمُونَ', translit: 'Allahumma la tu\'akhidhni bima yaqulun, waghfir li ma la ya\'lamun', en: 'O Allah, do not hold me accountable for what they say, and forgive me for what they do not know.', bn: 'হে আল্লাহ, তারা যা বলে তার জন্য আমাকে পাকড়াও করবেন না, এবং যা তারা জানে না তা ক্ষমা করুন।' },
+
+        { category: '🌧️ Weather & Nature', title: 'When It Rains', arabic: 'ٱللَّٰهُمَّ صَيِّبًا نَافِعًا', translit: 'Allahumma sayyiban nafi\'a', en: 'O Allah, make it a beneficial rain.', bn: 'হে আল্লাহ, এটি উপকারী বৃষ্টি করুন।' },
+        { category: '🌧️ Weather & Nature', title: 'When Hearing Thunder', arabic: 'سُبْحَٰنَ ٱلَّذِى يُسَبِّحُ ٱلرَّعْدُ بِحَمْدِهِ وَٱلْمَلَٰئِكَةُ مِنْ خِيفَتِهِ', translit: 'Subhanal-ladhi yusabbihur-ra\'du bi hamdihi wal-mala\'ikatu min khifatih', en: 'Glory to Him whom the thunder glorifies with His praise, and the angels too out of awe of Him.', bn: 'পবিত্র সেই সত্তা, যাঁর প্রশংসায় বজ্রধ্বনি ও ফেরেশতারা তাঁর ভয়ে তাসবীহ পাঠ করে।' },
+
+        { category: '📚 Knowledge', title: 'For Increase in Knowledge', arabic: 'رَبِّ زِدْنِي عِلْمًا', translit: 'Rabbi zidni \'ilma', en: 'My Lord, increase me in knowledge.', bn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন।' },
+        { category: '📚 Knowledge', title: 'Before Studying', arabic: 'ٱللَّٰهُمَّ ٱنْفَعْنِى بِمَا عَلَّمْتَنِى وَعَلِّمْنِى مَا يَنْفَعُنِى', translit: 'Allahumma infa\'ni bima \'allamtani wa \'allimni ma yanfa\'uni', en: 'O Allah, benefit me with what You have taught me, and teach me what will benefit me.', bn: 'হে আল্লাহ, আপনি আমাকে যা শিখিয়েছেন তা দিয়ে উপকৃত করুন, এবং যা উপকারী তা শিখিয়ে দিন।' },
+
+        { category: '🌟 General', title: 'Sayyidul Istighfar', arabic: 'ٱللَّٰهُمَّ أَنْتَ رَبِّى لَا إِلَٰهَ إِلَّا أَنْتَ خَلَقْتَنِى وَأَنَا عَبْدُكَ', translit: 'Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana \'abduk', en: 'O Allah, You are my Lord, there is no god but You. You created me and I am Your servant.', bn: 'হে আল্লাহ, আপনি আমার রব, আপনি ছাড়া কোনো উপাস্য নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা।' },
+        { category: '🌟 General', title: 'Best Dhikr', arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ سُبْحَانَ ٱللَّٰهِ ٱلْعَظِيمِ', translit: 'Subhanallahi wa bi hamdihi, Subhanallahil-\'Azim', en: 'Glory be to Allah and praise Him, glory be to Allah the Magnificent.', bn: 'আল্লাহর প্রশংসাসহ পবিত্রতা, মহান আল্লাহ পবিত্র।' }
+      ];
+
       let dhikrs = [];
       let activeId = null;
       let history = [];
       let congratsShownFor = null;
 
-      // ========== DOM ==========
+      let soundEnabled = true;
+      let audioCtx = null;
+
+      let currentCategory = null;
+      let currentDuaInCategory = 0;
+      let currentCategoryDuas = [];
+
+      let isSpeaking = false;
+      let currentSpeakingBtn = null;
+      let speechQueue = [];
+
       const $ = id => document.getElementById(id);
       const dhikrSelectDisplay = $('dhikrSelectDisplay');
       const dhikrSelectedText = $('dhikrSelectedText');
@@ -1253,6 +1889,8 @@
       const saveSessionBtn = $('saveSessionBtn');
       const saveIndicator = $('saveIndicator');
       const historyBtn = $('historyBtn');
+      const duasBtn = $('duasBtn');
+      const soundToggleBtn = $('soundToggleBtn');
       const dhikrTranslationEn = $('dhikrTranslationEn');
       const dhikrTranslationBn = $('dhikrTranslationBn');
 
@@ -1260,6 +1898,28 @@
       const congratsCount = $('congratsCount');
       const congratsDhikr = $('congratsDhikr');
       const heartLayer = $('heartLayer');
+
+      const duasModal = $('duasModal');
+      const closeDuasBtn = $('closeDuasBtn');
+      const duasCategoriesView = $('duasCategoriesView');
+      const duasInCategoryView = $('duasInCategoryView');
+      const duaDetailView = $('duaDetailView');
+      const duasSearchInput = $('duasSearchInput');
+      const duasCategoriesContainer = $('duasCategoriesContainer');
+      const duasInCategoryContainer = $('duasInCategoryContainer');
+      const backToCategoriesBtn = $('backToCategoriesBtn');
+      const categoryTitle = $('categoryTitle');
+      const duaBackBtn = $('duaBackBtn');
+      const duaDetailTitle = $('duaDetailTitle');
+      const duaProgressText = $('duaProgressText');
+      const duaProgressDots = $('duaProgressDots');
+      const duaDetailArabic = $('duaDetailArabic');
+      const duaDetailEn = $('duaDetailEn');
+      const duaDetailBn = $('duaDetailBn');
+      const prevDuaBtn = $('prevDuaBtn');
+      const nextDuaBtn = $('nextDuaBtn');
+      const listenAllBtn = $('listenAllBtn');
+      const stopListenBtn = $('stopListenBtn');
 
       const historyModal = $('historyModal');
       const historyList = $('historyList');
@@ -1283,15 +1943,222 @@
 
       let editingDhikrId = null;
 
-      // ========== HELPERS ==========
-      function getActive() {
-        return dhikrs.find(d => d.id === activeId) || dhikrs[0];
+      // ========== SPEECH ==========
+      const speechSupported = 'speechSynthesis' in window;
+      let cachedVoices = [];
+
+      function refreshVoices() {
+        if (!speechSupported) return;
+        try { cachedVoices = speechSynthesis.getVoices() || []; }
+        catch (e) { cachedVoices = []; }
       }
 
-      function uid() {
-        return 'dhikr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+      if (speechSupported) {
+        refreshVoices();
+        speechSynthesis.onvoiceschanged = refreshVoices;
+        setTimeout(refreshVoices, 250);
+        setTimeout(refreshVoices, 1000);
       }
 
+      function pickVoice(lang) {
+        if (!speechSupported) return null;
+        if (!cachedVoices.length) refreshVoices();
+        if (!cachedVoices.length) return null;
+
+        const lower = lang.toLowerCase();
+        const prefix = lower.split('-')[0];
+
+        let v = cachedVoices.find(x => x.lang && x.lang.toLowerCase() === lower);
+        if (v) return v;
+        v = cachedVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(prefix + '-'));
+        if (v) return v;
+        v = cachedVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(prefix));
+        if (v) return v;
+        if (prefix === 'ar') {
+          v = cachedVoices.find(x => x.name && /arab/i.test(x.name));
+          if (v) return v;
+        }
+        return null;
+      }
+
+      function hasArabicVoice() {
+        if (!speechSupported) return false;
+        if (!cachedVoices.length) refreshVoices();
+        return cachedVoices.some(x =>
+          (x.lang && x.lang.toLowerCase().startsWith('ar')) ||
+          (x.name && /arab/i.test(x.name))
+        );
+      }
+
+      function speakOne(text, lang, rate = 0.85) {
+        return new Promise((resolve) => {
+          if (!speechSupported || !text) { resolve(); return; }
+          const utter = new SpeechSynthesisUtterance(text);
+          const voice = pickVoice(lang);
+          if (voice) utter.voice = voice;
+          utter.lang = lang;
+          utter.rate = rate;
+          utter.pitch = 1;
+          utter.volume = 1;
+          let done = false;
+          const finish = () => { if (!done) { done = true; resolve(); } };
+          utter.onend = finish;
+          utter.onerror = finish;
+          const estMs = Math.max(2000, Math.min(60000, text.length * 130));
+          setTimeout(finish, estMs);
+          try { speechSynthesis.speak(utter); } catch (e) { finish(); }
+        });
+      }
+
+      function stopSpeech() {
+        if (speechSupported) {
+          try { speechSynthesis.cancel(); } catch (e) {}
+        }
+        isSpeaking = false;
+        speechQueue = [];
+        if (currentSpeakingBtn) {
+          currentSpeakingBtn.classList.remove('playing');
+          currentSpeakingBtn = null;
+        }
+        if (stopListenBtn) stopListenBtn.style.display = 'none';
+        if (listenAllBtn) listenAllBtn.style.display = '';
+        document.querySelectorAll('.dua-listen-small.playing').forEach(b => b.classList.remove('playing'));
+      }
+
+      function setPlaying(btn) {
+        if (currentSpeakingBtn && currentSpeakingBtn !== btn) currentSpeakingBtn.classList.remove('playing');
+        if (btn) {
+          btn.classList.add('playing');
+          currentSpeakingBtn = btn;
+        } else {
+          currentSpeakingBtn = null;
+        }
+      }
+
+      async function speakSection(text, lang, btn) {
+        if (isSpeaking) stopSpeech();
+        if (!speechSupported) { showToast('Speech not supported on this device'); return; }
+        if (lang === 'ar-SA' && !hasArabicVoice()) {
+          showToast('⚠ Arabic voice not installed. Please install an Arabic TTS voice in your device settings.');
+        }
+        refreshVoices();
+        setPlaying(btn);
+        isSpeaking = true;
+        await speakOne(text, lang, 0.8);
+        isSpeaking = false;
+        setPlaying(null);
+      }
+
+      async function speakAll(dua, btn) {
+        if (isSpeaking) stopSpeech();
+        if (!speechSupported) { showToast('Speech not supported on this device'); return; }
+        if (!hasArabicVoice()) {
+          showToast('⚠ Arabic voice not installed. Please install an Arabic TTS voice.');
+        }
+        refreshVoices();
+        setPlaying(btn);
+        isSpeaking = true;
+
+        if (listenAllBtn) listenAllBtn.style.display = 'none';
+        if (stopListenBtn) stopListenBtn.style.display = '';
+
+        if (dua.arabic && isSpeaking) await speakOne(dua.arabic, 'ar-SA', 0.75);
+        if (!isSpeaking) { stopSpeech(); return; }
+        if (dua.en && isSpeaking) await speakOne(dua.en, 'en-US', 0.9);
+
+        isSpeaking = false;
+        setPlaying(null);
+        if (stopListenBtn) stopListenBtn.style.display = 'none';
+        if (listenAllBtn) listenAllBtn.style.display = '';
+      }
+
+      // ========== CLICK SOUND ==========
+      function ensureAudioContext() {
+        if (!audioCtx) {
+          try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+          catch (e) { return null; }
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+      }
+
+      function playClickSound() {
+        if (!soundEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(1800, now);
+        osc1.frequency.exponentialRampToValueAtTime(900, now + 0.05);
+        gain1.gain.setValueAtTime(0.0001, now);
+        gain1.gain.exponentialRampToValueAtTime(0.18, now + 0.005);
+        gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+        osc1.connect(gain1); gain1.connect(ctx.destination);
+        osc1.start(now); osc1.stop(now + 0.07);
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(420, now);
+        osc2.frequency.exponentialRampToValueAtTime(180, now + 0.06);
+        gain2.gain.setValueAtTime(0.0001, now);
+        gain2.gain.exponentialRampToValueAtTime(0.12, now + 0.008);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+        osc2.connect(gain2); gain2.connect(ctx.destination);
+        osc2.start(now); osc2.stop(now + 0.1);
+      }
+
+      function playTargetSound() {
+        if (!soundEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + i * 0.08);
+          gain.gain.setValueAtTime(0.0001, now + i * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.15, now + i * 0.08 + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 0.4);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(now + i * 0.08); osc.stop(now + i * 0.08 + 0.5);
+        });
+      }
+
+      function loadSoundPref() {
+        try {
+          const stored = localStorage.getItem(KEYS.SOUND);
+          soundEnabled = stored !== 'off';
+        } catch (e) { soundEnabled = true; }
+        updateSoundButton();
+      }
+      function saveSoundPref() {
+        try { localStorage.setItem(KEYS.SOUND, soundEnabled ? 'on' : 'off'); } catch (e) {}
+      }
+      function updateSoundButton() {
+        if (!soundToggleBtn) return;
+        if (soundEnabled) {
+          soundToggleBtn.classList.remove('muted');
+          soundToggleBtn.innerHTML = '🔊';
+          soundToggleBtn.title = 'Sound ON (tap to mute)';
+        } else {
+          soundToggleBtn.classList.add('muted');
+          soundToggleBtn.innerHTML = '🔇';
+          soundToggleBtn.title = 'Sound OFF (tap to enable)';
+        }
+      }
+      function toggleSound() {
+        soundEnabled = !soundEnabled;
+        updateSoundButton();
+        saveSoundPref();
+        if (soundEnabled) { playClickSound(); showToast('Sound enabled 🔊'); }
+        else showToast('Sound muted 🔇');
+      }
+
+      function getActive() { return dhikrs.find(d => d.id === activeId) || dhikrs[0]; }
+      function uid() { return 'dhikr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); }
       function sanitizeTarget(raw) {
         let n = parseInt(raw, 10);
         if (isNaN(n) || n < 1) return 1;
@@ -1304,10 +2171,9 @@
         toastText.textContent = msg;
         toast.classList.add('show');
         if (toastTimer) clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
       }
 
-      // ========== SAVE INDICATOR ==========
       let saveTimeout = null;
       function showSaveIndicator() {
         saveIndicator.classList.add('show');
@@ -1315,25 +2181,16 @@
         saveTimeout = setTimeout(() => saveIndicator.classList.remove('show'), 1200);
       }
 
-      // ========== STORAGE ==========
       function saveAll() {
         try {
           localStorage.setItem(KEYS.DHIKRS, JSON.stringify(dhikrs));
           localStorage.setItem(KEYS.ACTIVE, activeId);
           showSaveIndicator();
-        } catch (e) {
-          console.warn('Save failed:', e);
-        }
+        } catch (e) {}
       }
-
       function saveHistory() {
-        try {
-          localStorage.setItem(KEYS.HISTORY, JSON.stringify(history));
-        } catch (e) {
-          console.warn('History save failed:', e);
-        }
+        try { localStorage.setItem(KEYS.HISTORY, JSON.stringify(history)); } catch (e) {}
       }
-
       let saveDebounceTimer = null;
       function saveDebounced() {
         showSaveIndicator();
@@ -1342,9 +2199,7 @@
           try {
             localStorage.setItem(KEYS.DHIKRS, JSON.stringify(dhikrs));
             localStorage.setItem(KEYS.ACTIVE, activeId);
-          } catch (e) {
-            console.warn('Save failed:', e);
-          }
+          } catch (e) {}
         }, 400);
       }
 
@@ -1366,10 +2221,8 @@
               });
             }
           }
-
           if (!dhikrs.length) {
-            // Try migrating from older storage versions
-            const olderVersions = ['tasbeeh_dhikrs_v10', 'tasbeeh_dhikrs_v9'];
+            const olderVersions = ['tasbeeh_dhikrs_v12', 'tasbeeh_dhikrs_v11'];
             for (const key of olderVersions) {
               const raw = localStorage.getItem(key);
               if (raw) {
@@ -1381,7 +2234,6 @@
                       d.target = sanitizeTarget(d.target);
                       if (typeof d.translationBn !== 'string') d.translationBn = '';
                     });
-                    // Add missing Rabbi Zidni Ilma if not present
                     if (!dhikrs.some(d => d.id === 'rabbizidni')) {
                       dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[7])));
                     }
@@ -1390,16 +2242,11 @@
                 } catch (e) {}
               }
             }
-            if (!dhikrs.length) {
-              dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
-            }
+            if (!dhikrs.length) dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
           }
 
-          if (rawActive && dhikrs.some(d => d.id === rawActive)) {
-            activeId = rawActive;
-          } else {
-            activeId = dhikrs[0].id;
-          }
+          if (rawActive && dhikrs.some(d => d.id === rawActive)) activeId = rawActive;
+          else activeId = dhikrs[0].id;
 
           if (rawHistory) {
             const parsed = JSON.parse(rawHistory);
@@ -1412,13 +2259,11 @@
             }
           }
         } catch (e) {
-          console.warn('Load failed:', e);
           dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
           activeId = dhikrs[0].id;
         }
       }
 
-      // ========== CELEBRATION ==========
       let heartInterval = null;
       let heartTimeouts = [];
 
@@ -1426,26 +2271,16 @@
         const heart = document.createElement('div');
         const variants = ['h-pink', 'h-red', 'h-peach', 'h-lav'];
         const anims = ['floatHeart1', 'floatHeart2', 'floatHeart3', 'floatHeart4', 'floatHeart5'];
-
         heart.className = 'floating-heart ' + variants[Math.floor(Math.random() * variants.length)];
-
         const emojis = ['❤️', '💖', '💗', '💓', '💕', '🌸', '✨', '💝'];
         heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
-        const startX = Math.random() * 100;
-        const startY = 90 + Math.random() * 10;
-
-        heart.style.left = startX + 'vw';
-        heart.style.top = startY + 'vh';
+        heart.style.left = (Math.random() * 100) + 'vw';
+        heart.style.top = (90 + Math.random() * 10) + 'vh';
         heart.style.fontSize = (1.4 + Math.random() * 1.6) + 'rem';
-
         const animName = anims[Math.floor(Math.random() * anims.length)];
         const duration = 3.5 + Math.random() * 2.5;
-
         heart.style.animation = `${animName} ${duration}s ease-out forwards`;
-
         heartLayer.appendChild(heart);
-
         const timeout = setTimeout(() => {
           if (heart.parentNode) heart.parentNode.removeChild(heart);
         }, duration * 1000 + 200);
@@ -1454,39 +2289,29 @@
 
       function startHeartRain() {
         stopHeartRain();
-        for (let i = 0; i < 14; i++) {
-          setTimeout(spawnFloatingHeart, i * 90);
-        }
+        for (let i = 0; i < 14; i++) setTimeout(spawnFloatingHeart, i * 90);
         let count = 0;
         heartInterval = setInterval(() => {
-          if (count >= 20) {
-            stopHeartRain();
-            return;
-          }
+          if (count >= 20) { stopHeartRain(); return; }
           spawnFloatingHeart();
           count++;
         }, 260);
       }
 
       function stopHeartRain() {
-        if (heartInterval) {
-          clearInterval(heartInterval);
-          heartInterval = null;
-        }
+        if (heartInterval) { clearInterval(heartInterval); heartInterval = null; }
         heartTimeouts.forEach(t => clearTimeout(t));
         heartTimeouts = [];
       }
 
       let congratsHideTimer = null;
-
       function showCongratulations(dhikr) {
         congratsCount.textContent = dhikr.target;
         congratsDhikr.textContent = dhikr.name;
         congratsOverlay.classList.add('show');
         startHeartRain();
-        if (navigator.vibrate) {
-          navigator.vibrate([40, 60, 40, 60, 80]);
-        }
+        playTargetSound();
+        if (navigator.vibrate) navigator.vibrate([40, 60, 40, 60, 80]);
         if (congratsHideTimer) clearTimeout(congratsHideTimer);
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
@@ -1494,19 +2319,14 @@
         }, 3500);
       }
 
-      // ========== UI RENDER ==========
       function updateUI() {
         const d = getActive();
         if (!d) return;
 
         countDisplay.textContent = d.count;
-
         const len = String(d.count).length;
-        if (len >= 3) {
-          countDisplay.setAttribute('data-len', String(Math.min(len, 6)));
-        } else {
-          countDisplay.removeAttribute('data-len');
-        }
+        if (len >= 3) countDisplay.setAttribute('data-len', String(Math.min(len, 6)));
+        else countDisplay.removeAttribute('data-len');
 
         targetInput.value = d.target;
         dhikrSelectedText.textContent = d.name;
@@ -1518,9 +2338,7 @@
           let percent = (d.count / d.target) * 100;
           if (percent > 100) percent = 100;
           progressFill.style.width = percent + '%';
-        } else {
-          progressFill.style.width = '0%';
-        }
+        } else progressFill.style.width = '0%';
 
         const reached = d.count >= d.target && d.target > 0;
         if (reached) {
@@ -1540,98 +2358,84 @@
 
       function renderDropdown() {
         dhikrDropdown.innerHTML = '';
-
         dhikrs.forEach(d => {
           const opt = document.createElement('div');
           opt.className = 'dhikr-option' + (d.id === activeId ? ' active' : '');
           opt.dataset.id = d.id;
-
           const info = document.createElement('div');
           info.className = 'dhikr-option-info';
-
           const nameEl = document.createElement('div');
           nameEl.className = 'dhikr-option-name';
           nameEl.textContent = d.name;
           info.appendChild(nameEl);
-
           if (d.arabic) {
             const ar = document.createElement('div');
             ar.className = 'dhikr-option-arabic';
             ar.textContent = d.arabic;
             info.appendChild(ar);
           }
-
           const stats = document.createElement('div');
           stats.className = 'dhikr-option-stats';
-
           const cEl = document.createElement('div');
           cEl.className = 'dhikr-option-count';
           cEl.textContent = d.count;
           stats.appendChild(cEl);
-
           const tEl = document.createElement('div');
           tEl.className = 'dhikr-option-target';
           tEl.textContent = '/ ' + d.target;
           stats.appendChild(tEl);
-
           const del = document.createElement('button');
           del.className = 'dhikr-option-delete';
           del.textContent = '🗑';
-          del.title = 'Delete this dhikr';
           del.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             deleteDhikr(d.id);
           });
-
-          opt.appendChild(info);
-          opt.appendChild(stats);
+          opt.appendChild(info); opt.appendChild(stats);
           if (dhikrs.length > 1) opt.appendChild(del);
-
-          opt.addEventListener('click', () => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
             switchDhikr(d.id);
             closeDropdown();
           });
-
           opt.addEventListener('dblclick', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             openEditDhikr(d.id);
           });
-
           dhikrDropdown.appendChild(opt);
         });
-
         const divider = document.createElement('div');
         divider.className = 'dhikr-divider';
         dhikrDropdown.appendChild(divider);
-
         const addBtn = document.createElement('div');
         addBtn.className = 'dhikr-add-btn';
         addBtn.innerHTML = '<span>➕</span> Add New Dhikr';
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
           openAddDhikr();
           closeDropdown();
         });
         dhikrDropdown.appendChild(addBtn);
       }
 
-      // ========== DROPDOWN ==========
       function openDropdown() {
         dhikrSelectDisplay.classList.add('open');
         dhikrDropdown.classList.add('show');
         renderDropdown();
       }
-
       function closeDropdown() {
         dhikrSelectDisplay.classList.remove('open');
         dhikrDropdown.classList.remove('show');
       }
-
       function toggleDropdown() {
         if (dhikrDropdown.classList.contains('show')) closeDropdown();
         else openDropdown();
       }
 
-      // ========== DHIKR ACTIONS ==========
       function switchDhikr(id) {
         if (id === activeId) return;
         activeId = id;
@@ -1641,14 +2445,10 @@
       }
 
       function deleteDhikr(id) {
-        if (dhikrs.length <= 1) {
-          alert('You need at least one dhikr.');
-          return;
-        }
+        if (dhikrs.length <= 1) { alert('You need at least one dhikr.'); return; }
         const d = dhikrs.find(x => x.id === id);
         if (!d) return;
         if (!confirm(`Delete "${d.name}" and its saved count (${d.count})?`)) return;
-
         dhikrs = dhikrs.filter(x => x.id !== id);
         history = history.filter(h => h.dhikrId !== id);
         saveHistory();
@@ -1662,15 +2462,10 @@
         const d = getActive();
         if (!d) return;
         if (d.count < MAX_COUNT) d.count++;
-
         const wasBelowTarget = (d.count - 1) < d.target;
         const nowAtTarget = d.count >= d.target;
-
-        updateUI();
-        pulseDisplay();
-        saveDebounced();
+        updateUI(); pulseDisplay(); saveDebounced(); playClickSound();
         if (navigator.vibrate) navigator.vibrate(10);
-
         if (wasBelowTarget && nowAtTarget && d.target > 0) {
           if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
             congratsShownFor = { dhikrId: d.id, target: d.target };
@@ -1684,13 +2479,11 @@
         if (!d) return;
         if (d.count > 0) {
           d.count--;
-          if (d.count < d.target) {
-            congratsShownFor = null;
-          }
+          if (d.count < d.target) congratsShownFor = null;
           updateUI();
           countDisplay.classList.add('pulse');
           setTimeout(() => countDisplay.classList.remove('pulse'), 100);
-          saveDebounced();
+          saveDebounced(); playClickSound();
         } else {
           countDisplay.classList.add('pulse');
           setTimeout(() => countDisplay.classList.remove('pulse'), 100);
@@ -1725,30 +2518,21 @@
         if (!d) return;
         d.target = sanitizeTarget(targetInput.value);
         targetInput.value = d.target;
-        if (congratsShownFor && congratsShownFor.target !== d.target) {
-          congratsShownFor = null;
-        }
+        if (congratsShownFor && congratsShownFor.target !== d.target) congratsShownFor = null;
         updateUI();
         saveAll();
       }
 
-      // ========== HISTORY ==========
       function upsertHistoryEntry(dhikr) {
         if (!dhikr || dhikr.count <= 0) return;
         history = history.filter(h => h.dhikrId !== dhikr.id);
-        history.unshift({
-          dhikrId: dhikr.id,
-          name: dhikr.name,
-          count: dhikr.count,
-          timestamp: Date.now()
-        });
+        history.unshift({ dhikrId: dhikr.id, name: dhikr.name, count: dhikr.count, timestamp: Date.now() });
         if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
         saveHistory();
       }
 
       function renderHistory() {
         historyList.innerHTML = '';
-
         if (!history.length) {
           const e = document.createElement('div');
           e.className = 'empty-history';
@@ -1756,62 +2540,38 @@
           historyList.appendChild(e);
           return;
         }
-
         const hint = document.createElement('div');
         hint.className = 'history-hint';
         hint.textContent = '👆 Tap a session to restore its count';
         historyList.appendChild(hint);
-
         history.forEach(item => {
           const div = document.createElement('div');
           div.className = 'history-item';
-          div.title = 'Tap to restore this count';
-
           const info = document.createElement('div');
           info.className = 'h-info';
-
           const name = document.createElement('span');
           name.className = 'h-name';
           name.textContent = item.name;
-
           const time = document.createElement('span');
           time.className = 'h-time';
           time.textContent = formatTime(item.timestamp);
-
-          info.appendChild(name);
-          info.appendChild(time);
-
+          info.appendChild(name); info.appendChild(time);
           const countEl = document.createElement('span');
           countEl.className = 'h-count';
           countEl.textContent = item.count;
-
-          div.appendChild(info);
-          div.appendChild(countEl);
-
-          div.addEventListener('click', () => {
-            restoreHistoryEntry(item);
-          });
-
+          div.appendChild(info); div.appendChild(countEl);
+          div.addEventListener('click', () => restoreHistoryEntry(item));
           historyList.appendChild(div);
         });
       }
 
       function restoreHistoryEntry(item) {
         const d = dhikrs.find(x => x.id === item.dhikrId);
-        if (!d) {
-          showToast('Dhikr no longer exists');
-          return;
-        }
-
-        if (activeId !== d.id) {
-          activeId = d.id;
-        }
-
+        if (!d) { showToast('Dhikr no longer exists'); return; }
+        if (activeId !== d.id) activeId = d.id;
         d.count = Math.min(item.count, MAX_COUNT);
         congratsShownFor = null;
-        updateUI();
-        saveAll();
-        closeHistory();
+        updateUI(); saveAll(); closeHistory();
         showToast(`Restored: ${d.name} → ${d.count}`);
         if (navigator.vibrate) navigator.vibrate(20);
       }
@@ -1825,23 +2585,201 @@
         return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
       }
 
-      function openHistory() {
-        renderHistory();
-        historyModal.classList.add('show');
-      }
-      function closeHistory() {
-        historyModal.classList.remove('show');
-      }
+      function openHistory() { renderHistory(); historyModal.classList.add('show'); }
+      function closeHistory() { historyModal.classList.remove('show'); }
       function clearHistory() {
         if (!history.length) return;
         if (confirm('Clear all saved sessions?')) {
-          history = [];
-          saveHistory();
-          renderHistory();
+          history = []; saveHistory(); renderHistory();
         }
       }
 
-      // ========== ADD / EDIT DHIKR ==========
+      function groupDuasByCategory() {
+        const groups = {};
+        DAILY_DUAS.forEach((dua, idx) => {
+          if (!groups[dua.category]) groups[dua.category] = [];
+          groups[dua.category].push({ ...dua, originalIndex: idx });
+        });
+        return groups;
+      }
+
+      function openDuas() {
+        showCategoriesView();
+        duasSearchInput.value = '';
+        renderCategoriesList('');
+        duasModal.classList.add('show');
+        setTimeout(() => { try { duasSearchInput.focus(); } catch (e) {} }, 300);
+      }
+
+      function closeDuas() {
+        stopSpeech();
+        duasModal.classList.remove('show');
+        setTimeout(showCategoriesView, 300);
+      }
+
+      function showCategoriesView() {
+        duasCategoriesView.hidden = false;
+        duasInCategoryView.hidden = true;
+        duaDetailView.hidden = true;
+        currentCategory = null;
+        currentCategoryDuas = [];
+        currentDuaInCategory = 0;
+        stopSpeech();
+      }
+
+      function showCategoryDuasView(categoryName) {
+        currentCategory = categoryName;
+        const groups = groupDuasByCategory();
+        currentCategoryDuas = groups[categoryName] || [];
+        currentDuaInCategory = 0;
+
+        categoryTitle.textContent = categoryName;
+
+        duasInCategoryContainer.innerHTML = '';
+        currentCategoryDuas.forEach((dua, idx) => {
+          const item = document.createElement('div');
+          item.className = 'dua-item';
+          const info = document.createElement('div');
+          info.className = 'dua-item-info';
+          const t = document.createElement('div');
+          t.className = 'dua-item-title';
+          t.textContent = dua.title;
+          const s = document.createElement('div');
+          s.className = 'dua-item-subtitle';
+          s.textContent = dua.translit;
+          info.appendChild(t); info.appendChild(s);
+          const arrow = document.createElement('span');
+          arrow.className = 'dua-item-arrow';
+          arrow.textContent = '›';
+          item.appendChild(info); item.appendChild(arrow);
+          item.addEventListener('click', () => showDuaDetail(idx));
+          duasInCategoryContainer.appendChild(item);
+        });
+
+        duasCategoriesView.hidden = true;
+        duasInCategoryView.hidden = false;
+        duaDetailView.hidden = true;
+        stopSpeech();
+      }
+
+      function showDuaDetail(index) {
+        if (!currentCategoryDuas.length) return;
+        if (index < 0) index = 0;
+        if (index >= currentCategoryDuas.length) index = currentCategoryDuas.length - 1;
+        currentDuaInCategory = index;
+
+        const dua = currentCategoryDuas[index];
+
+        duaDetailTitle.textContent = dua.title;
+        duaDetailArabic.textContent = dua.arabic;
+        duaDetailEn.textContent = dua.en;
+        duaDetailBn.textContent = dua.bn;
+
+        duaProgressText.textContent = `Dua ${index + 1} of ${currentCategoryDuas.length}`;
+        duaProgressDots.innerHTML = '';
+        for (let i = 0; i < currentCategoryDuas.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'dua-progress-dot';
+          if (i === index) dot.classList.add('active');
+          else if (i < index) dot.classList.add('visited');
+          duaProgressDots.appendChild(dot);
+        }
+
+        prevDuaBtn.disabled = (index === 0);
+        nextDuaBtn.disabled = (index === currentCategoryDuas.length - 1);
+        nextDuaBtn.textContent = (index === currentCategoryDuas.length - 1) ? 'End ✓' : 'Next →';
+        nextDuaBtn.classList.toggle('primary', index !== currentCategoryDuas.length - 1);
+
+        duasCategoriesView.hidden = true;
+        duasInCategoryView.hidden = true;
+        duaDetailView.hidden = false;
+
+        stopSpeech();
+        const body = duaDetailView.querySelector('.dua-detail-body');
+        if (body) body.scrollTop = 0;
+      }
+
+      function renderCategoriesList(filter) {
+        duasCategoriesContainer.innerHTML = '';
+        const term = (filter || '').toLowerCase().trim();
+
+        if (term) {
+          const filtered = DAILY_DUAS
+            .map((dua, originalIndex) => ({ dua, originalIndex }))
+            .filter(({ dua }) =>
+              dua.title.toLowerCase().includes(term) ||
+              dua.translit.toLowerCase().includes(term) ||
+              dua.en.toLowerCase().includes(term) ||
+              dua.bn.includes(term) ||
+              dua.category.toLowerCase().includes(term)
+            );
+
+          if (!filtered.length) {
+            const empty = document.createElement('div');
+            empty.className = 'empty-duas';
+            empty.textContent = '🤲 No duas found. Try a different search.';
+            duasCategoriesContainer.appendChild(empty);
+            return;
+          }
+
+          filtered.forEach(({ dua, originalIndex }) => {
+            const item = document.createElement('div');
+            item.className = 'dua-item';
+            const info = document.createElement('div');
+            info.className = 'dua-item-info';
+            const t = document.createElement('div');
+            t.className = 'dua-item-title';
+            t.textContent = dua.title;
+            const s = document.createElement('div');
+            s.className = 'dua-item-subtitle';
+            s.textContent = dua.category + ' · ' + dua.translit;
+            info.appendChild(t); info.appendChild(s);
+            const arrow = document.createElement('span');
+            arrow.className = 'dua-item-arrow';
+            arrow.textContent = '›';
+            item.appendChild(info); item.appendChild(arrow);
+            item.addEventListener('click', () => {
+              currentCategory = dua.category;
+              const groups = groupDuasByCategory();
+              currentCategoryDuas = groups[dua.category] || [];
+              const localIdx = currentCategoryDuas.findIndex(d => d.originalIndex === originalIndex);
+              showDuaDetail(localIdx >= 0 ? localIdx : 0);
+            });
+            duasCategoriesContainer.appendChild(item);
+          });
+          return;
+        }
+
+        const groups = groupDuasByCategory();
+        Object.keys(groups).forEach(category => {
+          const card = document.createElement('div');
+          card.className = 'dua-category-card';
+
+          const info = document.createElement('div');
+          info.className = 'dua-category-card-info';
+
+          const nameEl = document.createElement('div');
+          nameEl.className = 'dua-category-card-name';
+          nameEl.textContent = category;
+
+          const countEl = document.createElement('div');
+          countEl.className = 'dua-category-card-count';
+          countEl.textContent = `${groups[category].length} dua${groups[category].length > 1 ? 's' : ''}`;
+
+          info.appendChild(nameEl);
+          info.appendChild(countEl);
+
+          const badge = document.createElement('div');
+          badge.className = 'dua-category-card-badge';
+          badge.textContent = '›';
+
+          card.appendChild(info);
+          card.appendChild(badge);
+          card.addEventListener('click', () => showCategoryDuasView(category));
+          duasCategoriesContainer.appendChild(card);
+        });
+      }
+
       function openAddDhikr() {
         editingDhikrId = null;
         dhikrModalTitle.textContent = '➕ Add New Dhikr';
@@ -1874,44 +2812,24 @@
 
       function saveDhikrFromModal() {
         const name = dhikrNameInput.value.trim();
-        if (!name) {
-          alert('Please enter a name for the dhikr.');
-          dhikrNameInput.focus();
-          return;
-        }
+        if (!name) { alert('Please enter a name for the dhikr.'); dhikrNameInput.focus(); return; }
         const arabic = dhikrArabicInput.value.trim();
         const translation = dhikrTranslationInput.value.trim();
         const translationBn = dhikrTranslationBnInput.value.trim();
         const targetVal = sanitizeTarget(dhikrTargetInput.value);
-
         if (editingDhikrId) {
           const d = dhikrs.find(x => x.id === editingDhikrId);
           if (d) {
-            d.name = name;
-            d.arabic = arabic;
-            d.translation = translation;
-            d.translationBn = translationBn;
-            d.target = targetVal;
+            d.name = name; d.arabic = arabic; d.translation = translation;
+            d.translationBn = translationBn; d.target = targetVal;
             const h = history.find(x => x.dhikrId === d.id);
-            if (h) {
-              h.name = name;
-              saveHistory();
-            }
+            if (h) { h.name = name; saveHistory(); }
           }
         } else {
-          const newDhikr = {
-            id: uid(),
-            name,
-            arabic,
-            translation,
-            translationBn,
-            count: 0,
-            target: targetVal
-          };
+          const newDhikr = { id: uid(), name, arabic, translation, translationBn, count: 0, target: targetVal };
           dhikrs.push(newDhikr);
           activeId = newDhikr.id;
         }
-
         congratsShownFor = null;
         saveAll();
         updateUI();
@@ -1919,64 +2837,139 @@
       }
 
       // ========== EVENT LISTENERS ==========
+
+      // Dhikr selector — block ALL events from reaching the counter
+      dhikrSelectDisplay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        toggleDropdown();
+      });
+      dhikrSelectDisplay.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
+      dhikrSelectDisplay.addEventListener('touchend', (e) => {
+        e.stopPropagation();
+        // Let the click handler fire normally
+      }, { passive: true });
+
+      dhikrDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      dhikrDropdown.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
+
+      // Counter — only increments when clicking the counter area, not the selector
+      countWrap.addEventListener('click', (e) => {
+        e.stopPropagation();
+        increment();
+      });
+
       incrementBtn.addEventListener('click', increment);
       decrementBtn.addEventListener('click', decrement);
       resetBtn.addEventListener('click', resetCounter);
-      countWrap.addEventListener('click', increment);
 
-      saveSessionBtn.addEventListener('click', () => {
-        const d = getActive();
-        if (!d || d.count <= 0) {
-          showToast('Nothing to save yet');
-          return;
-        }
-        upsertHistoryEntry(d);
-        showSaveIndicator();
-        showToast(`Saved: ${d.name} → ${d.count}`);
-        if (navigator.vibrate) navigator.vibrate(15);
-      });
-
-      dhikrSelectDisplay.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleDropdown();
-      });
-
+      // Close dropdown when clicking outside
       document.addEventListener('click', (e) => {
         if (!dhikrSelectDisplay.contains(e.target) && !dhikrDropdown.contains(e.target)) {
           closeDropdown();
         }
       });
 
-      targetInput.addEventListener('input', () => {
+      saveSessionBtn.addEventListener('click', () => {
         const d = getActive();
-        if (!d) return;
+        if (!d || d.count <= 0) { showToast('Nothing to save yet'); return; }
+        upsertHistoryEntry(d);
+        showSaveIndicator();
+        showToast(`Saved: ${d.name} → ${d.count}`);
+        if (navigator.vibrate) navigator.vibrate(15);
+      });
 
-        let raw = targetInput.value.replace(/\D/g, '');
-        if (raw.length > 6) raw = raw.slice(0, 6);
-        if (raw === '') {
-          targetInput.value = '';
-          return;
-        }
-        if (raw !== targetInput.value) {
-          targetInput.value = raw;
-        }
+      if (soundToggleBtn) soundToggleBtn.addEventListener('click', toggleSound);
 
-        const parsed = parseInt(raw, 10);
-        if (!isNaN(parsed) && parsed >= 1) {
-          d.target = Math.min(parsed, MAX_COUNT);
-          updateUI();
-          saveDebounced();
+      duasBtn.addEventListener('click', openDuas);
+      closeDuasBtn.addEventListener('click', closeDuas);
+      duasModal.addEventListener('click', (e) => { if (e.target === duasModal) closeDuas(); });
+
+      duasSearchInput.addEventListener('input', (e) => renderCategoriesList(e.target.value));
+
+      backToCategoriesBtn.addEventListener('click', () => {
+        duasSearchInput.value = '';
+        renderCategoriesList('');
+        showCategoriesView();
+      });
+
+      duaBackBtn.addEventListener('click', () => {
+        showCategoryDuasView(currentCategory);
+      });
+
+      prevDuaBtn.addEventListener('click', () => {
+        if (currentDuaInCategory > 0) showDuaDetail(currentDuaInCategory - 1);
+      });
+      nextDuaBtn.addEventListener('click', () => {
+        if (currentDuaInCategory < currentCategoryDuas.length - 1) {
+          showDuaDetail(currentDuaInCategory + 1);
+        } else {
+          showCategoryDuasView(currentCategory);
         }
       });
 
+      // Speech buttons — only Arabic + English (Bangla removed)
+      document.querySelectorAll('.dua-listen-small').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.listen;
+          const dua = currentCategoryDuas[currentDuaInCategory];
+          if (!dua) return;
+          let text = '';
+          let lang = 'en-US';
+          if (target === 'arabic') { text = dua.arabic; lang = 'ar-SA'; }
+          else if (target === 'en') { text = dua.en; lang = 'en-US'; }
+          speakSection(text, lang, btn);
+        });
+      });
+
+      if (listenAllBtn) {
+        listenAllBtn.addEventListener('click', () => {
+          const dua = currentCategoryDuas[currentDuaInCategory];
+          if (!dua) return;
+          speakAll(dua, listenAllBtn);
+        });
+      }
+      if (stopListenBtn) {
+        stopListenBtn.addEventListener('click', () => { stopSpeech(); });
+      }
+
+      let touchStartX = 0;
+      duaDetailView.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      duaDetailView.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(dx) < 60) return;
+        if (dx < 0) {
+          if (currentDuaInCategory < currentCategoryDuas.length - 1) showDuaDetail(currentDuaInCategory + 1);
+        } else {
+          if (currentDuaInCategory > 0) showDuaDetail(currentDuaInCategory - 1);
+        }
+      }, { passive: true });
+
+      targetInput.addEventListener('input', () => {
+        const d = getActive();
+        if (!d) return;
+        let raw = targetInput.value.replace(/\D/g, '');
+        if (raw.length > 6) raw = raw.slice(0, 6);
+        if (raw === '') { targetInput.value = ''; return; }
+        if (raw !== targetInput.value) targetInput.value = raw;
+        const parsed = parseInt(raw, 10);
+        if (!isNaN(parsed) && parsed >= 1) {
+          d.target = Math.min(parsed, MAX_COUNT);
+          updateUI(); saveDebounced();
+        }
+      });
       targetInput.addEventListener('blur', applyTargetFromInput);
       targetInput.addEventListener('change', applyTargetFromInput);
       targetInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          targetInput.blur();
-          applyTargetFromInput();
-        }
+        if (e.key === 'Enter') { e.preventDefault(); targetInput.blur(); applyTargetFromInput(); }
         e.stopPropagation();
       });
 
@@ -1984,24 +2977,44 @@
       closeHistoryBtn.addEventListener('click', closeHistory);
       closeHistoryBtn2.addEventListener('click', closeHistory);
       clearHistoryBtn.addEventListener('click', clearHistory);
-      historyModal.addEventListener('click', (e) => {
-        if (e.target === historyModal) closeHistory();
-      });
+      historyModal.addEventListener('click', (e) => { if (e.target === historyModal) closeHistory(); });
 
       closeDhikrBtn.addEventListener('click', closeDhikrModal);
       cancelDhikrBtn.addEventListener('click', closeDhikrModal);
       saveDhikrBtn.addEventListener('click', saveDhikrFromModal);
-      dhikrModal.addEventListener('click', (e) => {
-        if (e.target === dhikrModal) closeDhikrModal();
-      });
+      dhikrModal.addEventListener('click', (e) => { if (e.target === dhikrModal) closeDhikrModal(); });
 
       window.addEventListener('keydown', (e) => {
         if (document.activeElement === targetInput) return;
+        if (document.activeElement === duasSearchInput) {
+          if (e.key === 'Escape') duasSearchInput.blur();
+          return;
+        }
         if (document.activeElement === dhikrNameInput ||
             document.activeElement === dhikrArabicInput ||
             document.activeElement === dhikrTranslationInput ||
             document.activeElement === dhikrTranslationBnInput ||
             document.activeElement === dhikrTargetInput) return;
+
+        if (duasModal.classList.contains('show')) {
+          if (!duaDetailView.hidden) {
+            if (e.key === 'ArrowRight') {
+              e.preventDefault();
+              if (currentDuaInCategory < currentCategoryDuas.length - 1) showDuaDetail(currentDuaInCategory + 1);
+            } else if (e.key === 'ArrowLeft') {
+              e.preventDefault();
+              if (currentDuaInCategory > 0) showDuaDetail(currentDuaInCategory - 1);
+            } else if (e.key === 'Escape') {
+              e.preventDefault();
+              showCategoryDuasView(currentCategory);
+            }
+          } else if (!duasInCategoryView.hidden) {
+            if (e.key === 'Escape') { e.preventDefault(); backToCategoriesBtn.click(); }
+          } else {
+            if (e.key === 'Escape') closeDuas();
+          }
+          return;
+        }
 
         if (historyModal.classList.contains('show')) {
           if (e.key === 'Escape') closeHistory();
@@ -2014,23 +3027,21 @@
         }
 
         if (e.key === ' ' || e.key === 'Space' || e.key === '+' || e.key === 'ArrowUp' || e.key === 'Enter') {
-          e.preventDefault();
-          increment();
+          e.preventDefault(); increment();
         } else if (e.key === '-' || e.key === 'ArrowDown') {
-          e.preventDefault();
-          decrement();
+          e.preventDefault(); decrement();
         } else if (e.key === 'r' || e.key === 'R') {
-          e.preventDefault();
-          resetCounter();
+          e.preventDefault(); resetCounter();
         } else if (e.key === 'h' || e.key === 'H') {
-          e.preventDefault();
-          openHistory();
+          e.preventDefault(); openHistory();
+        } else if (e.key === 'd' || e.key === 'D') {
+          e.preventDefault(); openDuas();
         } else if (e.key === 's' || e.key === 'S') {
-          e.preventDefault();
-          saveSessionBtn.click();
+          e.preventDefault(); saveSessionBtn.click();
         } else if (e.key === 'n' || e.key === 'N') {
-          e.preventDefault();
-          openAddDhikr();
+          e.preventDefault(); openAddDhikr();
+        } else if (e.key === 'm' || e.key === 'M') {
+          e.preventDefault(); toggleSound();
         } else if (e.key === 'Escape') {
           closeDropdown();
         }
@@ -2040,20 +3051,25 @@
         btn.addEventListener('contextmenu', (e) => e.preventDefault());
       });
 
-      window.addEventListener('beforeunload', saveAll);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) saveAll();
+      window.addEventListener('beforeunload', () => {
+        stopSpeech();
+        saveAll();
       });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) saveAll(); });
 
-      // ========== INIT ==========
+      if (speechSupported) {
+        refreshVoices();
+        speechSynthesis.onvoiceschanged = refreshVoices;
+      }
+
       loadAll();
+      loadSoundPref();
       updateUI();
       renderDropdown();
 
     })();
   </script>
 
-  <!-- ========== SERVICE WORKER REGISTRATION ========== -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
