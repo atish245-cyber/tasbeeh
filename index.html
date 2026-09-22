@@ -1086,7 +1086,7 @@
         </div>
       </div>
 
-      <!-- Count wrapper — FIXED size, clickable to increment -->
+      <!-- Count wrapper -->
       <div id="countWrap" class="count-wrap" title="Tap to count">
         <div id="countDisplay" class="count-display">0</div>
       </div>
@@ -1135,10 +1135,10 @@
     </div>
   </div>
 
-  <!-- ================= FLOATING HEARTS LAYER ================= -->
+  <!-- Floating hearts -->
   <div id="heartLayer" class="heart-layer"></div>
 
-  <!-- ================= CONGRATULATIONS OVERLAY ================= -->
+  <!-- Congratulations overlay -->
   <div id="congratsOverlay" class="congrats-overlay">
     <div class="congrats-card">
       <div class="congrats-emoji">💖</div>
@@ -1148,16 +1148,14 @@
     </div>
   </div>
 
-  <!-- ================= HISTORY MODAL ================= -->
+  <!-- History modal -->
   <div id="historyModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
         <span class="modal-title">📜 Saved Sessions</span>
         <button id="closeHistoryBtn" class="modal-close" aria-label="Close">✕</button>
       </div>
-      <div id="historyList" class="modal-body">
-        <!-- populated by JS -->
-      </div>
+      <div id="historyList" class="modal-body"></div>
       <div class="modal-footer">
         <button id="clearHistoryBtn" class="modal-btn danger">Clear All</button>
         <button id="closeHistoryBtn2" class="modal-btn">Close</button>
@@ -1165,7 +1163,7 @@
     </div>
   </div>
 
-  <!-- ================= ADD/EDIT DHIKR MODAL ================= -->
+  <!-- Add/Edit Dhikr modal -->
   <div id="dhikrModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
@@ -1201,7 +1199,7 @@
     </div>
   </div>
 
-  <!-- Toast notification -->
+  <!-- Toast -->
   <div id="toast" class="toast">
     <span>✓</span> <span id="toastText">Saved</span>
   </div>
@@ -1211,16 +1209,17 @@
       'use strict';
 
       // ========== STORAGE KEYS ==========
+      // Bumped to v11 so your existing data migrates to the new list
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v10',
-        ACTIVE: 'tasbeeh_active_v10',
-        HISTORY: 'tasbeeh_history_v10'
+        DHIKRS: 'tasbeeh_dhikrs_v11',
+        ACTIVE: 'tasbeeh_active_v11',
+        HISTORY: 'tasbeeh_history_v11'
       };
 
       const MAX_COUNT = 999999;
       const MAX_HISTORY = 50;
 
-      // ========== DEFAULT DHIKRS ==========
+      // ========== DEFAULT DHIKRS (with Rabbi Zidni Ilma added) ==========
       const DEFAULT_DHIKRS = [
         { id: 'subhanallah',     name: 'Subhanallah',                 arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',                       translationBn: 'আল্লাহ পবিত্র, মহান',                       count: 0, target: 33  },
         { id: 'alhamdulillah',   name: 'Alhamdulillah',               arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',                 translationBn: 'সকল প্রশংসা আল্লাহর জন্য',                 count: 0, target: 33  },
@@ -1228,15 +1227,15 @@
         { id: 'lailahaillallah', name: 'La ilaha illallah',           arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',               translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',             count: 0, target: 100 },
         { id: 'astaghfirullah',  name: 'Astaghfirullah',              arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',           translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',               count: 0, target: 100 },
         { id: 'salawat',         name: 'Allahumma Salli Ala Muhammad', arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',       translation: 'O Allah, send blessings upon Muhammad',    translationBn: 'হে আল্লাহ, মুহাম্মদের উপর রহমত বর্ষণ করুন', count: 0, target: 100 },
-        { id: 'Rabbi Zidni',     name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',     translation: 'My Lord, increase me in knowledge',             translationBn: 'হে আমার প্রতিপালক, আমার জ্ঞান বৃদ্ধি করো',       count: 0, target: 100 }
-        { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100 }
+        { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100 },
+        { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100 }
       ];
 
       // ========== STATE ==========
       let dhikrs = [];
       let activeId = null;
       let history = [];
-      let congratsShownFor = null; // {dhikrId, target} — prevent repeat celebration
+      let congratsShownFor = null;
 
       // ========== DOM ==========
       const $ = id => document.getElementById(id);
@@ -1369,18 +1368,27 @@
           }
 
           if (!dhikrs.length) {
-            const oldV9 = localStorage.getItem('tasbeeh_dhikrs_v9');
-            if (oldV9) {
-              try {
-                const parsed = JSON.parse(oldV9);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                  dhikrs = parsed.filter(d => d && d.id && typeof d.count === 'number');
-                  dhikrs.forEach(d => {
-                    d.target = sanitizeTarget(d.target);
-                    if (typeof d.translationBn !== 'string') d.translationBn = '';
-                  });
-                }
-              } catch (e) {}
+            // Try migrating from older storage versions
+            const olderVersions = ['tasbeeh_dhikrs_v10', 'tasbeeh_dhikrs_v9'];
+            for (const key of olderVersions) {
+              const raw = localStorage.getItem(key);
+              if (raw) {
+                try {
+                  const parsed = JSON.parse(raw);
+                  if (Array.isArray(parsed) && parsed.length > 0) {
+                    dhikrs = parsed.filter(d => d && d.id && typeof d.count === 'number');
+                    dhikrs.forEach(d => {
+                      d.target = sanitizeTarget(d.target);
+                      if (typeof d.translationBn !== 'string') d.translationBn = '';
+                    });
+                    // Add missing Rabbi Zidni Ilma if not present
+                    if (!dhikrs.some(d => d.id === 'rabbizidni')) {
+                      dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[7])));
+                    }
+                    break;
+                  }
+                } catch (e) {}
+              }
             }
             if (!dhikrs.length) {
               dhikrs = JSON.parse(JSON.stringify(DEFAULT_DHIKRS));
@@ -1474,15 +1482,11 @@
       function showCongratulations(dhikr) {
         congratsCount.textContent = dhikr.target;
         congratsDhikr.textContent = dhikr.name;
-
         congratsOverlay.classList.add('show');
-
         startHeartRain();
-
         if (navigator.vibrate) {
           navigator.vibrate([40, 60, 40, 60, 80]);
         }
-
         if (congratsHideTimer) clearTimeout(congratsHideTimer);
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
