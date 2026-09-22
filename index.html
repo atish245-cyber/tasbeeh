@@ -1586,7 +1586,6 @@
         </div>
       </div>
 
-      <!-- Dhikr selector: stopPropagation on all touch + click events -->
       <div class="dhikr-selector">
         <div id="dhikrSelectDisplay" class="dhikr-select-display">
           <div class="dhikr-select-center">
@@ -1695,7 +1694,6 @@
             <div class="dua-detail-section">
               <div class="dua-detail-label-row">
                 <div class="dua-detail-label">Arabic</div>
-                <button class="dua-listen-small" data-listen="arabic" title="Listen to Arabic">🔊 Listen</button>
               </div>
               <div id="duaDetailArabic" class="dua-detail-arabic"></div>
             </div>
@@ -1791,9 +1789,9 @@
       'use strict';
 
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v13',
-        ACTIVE: 'tasbeeh_active_v13',
-        HISTORY: 'tasbeeh_history_v13',
+        DHIKRS: 'tasbeeh_dhikrs_v14',
+        ACTIVE: 'tasbeeh_active_v14',
+        HISTORY: 'tasbeeh_history_v14',
         SOUND: 'tasbeeh_sound_v1'
       };
 
@@ -1812,6 +1810,73 @@
       ];
 
       const DAILY_DUAS = [
+        // RAMADAN & FASTING (NEW)
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Intention for Fasting (Niyyah)',
+          arabic: 'وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ',
+          translit: 'Wa bisawmi ghadin nawaytu min shahri Ramadan',
+          en: 'And I intend to keep the fast for tomorrow in the month of Ramadan.',
+          bn: 'এবং আমি রমজান মাসের আগামীকালের রোজা রাখার নিয়ত করলাম।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua for Suhoor (Pre-Dawn Meal)',
+          arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ',
+          translit: 'Allahumma barik lana fima razaqtana wa qina \'adhaban-nar',
+          en: 'O Allah, bless us in what You have provided us and save us from the punishment of the Fire.',
+          bn: 'হে আল্লাহ, আপনি আমাদের যা রিজিক দিয়েছেন তাতে বরকত দিন এবং জাহান্নামের আজাব থেকে রক্ষা করুন।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua at Iftar (Breaking the Fast)',
+          arabic: 'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ',
+          translit: 'Dhahaba adh-dhama\'u wabtallatil-\'uruqu wa thabatal-ajru in sha Allah',
+          en: 'The thirst has gone, the veins are moistened, and the reward is confirmed, if Allah wills.',
+          bn: 'পিপাসা দূর হয়েছে, শিরাগুলো সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হয়েছে।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua When Seeing the New Moon',
+          arabic: 'اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ',
+          translit: 'Allahumma ahillahu \'alayna bil-yumni wal-iman was-salamati wal-islam',
+          en: 'O Allah, let this moon appear on us with security, faith, safety, and Islam.',
+          bn: 'হে আল্লাহ, এই চাঁদ আমাদের উপর নিরাপত্তা, ঈমান, শান্তি ও ইসলামের সাথে উদিত করুন।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua for Laylatul Qadr',
+          arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي',
+          translit: 'Allahumma innaka \'afuwwun tuhibbul-\'afwa fa\'fu \'anni',
+          en: 'O Allah, You are Most Forgiving, and You love forgiveness; so forgive me.',
+          bn: 'হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন, তাই আমাকে ক্ষমা করুন।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua for Breaking Fast at Someone\'s Home',
+          arabic: 'أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ',
+          translit: 'Aftara \'indakumus-sa\'imuna wa akala ta\'amakumul-abraru wa sallat \'alaykumul-mala\'ikah',
+          en: 'May the fasting break their fast in your home, and may the righteous eat your food, and may the angels send blessings upon you.',
+          bn: 'আপনার ঘরে রোজাদাররা ইফতার করুক, নেককাররা আপনার খাবার খাক এবং ফেরেশতারা আপনার উপর দোয়া করুক।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua When Someone Insults You While Fasting',
+          arabic: 'إِنِّي صَائِمٌ إِنِّي صَائِمٌ',
+          translit: 'Inni sa\'imun, inni sa\'imun',
+          en: 'I am fasting, I am fasting.',
+          bn: 'আমি রোজাদার, আমি রোজাদার।'
+        },
+        {
+          category: '🌙 Ramadan & Fasting',
+          title: 'Dua for Forgiveness in Ramadan',
+          arabic: 'رَبَّنَا اغْفِرْ لَنَا وَلِوَالِدَيْنَا وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
+          translit: 'Rabbanaghfir lana wa liwalidayna warhamhuma kama rabbayani saghira',
+          en: 'Our Lord, forgive us and our parents, and have mercy on them as they raised me when I was small.',
+          bn: 'হে আমাদের রব, আমাদের এবং আমাদের পিতা-মাতাকে ক্ষমা করুন এবং তাদের প্রতি দয়া করুন যেমন তারা আমাকে ছোটবেলায় লালন-পালন করেছেন।'
+        },
+
+        // SLEEP & WAKING
         { category: '😴 Sleep & Waking', title: 'Before Sleeping', arabic: 'بِاسْمِكَ ٱللَّٰهُمَّ أَمُوتُ وَأَحْيَا', translit: 'Bismika Allahumma amootu wa ahya', en: 'In Your name, O Allah, I die and I live.', bn: 'হে আল্লাহ, আপনার নামেই আমি মরি ও বাঁচি।' },
         { category: '😴 Sleep & Waking', title: 'Upon Waking Up', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ ٱلنُّشُورُ', translit: 'Alhamdulillahi alladhi ahyana ba\'da ma amatana wa ilayhin-nushur', en: 'All praise is for Allah who gave us life after death, and to Him is the resurrection.', bn: 'সকল প্রশংসা আল্লাহর, যিনি মৃত্যুর পর আমাদের জীবন দান করেছেন এবং তাঁর কাছেই ফিরে যেতে হবে।' },
         {
@@ -1823,37 +1888,44 @@
           bn: 'আল্লাহ, তিনি ছাড়া কোনো উপাস্য নেই। তিনি চিরঞ্জীব, সবকিছুর ধারক। তাঁকে তন্দ্রা ও নিদ্রা স্পর্শ করে না। আসমান ও জমিনে যা কিছু আছে সবই তাঁর। কে আছে যে তাঁর অনুমতি ছাড়া তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পিছনে যা কিছু আছে। তারা তাঁর জ্ঞানের কিছুই আয়ত্ত করতে পারে না, তবে তিনি যতটুকু চান। তাঁর কুরসি আসমান ও জমিন পরিব্যাপ্ত করে আছে, আর তা রক্ষণাবেক্ষণ তাঁর জন্য কষ্টকর নয়। তিনিই সুউচ্চ, মহান।'
         },
 
+        // EATING
         { category: '🍽️ Eating & Drinking', title: 'Before Eating', arabic: 'بِسْمِ ٱللَّٰهِ وَعَلَىٰ بَرَكَةِ ٱللَّٰهِ', translit: 'Bismillahi wa \'ala barakatillah', en: 'In the name of Allah and with the blessings of Allah.', bn: 'আল্লাহর নামে এবং আল্লাহর বরকতের সাথে।' },
         { category: '🍽️ Eating & Drinking', title: 'After Eating', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ', translit: 'Alhamdulillahi alladhi at\'amana wa saqana wa ja\'alana muslimin', en: 'All praise is for Allah who fed us, gave us drink, and made us Muslims.', bn: 'সকল প্রশংসা আল্লাহর, যিনি আমাদের খাওয়ালেন, পান করালেন এবং মুসলিম বানালেন।' },
         { category: '🍽️ Eating & Drinking', title: 'When Forgetting Bismillah', arabic: 'بِسْمِ ٱللَّٰهِ أَوَّلَهُ وَآخِرَهُ', translit: 'Bismillahi awwalahu wa akhirahu', en: 'In the name of Allah at the beginning and at the end.', bn: 'আল্লাহর নামে শুরুতে এবং শেষে।' },
-        { category: '🍽️ Eating & Drinking', title: 'After Drinking Milk', arabic: 'ٱللَّٰهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ', translit: 'Allahumma barik lana fihi wa zidna minhu', en: 'O Allah, bless it for us and give us more of it.', bn: 'হে আল্লাহ, এতে আমাদের জন্য বরকত দিন এবং আরও বাড়িয়ে দিন।' },
 
+        // BATHROOM
         { category: '🚿 Bathroom', title: 'Before Entering Toilet', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْخُبُثِ وَٱلْخَبَائِثِ', translit: 'Allahumma inni a\'udhu bika minal-khubuthi wal-khaba\'ith', en: 'O Allah, I seek refuge with You from the male and female devils.', bn: 'হে আল্লাহ, আমি পুরুষ ও নারী শয়তান থেকে আপনার আশ্রয় চাই।' },
         { category: '🚿 Bathroom', title: 'After Leaving Toilet', arabic: 'غُفْرَانَكَ', translit: 'Ghufranak', en: 'I seek Your forgiveness.', bn: 'আমি আপনার ক্ষমা প্রার্থনা করি।' },
 
+        // WUDU
         { category: '🕌 Wudu & Prayer', title: 'Before Wudu', arabic: 'بِسْمِ ٱللَّٰهِ', translit: 'Bismillah', en: 'In the name of Allah.', bn: 'আল্লাহর নামে।' },
         { category: '🕌 Wudu & Prayer', title: 'After Wudu', arabic: 'أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ', translit: 'Ash-hadu an la ilaha illallah wa ash-hadu anna Muhammadan \'abduhu wa rasuluh', en: 'I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.', bn: 'আমি সাক্ষ্য দিচ্ছি যে, আল্লাহ ছাড়া কোনো উপাস্য নেই এবং মুহাম্মদ (সা.) তাঁর বান্দা ও রাসূল।' },
         { category: '🕌 Wudu & Prayer', title: 'Entering the Mosque', arabic: 'ٱللَّٰهُمَّ ٱفْتَحْ لِى أَبْوَابَ رَحْمَتِكَ', translit: 'Allahumma iftah li abwaba rahmatik', en: 'O Allah, open the gates of Your mercy for me.', bn: 'হে আল্লাহ, আমার জন্য আপনার রহমতের দরজা খুলে দিন।' },
         { category: '🕌 Wudu & Prayer', title: 'Leaving the Mosque', arabic: 'ٱللَّٰهُمَّ إِنِّى أَسْأَلُكَ مِنْ فَضْلِكَ', translit: 'Allahumma inni as\'aluka min fadlik', en: 'O Allah, I ask You from Your bounty.', bn: 'হে আল্লাহ, আমি আপনার অনুগ্রহ প্রার্থনা করি।' },
 
+        // HOME & TRAVEL
         { category: '🏠 Home & Travel', title: 'Entering Home', arabic: 'بِسْمِ ٱللَّٰهِ وَلَجْنَا وَبِسْمِ ٱللَّٰهِ خَرَجْنَا وَعَلَىٰ رَبِّنَا تَوَكَّلْنَا', translit: 'Bismillahi walajna wa bismillahi kharajna wa \'ala Rabbina tawakkalna', en: 'In the name of Allah we enter, in the name of Allah we leave, and upon our Lord we rely.', bn: 'আল্লাহর নামে আমরা প্রবেশ করলাম, আল্লাহর নামেই বের হলাম এবং আমাদের রবের উপরই ভরসা করলাম।' },
         { category: '🏠 Home & Travel', title: 'Leaving Home', arabic: 'بِسْمِ ٱللَّٰهِ تَوَكَّلْتُ عَلَى ٱللَّٰهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translit: 'Bismillahi tawakkaltu \'alallah, wa la hawla wa la quwwata illa billah', en: 'In the name of Allah, I place my trust in Allah. There is no might nor power except with Allah.', bn: 'আল্লাহর নামে, আল্লাহর উপরই ভরসা করলাম। আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও ক্ষমতা নেই।' },
         { category: '🏠 Home & Travel', title: 'Travel Dua', arabic: 'سُبْحَٰنَ ٱلَّذِى سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُۥ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنقَلِبُونَ', translit: 'Subhanal-ladhi sakhkhara lana hadha wa ma kunna lahu muqrinin, wa inna ila Rabbina lamunqalibun', en: 'Glory to Him who has subjected this to us, and to our Lord we shall surely return.', bn: 'পবিত্র সেই সত্তা, যিনি এটিকে আমাদের অধীন করে দিয়েছেন, নিশ্চয়ই আমরা আমাদের রবের কাছে ফিরে যাব।' },
 
+        // DISTRESS
         { category: '🛡️ Distress & Protection', title: 'When in Difficulty', arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ ٱلْعَظِيمُ ٱلْحَلِيمُ', translit: 'La ilaha illallahul-\'Azimul-Halim', en: 'There is no god but Allah, the Mighty, the Forbearing.', bn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি মহান ও সহনশীল।' },
         { category: '🛡️ Distress & Protection', title: 'For Anxiety & Sorrow', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْهَمِّ وَٱلْحَزَنِ', translit: 'Allahumma inni a\'udhu bika minal-hammi wal-hazan', en: 'O Allah, I seek refuge with You from anxiety and sorrow.', bn: 'হে আল্লাহ, আমি দুশ্চিন্তা ও দুঃখ থেকে আপনার আশ্রয় চাই।' },
         { category: '🛡️ Distress & Protection', title: 'Seeking Forgiveness', arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ رَبِّى مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ', translit: 'Astaghfirullaha Rabbi min kulli dhanbin wa atubu ilayh', en: 'I seek forgiveness from Allah, my Lord, for every sin, and I turn to Him in repentance.', bn: 'আমি আমার রব আল্লাহর কাছে সব গুনাহের জন্য ক্ষমা চাই এবং তাঁর কাছে তওবা করছি।' },
 
+        // PRAISE
         { category: '✨ Praise & Gratitude', title: 'When Something Good Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى بِنِعْمَتِهِ تَتِمُّ ٱلصَّالِحَاتُ', translit: 'Alhamdulillahi alladhi bi ni\'matihi tatimmus-salihat', en: 'All praise is for Allah by whose favor good things are accomplished.', bn: 'সকল প্রশংসা আল্লাহর, যাঁর নিয়ামতে সকল কল্যাণ সম্পন্ন হয়।' },
         { category: '✨ Praise & Gratitude', title: 'When Something Bad Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ عَلَىٰ كُلِّ حَالٍ', translit: 'Alhamdulillahi \'ala kulli hal', en: 'All praise is for Allah in every situation.', bn: 'সব অবস্থায় আল্লাহর প্রশংসা।' },
-        { category: '✨ Praise & Gratitude', title: 'When Praised by Someone', arabic: 'ٱللَّٰهُمَّ لَا تُؤَاخِذْنِى بِمَا يَقُولُونَ وَٱغْفِرْ لِى مَا لَا يَعْلَمُونَ', translit: 'Allahumma la tu\'akhidhni bima yaqulun, waghfir li ma la ya\'lamun', en: 'O Allah, do not hold me accountable for what they say, and forgive me for what they do not know.', bn: 'হে আল্লাহ, তারা যা বলে তার জন্য আমাকে পাকড়াও করবেন না, এবং যা তারা জানে না তা ক্ষমা করুন।' },
 
+        // WEATHER
         { category: '🌧️ Weather & Nature', title: 'When It Rains', arabic: 'ٱللَّٰهُمَّ صَيِّبًا نَافِعًا', translit: 'Allahumma sayyiban nafi\'a', en: 'O Allah, make it a beneficial rain.', bn: 'হে আল্লাহ, এটি উপকারী বৃষ্টি করুন।' },
         { category: '🌧️ Weather & Nature', title: 'When Hearing Thunder', arabic: 'سُبْحَٰنَ ٱلَّذِى يُسَبِّحُ ٱلرَّعْدُ بِحَمْدِهِ وَٱلْمَلَٰئِكَةُ مِنْ خِيفَتِهِ', translit: 'Subhanal-ladhi yusabbihur-ra\'du bi hamdihi wal-mala\'ikatu min khifatih', en: 'Glory to Him whom the thunder glorifies with His praise, and the angels too out of awe of Him.', bn: 'পবিত্র সেই সত্তা, যাঁর প্রশংসায় বজ্রধ্বনি ও ফেরেশতারা তাঁর ভয়ে তাসবীহ পাঠ করে।' },
 
+        // KNOWLEDGE
         { category: '📚 Knowledge', title: 'For Increase in Knowledge', arabic: 'رَبِّ زِدْنِي عِلْمًا', translit: 'Rabbi zidni \'ilma', en: 'My Lord, increase me in knowledge.', bn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন।' },
         { category: '📚 Knowledge', title: 'Before Studying', arabic: 'ٱللَّٰهُمَّ ٱنْفَعْنِى بِمَا عَلَّمْتَنِى وَعَلِّمْنِى مَا يَنْفَعُنِى', translit: 'Allahumma infa\'ni bima \'allamtani wa \'allimni ma yanfa\'uni', en: 'O Allah, benefit me with what You have taught me, and teach me what will benefit me.', bn: 'হে আল্লাহ, আপনি আমাকে যা শিখিয়েছেন তা দিয়ে উপকৃত করুন, এবং যা উপকারী তা শিখিয়ে দিন।' },
 
+        // GENERAL
         { category: '🌟 General', title: 'Sayyidul Istighfar', arabic: 'ٱللَّٰهُمَّ أَنْتَ رَبِّى لَا إِلَٰهَ إِلَّا أَنْتَ خَلَقْتَنِى وَأَنَا عَبْدُكَ', translit: 'Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana \'abduk', en: 'O Allah, You are my Lord, there is no god but You. You created me and I am Your servant.', bn: 'হে আল্লাহ, আপনি আমার রব, আপনি ছাড়া কোনো উপাস্য নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা।' },
         { category: '🌟 General', title: 'Best Dhikr', arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ سُبْحَانَ ٱللَّٰهِ ٱلْعَظِيمِ', translit: 'Subhanallahi wa bi hamdihi, Subhanallahil-\'Azim', en: 'Glory be to Allah and praise Him, glory be to Allah the Magnificent.', bn: 'আল্লাহর প্রশংসাসহ পবিত্রতা, মহান আল্লাহ পবিত্র।' }
       ];
@@ -1943,7 +2015,7 @@
 
       let editingDhikrId = null;
 
-      // ========== SPEECH ==========
+      // ========== SPEECH (English only) ==========
       const speechSupported = 'speechSynthesis' in window;
       let cachedVoices = [];
 
@@ -1964,30 +2036,15 @@
         if (!speechSupported) return null;
         if (!cachedVoices.length) refreshVoices();
         if (!cachedVoices.length) return null;
-
         const lower = lang.toLowerCase();
         const prefix = lower.split('-')[0];
-
         let v = cachedVoices.find(x => x.lang && x.lang.toLowerCase() === lower);
         if (v) return v;
         v = cachedVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(prefix + '-'));
         if (v) return v;
         v = cachedVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(prefix));
         if (v) return v;
-        if (prefix === 'ar') {
-          v = cachedVoices.find(x => x.name && /arab/i.test(x.name));
-          if (v) return v;
-        }
         return null;
-      }
-
-      function hasArabicVoice() {
-        if (!speechSupported) return false;
-        if (!cachedVoices.length) refreshVoices();
-        return cachedVoices.some(x =>
-          (x.lang && x.lang.toLowerCase().startsWith('ar')) ||
-          (x.name && /arab/i.test(x.name))
-        );
       }
 
       function speakOne(text, lang, rate = 0.85) {
@@ -2004,7 +2061,7 @@
           const finish = () => { if (!done) { done = true; resolve(); } };
           utter.onend = finish;
           utter.onerror = finish;
-          const estMs = Math.max(2000, Math.min(60000, text.length * 130));
+          const estMs = Math.max(2000, Math.min(60000, text.length * 100));
           setTimeout(finish, estMs);
           try { speechSynthesis.speak(utter); } catch (e) { finish(); }
         });
@@ -2038,13 +2095,10 @@
       async function speakSection(text, lang, btn) {
         if (isSpeaking) stopSpeech();
         if (!speechSupported) { showToast('Speech not supported on this device'); return; }
-        if (lang === 'ar-SA' && !hasArabicVoice()) {
-          showToast('⚠ Arabic voice not installed. Please install an Arabic TTS voice in your device settings.');
-        }
         refreshVoices();
         setPlaying(btn);
         isSpeaking = true;
-        await speakOne(text, lang, 0.8);
+        await speakOne(text, lang, 0.9);
         isSpeaking = false;
         setPlaying(null);
       }
@@ -2052,9 +2106,6 @@
       async function speakAll(dua, btn) {
         if (isSpeaking) stopSpeech();
         if (!speechSupported) { showToast('Speech not supported on this device'); return; }
-        if (!hasArabicVoice()) {
-          showToast('⚠ Arabic voice not installed. Please install an Arabic TTS voice.');
-        }
         refreshVoices();
         setPlaying(btn);
         isSpeaking = true;
@@ -2062,9 +2113,8 @@
         if (listenAllBtn) listenAllBtn.style.display = 'none';
         if (stopListenBtn) stopListenBtn.style.display = '';
 
-        if (dua.arabic && isSpeaking) await speakOne(dua.arabic, 'ar-SA', 0.75);
-        if (!isSpeaking) { stopSpeech(); return; }
-        if (dua.en && isSpeaking) await speakOne(dua.en, 'en-US', 0.9);
+        // English only — no Arabic pronunciation
+        if (dua.en && isSpeaking) await speakOne(dua.en, 'en-US', 0.95);
 
         isSpeaking = false;
         setPlaying(null);
@@ -2222,7 +2272,7 @@
             }
           }
           if (!dhikrs.length) {
-            const olderVersions = ['tasbeeh_dhikrs_v12', 'tasbeeh_dhikrs_v11'];
+            const olderVersions = ['tasbeeh_dhikrs_v13', 'tasbeeh_dhikrs_v12'];
             for (const key of olderVersions) {
               const raw = localStorage.getItem(key);
               if (raw) {
@@ -2838,28 +2888,17 @@
 
       // ========== EVENT LISTENERS ==========
 
-      // Dhikr selector — block ALL events from reaching the counter
       dhikrSelectDisplay.addEventListener('click', (e) => {
         e.stopPropagation();
         e.preventDefault();
         toggleDropdown();
       });
-      dhikrSelectDisplay.addEventListener('touchstart', (e) => {
-        e.stopPropagation();
-      }, { passive: true });
-      dhikrSelectDisplay.addEventListener('touchend', (e) => {
-        e.stopPropagation();
-        // Let the click handler fire normally
-      }, { passive: true });
+      dhikrSelectDisplay.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+      dhikrSelectDisplay.addEventListener('touchend', (e) => e.stopPropagation(), { passive: true });
 
-      dhikrDropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-      dhikrDropdown.addEventListener('touchstart', (e) => {
-        e.stopPropagation();
-      }, { passive: true });
+      dhikrDropdown.addEventListener('click', (e) => e.stopPropagation());
+      dhikrDropdown.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
 
-      // Counter — only increments when clicking the counter area, not the selector
       countWrap.addEventListener('click', (e) => {
         e.stopPropagation();
         increment();
@@ -2869,7 +2908,6 @@
       decrementBtn.addEventListener('click', decrement);
       resetBtn.addEventListener('click', resetCounter);
 
-      // Close dropdown when clicking outside
       document.addEventListener('click', (e) => {
         if (!dhikrSelectDisplay.contains(e.target) && !dhikrDropdown.contains(e.target)) {
           closeDropdown();
@@ -2914,17 +2952,14 @@
         }
       });
 
-      // Speech buttons — only Arabic + English (Bangla removed)
       document.querySelectorAll('.dua-listen-small').forEach(btn => {
         btn.addEventListener('click', () => {
           const target = btn.dataset.listen;
           const dua = currentCategoryDuas[currentDuaInCategory];
           if (!dua) return;
-          let text = '';
-          let lang = 'en-US';
-          if (target === 'arabic') { text = dua.arabic; lang = 'ar-SA'; }
-          else if (target === 'en') { text = dua.en; lang = 'en-US'; }
-          speakSection(text, lang, btn);
+          if (target === 'en') {
+            speakSection(dua.en, 'en-US', btn);
+          }
         });
       });
 
