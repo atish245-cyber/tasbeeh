@@ -75,8 +75,13 @@
       pointer-events: none;
     }
 
-    .tasbeeh-container {
-      background: rgba(13, 43, 28, 0.65);
+    /* ================================================================
+       SHARED LAYOUT — 100% identical for Tasbeeh and Duas
+       ================================================================ */
+
+    /* Outer shell — same size, padding, blur for both */
+    .app-shell {
+      background: rgba(13, 43, 28, 0.55);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-radius: 48px;
@@ -84,14 +89,16 @@
       box-shadow: 0 30px 55px -20px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
       width: 100%;
       max-width: 480px;
-      max-height: 100dvh;
+      /* FIXED height — same for Tasbeeh AND Duas */
+      height: min(720px, calc(100dvh - 24px));
       display: flex;
       flex-direction: column;
       position: relative;
       z-index: 1;
     }
 
-    .counter-card {
+    /* Inner card — same border, radius, background, shadow */
+    .app-card {
       background: rgba(13, 43, 28, 0.95);
       border-radius: 40px;
       padding: 20px 16px 22px;
@@ -100,11 +107,13 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      flex: 1 1 auto;
       min-height: 0;
       overflow: hidden;
     }
 
-    .counter-card::before {
+    /* Mosque decorative background inside */
+    .app-card::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -117,7 +126,7 @@
       background-repeat: no-repeat;
     }
 
-    .counter-card::after {
+    .app-card::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -128,10 +137,23 @@
         radial-gradient(ellipse 90% 50% at 50% 100%, rgba(46, 122, 72, 0.18), transparent 70%);
     }
 
-    .counter-card > * {
+    .app-card > * {
       position: relative;
       z-index: 2;
     }
+
+    /* Content wrapper — flex layout for both */
+    .app-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ================================================================
+       MAIN SCREEN — TASBEEH
+       ================================================================ */
 
     .top-bar {
       display: flex;
@@ -423,7 +445,8 @@
 
     .count-wrap {
       width: 100%;
-      height: 180px;
+      flex: 1 1 auto;
+      min-height: 160px;
       padding: 4px 12px;
       margin: 8px 0 16px;
       display: flex;
@@ -461,7 +484,7 @@
     }
 
     .count-display {
-      font-size: clamp(6rem, 26vw, 11rem);
+      font-size: clamp(4.5rem, 22vw, 9rem);
       font-weight: 900;
       text-align: center;
       color: #e9f7d6;
@@ -487,10 +510,10 @@
       text-shadow: 0 0 30px #d4ffb0, 0 14px 0 #0a1f12;
     }
 
-    .count-display[data-len="3"] { font-size: clamp(4.8rem, 20vw, 9rem); }
-    .count-display[data-len="4"] { font-size: clamp(3.6rem, 15vw, 7rem); }
-    .count-display[data-len="5"] { font-size: clamp(2.8rem, 12vw, 5.6rem); }
-    .count-display[data-len="6"] { font-size: clamp(2.3rem, 10vw, 4.6rem); }
+    .count-display[data-len="3"] { font-size: clamp(3.5rem, 18vw, 7rem); }
+    .count-display[data-len="4"] { font-size: clamp(2.8rem, 14vw, 5.5rem); }
+    .count-display[data-len="5"] { font-size: clamp(2.2rem, 11vw, 4.5rem); }
+    .count-display[data-len="6"] { font-size: clamp(1.9rem, 9vw, 3.8rem); }
 
     .target-row {
       display: flex;
@@ -504,6 +527,7 @@
       border: 1px solid #2d5a3b;
       gap: 6px;
       backdrop-filter: blur(6px);
+      flex-shrink: 0;
     }
 
     .target-label {
@@ -559,6 +583,7 @@
       display: flex;
       justify-content: center;
       margin: 6px 0 14px;
+      flex-shrink: 0;
     }
 
     .ring-track {
@@ -584,6 +609,7 @@
       flex-wrap: wrap;
       gap: 10px;
       margin: 16px 0 6px;
+      flex-shrink: 0;
     }
 
     .btn {
@@ -638,6 +664,7 @@
       align-items: center;
       margin-top: 12px;
       padding: 0 4px;
+      flex-shrink: 0;
     }
 
     .dhikr-translation {
@@ -677,177 +704,55 @@
       text-overflow: ellipsis;
     }
 
-    .congrats-overlay {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 150;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .congrats-overlay.show { opacity: 1; }
-
-    .heart-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 160;
-      overflow: hidden;
-    }
-
-    .floating-heart {
-      position: absolute;
-      font-size: 2rem;
-      line-height: 1;
-      will-change: transform, opacity;
-      filter: drop-shadow(0 0 8px rgba(255, 120, 180, 0.9));
-      user-select: none;
-      pointer-events: none;
-    }
-
-    .floating-heart.h-pink { color: #ff8fc7; }
-    .floating-heart.h-red { color: #ff5a7a; }
-    .floating-heart.h-peach { color: #ffb3c1; }
-    .floating-heart.h-lav { color: #e0b0ff; }
-
-    @keyframes floatHeart1 {
-      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      50%  { transform: translate(40px, -220px) scale(1.1) rotate(20deg); opacity: 1; }
-      100% { transform: translate(-30px, -520px) scale(0.7) rotate(-25deg); opacity: 0; }
-    }
-    @keyframes floatHeart2 {
-      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      50%  { transform: translate(-60px, -260px) scale(1.2) rotate(-30deg); opacity: 1; }
-      100% { transform: translate(50px, -560px) scale(0.6) rotate(35deg); opacity: 0; }
-    }
-    @keyframes floatHeart3 {
-      0%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      50%  { transform: translate(80px, -180px) scale(1) rotate(15deg); opacity: 1; }
-      100% { transform: translate(-70px, -500px) scale(0.5) rotate(-40deg); opacity: 0; }
-    }
-    @keyframes floatHeart4 {
-      0%   { transform: translate(0, 0) scale(0.35) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      50%  { transform: translate(-90px, -300px) scale(1.15) rotate(25deg); opacity: 1; }
-      100% { transform: translate(60px, -600px) scale(0.65) rotate(-20deg); opacity: 0; }
-    }
-    @keyframes floatHeart5 {
-      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      50%  { transform: translate(120px, -200px) scale(1.05) rotate(-18deg); opacity: 1; }
-      100% { transform: translate(-100px, -540px) scale(0.55) rotate(45deg); opacity: 0; }
-    }
-
-    .congrats-card {
-      background: linear-gradient(145deg, #2e7a48 0%, #1a4a2e 100%);
-      border: 2px solid #ffb3c1;
-      border-radius: 32px;
-      padding: 32px 28px;
-      text-align: center;
-      max-width: 360px;
-      width: 100%;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 143, 199, 0.6), inset 0 0 40px rgba(255, 143, 199, 0.15);
-      transform: scale(0.7);
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      z-index: 2;
-    }
-
-    .congrats-overlay.show .congrats-card { transform: scale(1); }
-
-    .congrats-emoji {
-      font-size: 4.5rem;
-      line-height: 1;
-      margin-bottom: 10px;
-      animation: bounceEmoji 1.1s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px rgba(255, 143, 199, 0.9));
-    }
-
-    @keyframes bounceEmoji {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-12px) scale(1.08); }
-    }
-
-    .congrats-title {
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: #ffffff;
-      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 180, 210, 0.9);
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-    }
-
-    .congrats-subtitle {
-      font-size: 1.05rem;
-      color: #ffe6f0;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .congrats-detail {
-      font-size: 0.9rem;
-      color: #ffffff;
-      font-weight: 500;
-      padding: 8px 16px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .congrats-detail strong { color: #ffb3c1; font-weight: 800; }
-
+    /* ================================================================
+       MODAL — fully opaque outside, identical card inside
+       ================================================================ */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      /* FULLY OPAQUE dark background — matches body background gradient */
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(159, 223, 159, 0.18), transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(46, 122, 72, 0.28), transparent 60%),
+        linear-gradient(180deg, #0b2a1e 0%, #06231a 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 12px;
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
 
-    .modal-overlay.show { opacity: 1; pointer-events: auto; }
-
-    .modal {
-      background: #0d2b1c;
-      border: 1px solid #3b6e4b;
-      border-radius: 32px;
-      padding: 22px 20px;
-      width: 100%;
-      max-width: 380px;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
-      transform: translateY(20px);
-      transition: transform 0.25s ease;
-      position: relative;
-      overflow: hidden;
+    /* Islamic pattern on modal overlay too */
+    .modal-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.14;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><defs><pattern id='p2' x='0' y='0' width='120' height='120' patternUnits='userSpaceOnUse'><g fill='none' stroke='%23bbf0bb' stroke-width='1.1'><path d='M60 10 L75 30 L100 30 L85 50 L95 75 L60 58 L25 75 L35 50 L20 30 L45 30 Z'/><path d='M60 25 L70 38 L88 38 L78 50 L85 68 L60 56 L35 68 L42 50 L32 38 L50 38 Z'/><circle cx='60' cy='48' r='5' fill='%23bbf0bb' opacity='0.6'/><circle cx='60' cy='48' r='10' fill='none' stroke='%23bbf0bb' opacity='0.4'/></g></pattern></defs><rect width='240' height='240' fill='url(%23p2)'/></svg>");
+      background-size: 240px 240px;
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .modal-overlay.show .modal { transform: translateY(0); }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+    /* Modal shell is exactly like the main app-shell */
+    .modal-overlay .app-shell {
+      position: relative;
+      z-index: 1;
+    }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       flex-shrink: 0;
       position: relative;
       z-index: 2;
@@ -877,70 +782,9 @@
 
     .modal-close:active { background: #2b6e40; }
 
-    .duas-modal {
-      height: 85vh;
-      max-height: 85vh;
-      padding: 0;
-      overflow: hidden;
-      background: #0a241a;
-    }
-
-    .duas-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 90% 45% at 50% 0%, rgba(212, 255, 176, 0.22), transparent 60%),
-        radial-gradient(ellipse 100% 55% at 50% 100%, rgba(46, 122, 72, 0.35), transparent 65%),
-        linear-gradient(180deg, #0d3021 0%, #06231a 55%, #041a12 100%);
-      pointer-events: none;
-    }
-
-    .duas-bg-pattern {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      opacity: 0.20;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><defs><pattern id='tile' x='0' y='0' width='100' height='100' patternUnits='userSpaceOnUse'><g fill='none' stroke='%23d4ffb0' stroke-width='1'><path d='M50 5 L65 25 L90 25 L75 45 L85 70 L50 54 L15 70 L25 45 L10 25 L35 25 Z'/><path d='M50 20 L60 35 L78 35 L67 48 L74 65 L50 53 L26 65 L33 48 L22 35 L40 35 Z'/><circle cx='50' cy='42' r='4' fill='%23d4ffb0' opacity='0.55'/><path d='M0 50 L8 50 M100 50 L92 50 M50 0 L50 8 M50 100 L50 92'/><circle cx='0' cy='0' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='100' cy='0' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='0' cy='100' r='3' fill='%23d4ffb0' opacity='0.5'/><circle cx='100' cy='100' r='3' fill='%23d4ffb0' opacity='0.5'/></g></pattern></defs><rect width='200' height='200' fill='url(%23tile)'/></svg>");
-      background-size: 140px 140px;
-      background-repeat: repeat;
-      pointer-events: none;
-    }
-
-    .duas-bg-mosque {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 42%;
-      z-index: 2;
-      opacity: 0.28;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' preserveAspectRatio='xMidYMax meet'><g fill='%239fdf9f'><path d='M400 60 Q 320 120 320 220 L 320 400 L 480 400 L 480 220 Q 480 120 400 60 Z'/><path d='M400 90 Q 340 140 340 225 L 340 400 L 460 400 L 460 225 Q 460 140 400 90 Z' fill='%230d3021'/><circle cx='400' cy='55' r='6'/><path d='M400 40 L 400 55 M 394 48 L 400 42 L 406 48' fill='%239fdf9f' stroke='%239fdf9f' stroke-width='2'/><path d='M180 200 L 180 400 L 240 400 L 240 200 Q 240 160 210 140 Q 180 160 180 200 Z'/><path d='M560 200 L 560 400 L 620 400 L 620 200 Q 620 160 590 140 Q 560 160 560 200 Z'/><path d='M100 260 L 100 400 L 160 400 L 160 260 Q 160 240 130 230 Q 100 240 100 260 Z'/><path d='M640 260 L 640 400 L 700 400 L 700 260 Q 700 240 670 230 Q 640 240 640 260 Z'/><rect x='0' y='380' width='800' height='20'/></g></svg>");
-      background-size: cover;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      filter: drop-shadow(0 -10px 30px rgba(159, 223, 159, 0.35));
-    }
-
-    .duas-bg-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 50% 20%, rgba(212, 255, 176, 0.10), transparent 55%);
-    }
-
-    .duas-content {
-      position: relative;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      padding: 22px 20px;
-      overflow: hidden;
-    }
+    /* ================================================================
+       DUAS VIEWS
+       ================================================================ */
 
     .duas-view {
       display: flex;
@@ -1353,6 +1197,10 @@
       transform: none;
     }
 
+    /* ================================================================
+       HISTORY + FORM
+       ================================================================ */
+
     .history-hint {
       font-size: 0.72rem;
       color: #7fa588;
@@ -1413,6 +1261,7 @@
       gap: 8px;
       padding-right: 4px;
       min-height: 0;
+      flex: 1 1 auto;
       position: relative;
       z-index: 2;
     }
@@ -1496,6 +1345,139 @@
     .duas-list::-webkit-scrollbar-thumb,
     .dua-detail-body::-webkit-scrollbar-thumb { background: #2d5a3b; border-radius: 3px; }
 
+    /* ================================================================
+       CONGRATS + TOAST
+       ================================================================ */
+
+    .congrats-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .congrats-overlay.show { opacity: 1; }
+
+    .heart-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 160;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 2rem;
+      line-height: 1;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 8px rgba(255, 120, 180, 0.9));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .floating-heart.h-pink { color: #ff8fc7; }
+    .floating-heart.h-red { color: #ff5a7a; }
+    .floating-heart.h-peach { color: #ffb3c1; }
+    .floating-heart.h-lav { color: #e0b0ff; }
+
+    @keyframes floatHeart1 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(40px, -220px) scale(1.1) rotate(20deg); opacity: 1; }
+      100% { transform: translate(-30px, -520px) scale(0.7) rotate(-25deg); opacity: 0; }
+    }
+    @keyframes floatHeart2 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(-60px, -260px) scale(1.2) rotate(-30deg); opacity: 1; }
+      100% { transform: translate(50px, -560px) scale(0.6) rotate(35deg); opacity: 0; }
+    }
+    @keyframes floatHeart3 {
+      0%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(80px, -180px) scale(1) rotate(15deg); opacity: 1; }
+      100% { transform: translate(-70px, -500px) scale(0.5) rotate(-40deg); opacity: 0; }
+    }
+    @keyframes floatHeart4 {
+      0%   { transform: translate(0, 0) scale(0.35) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(-90px, -300px) scale(1.15) rotate(25deg); opacity: 1; }
+      100% { transform: translate(60px, -600px) scale(0.65) rotate(-20deg); opacity: 0; }
+    }
+    @keyframes floatHeart5 {
+      0%   { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate(120px, -200px) scale(1.05) rotate(-18deg); opacity: 1; }
+      100% { transform: translate(-100px, -540px) scale(0.55) rotate(45deg); opacity: 0; }
+    }
+
+    .congrats-card {
+      background: linear-gradient(145deg, #2e7a48 0%, #1a4a2e 100%);
+      border: 2px solid #ffb3c1;
+      border-radius: 32px;
+      padding: 32px 28px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 143, 199, 0.6), inset 0 0 40px rgba(255, 143, 199, 0.15);
+      transform: scale(0.7);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .congrats-overlay.show .congrats-card { transform: scale(1); }
+
+    .congrats-emoji {
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: bounceEmoji 1.1s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 143, 199, 0.9));
+    }
+
+    @keyframes bounceEmoji {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.08); }
+    }
+
+    .congrats-title {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 180, 210, 0.9);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .congrats-subtitle {
+      font-size: 1.05rem;
+      color: #ffe6f0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .congrats-detail {
+      font-size: 0.9rem;
+      color: #ffffff;
+      font-weight: 500;
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .congrats-detail strong { color: #ffb3c1; font-weight: 800; }
+
     .toast {
       position: fixed;
       bottom: 30px;
@@ -1525,9 +1507,13 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+
     @media (max-width: 420px) {
-      .tasbeeh-container { padding: 14px 10px 18px; border-radius: 36px; }
-      .counter-card { padding: 16px 12px 20px; }
+      .app-shell { padding: 14px 10px 18px; border-radius: 36px; }
+      .app-card { padding: 16px 12px 20px; border-radius: 32px; }
       .btn { padding: 15px 6px; font-size: 1.05rem; min-width: 85px; }
       .btn-primary { font-size: 1.3rem; }
       .target-label { font-size: 0.8rem; }
@@ -1537,7 +1523,6 @@
       .dhikr-translation { font-size: 0.75rem; padding: 6px 12px; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.75rem; }
-      .count-wrap { height: 150px; }
       .congrats-card { padding: 26px 20px; }
       .congrats-emoji { font-size: 3.5rem; }
       .congrats-title { font-size: 1.9rem; }
@@ -1558,23 +1543,25 @@
       .dhikr-selected-arabic { font-size: 0.92rem; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.7rem; }
-      .count-wrap { height: 130px; }
     }
 
     @media (max-height: 700px) {
-      .count-wrap { height: 140px; margin: 4px 0 10px; }
       .target-row { margin: 6px 0 12px; padding: 6px 12px; }
       .progress-ring { margin: 4px 0 10px; }
       .button-grid { margin: 10px 0 4px; }
       .btn { padding: 14px 6px; }
       .footer-row { margin-top: 8px; }
-      .duas-modal { height: 88vh; max-height: 88vh; }
+      .count-wrap { margin: 4px 0 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="tasbeeh-container">
-    <div class="counter-card">
+
+  <!-- ================================================================
+       MAIN SCREEN — Tasbeeh
+       ================================================================ -->
+  <div class="app-shell">
+    <div class="app-card">
       <div class="top-bar">
         <div class="top-bar-left">
           <button id="historyBtn" class="top-btn" title="View session history">📜 History</button>
@@ -1652,130 +1639,132 @@
     </div>
   </div>
 
-  <!-- ========== DAILY DUAS MODAL ========== -->
+  <!-- ================================================================
+       DUAS MODAL — identical frame to main screen
+       ================================================================ -->
   <div id="duasModal" class="modal-overlay">
-    <div class="modal duas-modal">
-      <div class="duas-bg"></div>
-      <div class="duas-bg-pattern"></div>
-      <div class="duas-bg-mosque"></div>
-      <div class="duas-bg-overlay"></div>
-
-      <div class="duas-content">
+    <div class="app-shell">
+      <div class="app-card">
         <div class="modal-header">
           <span class="modal-title">🤲 Daily Duas</span>
           <button id="closeDuasBtn" class="modal-close" aria-label="Close">✕</button>
         </div>
 
-        <div id="duasCategoriesView" class="duas-view">
-          <input type="text" id="duasSearchInput" class="duas-search" placeholder="🔍 Search duas..." />
-          <div id="duasCategoriesContainer" class="duas-list"></div>
-        </div>
-
-        <div id="duasInCategoryView" class="duas-view" hidden>
-          <div class="duas-view-header">
-            <button id="backToCategoriesBtn" class="dua-back-btn">← Categories</button>
-            <span id="categoryTitle" class="dua-detail-title">Category</span>
-          </div>
-          <div id="duasInCategoryContainer" class="duas-list"></div>
-        </div>
-
-        <div id="duaDetailView" class="duas-view" hidden>
-          <div class="duas-view-header">
-            <button id="duaBackBtn" class="dua-back-btn">← Back</button>
-            <span id="duaDetailTitle" class="dua-detail-title">Dua</span>
+        <div class="app-content">
+          <div id="duasCategoriesView" class="duas-view">
+            <input type="text" id="duasSearchInput" class="duas-search" placeholder="🔍 Search duas..." />
+            <div id="duasCategoriesContainer" class="duas-list"></div>
           </div>
 
-          <div class="dua-progress" id="duaProgress">
-            <span id="duaProgressText">Dua 1 of 1</span>
-            <div class="dua-progress-dots" id="duaProgressDots"></div>
+          <div id="duasInCategoryView" class="duas-view" hidden>
+            <div class="duas-view-header">
+              <button id="backToCategoriesBtn" class="dua-back-btn">← Categories</button>
+              <span id="categoryTitle" class="dua-detail-title">Category</span>
+            </div>
+            <div id="duasInCategoryContainer" class="duas-list"></div>
           </div>
 
-          <div class="dua-detail-body">
-            <div class="dua-detail-section">
-              <div class="dua-detail-label-row">
-                <div class="dua-detail-label">Arabic</div>
+          <div id="duaDetailView" class="duas-view" hidden>
+            <div class="duas-view-header">
+              <button id="duaBackBtn" class="dua-back-btn">← Back</button>
+              <span id="duaDetailTitle" class="dua-detail-title">Dua</span>
+            </div>
+
+            <div class="dua-progress" id="duaProgress">
+              <span id="duaProgressText">Dua 1 of 1</span>
+              <div class="dua-progress-dots" id="duaProgressDots"></div>
+            </div>
+
+            <div class="dua-detail-body">
+              <div class="dua-detail-section">
+                <div class="dua-detail-label-row">
+                  <div class="dua-detail-label">Arabic</div>
+                </div>
+                <div id="duaDetailArabic" class="dua-detail-arabic"></div>
               </div>
-              <div id="duaDetailArabic" class="dua-detail-arabic"></div>
-            </div>
 
-            <div class="dua-detail-section">
-              <div class="dua-detail-label-row">
-                <div class="dua-detail-label">English Meaning</div>
-                <button class="dua-listen-small" data-listen="en" title="Listen to English meaning">🔊 Listen</button>
+              <div class="dua-detail-section">
+                <div class="dua-detail-label-row">
+                  <div class="dua-detail-label">English Meaning</div>
+                  <button class="dua-listen-small" data-listen="en" title="Listen to English meaning">🔊 Listen</button>
+                </div>
+                <div id="duaDetailEn" class="dua-detail-meaning-en"></div>
               </div>
-              <div id="duaDetailEn" class="dua-detail-meaning-en"></div>
-            </div>
 
-            <div class="dua-detail-section">
-              <div class="dua-detail-label-row">
-                <div class="dua-detail-label">বাংলা অর্থ</div>
+              <div class="dua-detail-section">
+                <div class="dua-detail-label-row">
+                  <div class="dua-detail-label">বাংলা অর্থ</div>
+                </div>
+                <div id="duaDetailBn" class="dua-detail-meaning-bn"></div>
               </div>
-              <div id="duaDetailBn" class="dua-detail-meaning-bn"></div>
+
+              <div class="dua-listen-row">
+                <button id="listenAllBtn" class="dua-listen-btn" data-listen="all">🔊 Listen to Full Dua</button>
+                <button id="stopListenBtn" class="dua-listen-btn" data-listen="stop" style="display:none;">⏹ Stop</button>
+              </div>
             </div>
 
-            <div class="dua-listen-row">
-              <button id="listenAllBtn" class="dua-listen-btn" data-listen="all">🔊 Listen to Full Dua</button>
-              <button id="stopListenBtn" class="dua-listen-btn" data-listen="stop" style="display:none;">⏹ Stop</button>
+            <div class="dua-nav">
+              <button id="prevDuaBtn" class="dua-nav-btn">← Previous</button>
+              <button id="nextDuaBtn" class="dua-nav-btn primary">Next →</button>
             </div>
-          </div>
-
-          <div class="dua-nav">
-            <button id="prevDuaBtn" class="dua-nav-btn">← Previous</button>
-            <button id="nextDuaBtn" class="dua-nav-btn primary">Next →</button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- History modal -->
+  <!-- History modal — same shell + card -->
   <div id="historyModal" class="modal-overlay">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">📜 Saved Sessions</span>
-        <button id="closeHistoryBtn" class="modal-close" aria-label="Close">✕</button>
-      </div>
-      <div id="historyList" class="modal-body"></div>
-      <div class="modal-footer">
-        <button id="clearHistoryBtn" class="modal-btn danger">Clear All</button>
-        <button id="closeHistoryBtn2" class="modal-btn">Close</button>
+    <div class="app-shell">
+      <div class="app-card">
+        <div class="modal-header">
+          <span class="modal-title">📜 Saved Sessions</span>
+          <button id="closeHistoryBtn" class="modal-close" aria-label="Close">✕</button>
+        </div>
+        <div id="historyList" class="modal-body"></div>
+        <div class="modal-footer">
+          <button id="clearHistoryBtn" class="modal-btn danger">Clear All</button>
+          <button id="closeHistoryBtn2" class="modal-btn">Close</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Add/Edit Dhikr modal -->
+  <!-- Add/Edit Dhikr modal — same shell + card -->
   <div id="dhikrModal" class="modal-overlay">
-    <div class="modal">
-      <div class="modal-header">
-        <span id="dhikrModalTitle" class="modal-title">➕ Add New Dhikr</span>
-        <button id="closeDhikrBtn" class="modal-close" aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label class="form-label" for="dhikrNameInput">Name (English)</label>
-          <input id="dhikrNameInput" class="form-input" type="text" maxlength="40" placeholder="e.g. Subhanallah" />
+    <div class="app-shell">
+      <div class="app-card">
+        <div class="modal-header">
+          <span id="dhikrModalTitle" class="modal-title">➕ Add New Dhikr</span>
+          <button id="closeDhikrBtn" class="modal-close" aria-label="Close">✕</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="dhikrArabicInput">Arabic Text (optional)</label>
-          <textarea id="dhikrArabicInput" class="form-textarea" maxlength="120" placeholder="سُبْحَانَ ٱللَّٰهِ"></textarea>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="dhikrNameInput">Name (English)</label>
+            <input id="dhikrNameInput" class="form-input" type="text" maxlength="40" placeholder="e.g. Subhanallah" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dhikrArabicInput">Arabic Text (optional)</label>
+            <textarea id="dhikrArabicInput" class="form-textarea" maxlength="120" placeholder="سُبْحَانَ ٱللَّٰهِ"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dhikrTranslationInput">English Meaning</label>
+            <input id="dhikrTranslationInput" class="form-input" type="text" maxlength="80" placeholder="Glory be to Allah" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dhikrTranslationBnInput">Bangla Meaning</label>
+            <input id="dhikrTranslationBnInput" class="form-input" type="text" maxlength="80" placeholder="আল্লাহ পবিত্র, মহান" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dhikrTargetInput">Default Target (up to 6 digits)</label>
+            <input id="dhikrTargetInput" class="form-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" />
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="dhikrTranslationInput">English Meaning</label>
-          <input id="dhikrTranslationInput" class="form-input" type="text" maxlength="80" placeholder="Glory be to Allah" />
+        <div class="modal-footer">
+          <button id="cancelDhikrBtn" class="modal-btn">Cancel</button>
+          <button id="saveDhikrBtn" class="modal-btn primary">Save</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="dhikrTranslationBnInput">Bangla Meaning</label>
-          <input id="dhikrTranslationBnInput" class="form-input" type="text" maxlength="80" placeholder="আল্লাহ পবিত্র, মহান" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="dhikrTargetInput">Default Target (up to 6 digits)</label>
-          <input id="dhikrTargetInput" class="form-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" />
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="cancelDhikrBtn" class="modal-btn">Cancel</button>
-        <button id="saveDhikrBtn" class="modal-btn primary">Save</button>
       </div>
     </div>
   </div>
@@ -1789,9 +1778,9 @@
       'use strict';
 
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v14',
-        ACTIVE: 'tasbeeh_active_v14',
-        HISTORY: 'tasbeeh_history_v14',
+        DHIKRS: 'tasbeeh_dhikrs_v15',
+        ACTIVE: 'tasbeeh_active_v15',
+        HISTORY: 'tasbeeh_history_v15',
         SOUND: 'tasbeeh_sound_v1'
       };
 
@@ -1810,73 +1799,15 @@
       ];
 
       const DAILY_DUAS = [
-        // RAMADAN & FASTING (NEW)
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Intention for Fasting (Niyyah)',
-          arabic: 'وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ',
-          translit: 'Wa bisawmi ghadin nawaytu min shahri Ramadan',
-          en: 'And I intend to keep the fast for tomorrow in the month of Ramadan.',
-          bn: 'এবং আমি রমজান মাসের আগামীকালের রোজা রাখার নিয়ত করলাম।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua for Suhoor (Pre-Dawn Meal)',
-          arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ',
-          translit: 'Allahumma barik lana fima razaqtana wa qina \'adhaban-nar',
-          en: 'O Allah, bless us in what You have provided us and save us from the punishment of the Fire.',
-          bn: 'হে আল্লাহ, আপনি আমাদের যা রিজিক দিয়েছেন তাতে বরকত দিন এবং জাহান্নামের আজাব থেকে রক্ষা করুন।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua at Iftar (Breaking the Fast)',
-          arabic: 'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ',
-          translit: 'Dhahaba adh-dhama\'u wabtallatil-\'uruqu wa thabatal-ajru in sha Allah',
-          en: 'The thirst has gone, the veins are moistened, and the reward is confirmed, if Allah wills.',
-          bn: 'পিপাসা দূর হয়েছে, শিরাগুলো সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হয়েছে।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua When Seeing the New Moon',
-          arabic: 'اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ',
-          translit: 'Allahumma ahillahu \'alayna bil-yumni wal-iman was-salamati wal-islam',
-          en: 'O Allah, let this moon appear on us with security, faith, safety, and Islam.',
-          bn: 'হে আল্লাহ, এই চাঁদ আমাদের উপর নিরাপত্তা, ঈমান, শান্তি ও ইসলামের সাথে উদিত করুন।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua for Laylatul Qadr',
-          arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي',
-          translit: 'Allahumma innaka \'afuwwun tuhibbul-\'afwa fa\'fu \'anni',
-          en: 'O Allah, You are Most Forgiving, and You love forgiveness; so forgive me.',
-          bn: 'হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন, তাই আমাকে ক্ষমা করুন।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua for Breaking Fast at Someone\'s Home',
-          arabic: 'أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ',
-          translit: 'Aftara \'indakumus-sa\'imuna wa akala ta\'amakumul-abraru wa sallat \'alaykumul-mala\'ikah',
-          en: 'May the fasting break their fast in your home, and may the righteous eat your food, and may the angels send blessings upon you.',
-          bn: 'আপনার ঘরে রোজাদাররা ইফতার করুক, নেককাররা আপনার খাবার খাক এবং ফেরেশতারা আপনার উপর দোয়া করুক।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua When Someone Insults You While Fasting',
-          arabic: 'إِنِّي صَائِمٌ إِنِّي صَائِمٌ',
-          translit: 'Inni sa\'imun, inni sa\'imun',
-          en: 'I am fasting, I am fasting.',
-          bn: 'আমি রোজাদার, আমি রোজাদার।'
-        },
-        {
-          category: '🌙 Ramadan & Fasting',
-          title: 'Dua for Forgiveness in Ramadan',
-          arabic: 'رَبَّنَا اغْفِرْ لَنَا وَلِوَالِدَيْنَا وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
-          translit: 'Rabbanaghfir lana wa liwalidayna warhamhuma kama rabbayani saghira',
-          en: 'Our Lord, forgive us and our parents, and have mercy on them as they raised me when I was small.',
-          bn: 'হে আমাদের রব, আমাদের এবং আমাদের পিতা-মাতাকে ক্ষমা করুন এবং তাদের প্রতি দয়া করুন যেমন তারা আমাকে ছোটবেলায় লালন-পালন করেছেন।'
-        },
+        { category: '🌙 Ramadan & Fasting', title: 'Intention for Fasting (Niyyah)', arabic: 'وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ', translit: 'Wa bisawmi ghadin nawaytu min shahri Ramadan', en: 'And I intend to keep the fast for tomorrow in the month of Ramadan.', bn: 'এবং আমি রমজান মাসের আগামীকালের রোজা রাখার নিয়ত করলাম।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua for Suhoor (Pre-Dawn Meal)', arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ', translit: 'Allahumma barik lana fima razaqtana wa qina \'adhaban-nar', en: 'O Allah, bless us in what You have provided us and save us from the punishment of the Fire.', bn: 'হে আল্লাহ, আপনি আমাদের যা রিজিক দিয়েছেন তাতে বরকত দিন এবং জাহান্নামের আজাব থেকে রক্ষা করুন।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua at Iftar (Breaking the Fast)', arabic: 'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ', translit: 'Dhahaba adh-dhama\'u wabtallatil-\'uruqu wa thabatal-ajru in sha Allah', en: 'The thirst has gone, the veins are moistened, and the reward is confirmed, if Allah wills.', bn: 'পিপাসা দূর হয়েছে, শিরাগুলো সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হয়েছে।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua When Seeing the New Moon', arabic: 'اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ', translit: 'Allahumma ahillahu \'alayna bil-yumni wal-iman was-salamati wal-islam', en: 'O Allah, let this moon appear on us with security, faith, safety, and Islam.', bn: 'হে আল্লাহ, এই চাঁদ আমাদের উপর নিরাপত্তা, ঈমান, শান্তি ও ইসলামের সাথে উদিত করুন।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua for Laylatul Qadr', arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي', translit: 'Allahumma innaka \'afuwwun tuhibbul-\'afwa fa\'fu \'anni', en: 'O Allah, You are Most Forgiving, and You love forgiveness; so forgive me.', bn: 'হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন, তাই আমাকে ক্ষমা করুন।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua for Breaking Fast at Someone\'s Home', arabic: 'أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ', translit: 'Aftara \'indakumus-sa\'imuna wa akala ta\'amakumul-abraru wa sallat \'alaykumul-mala\'ikah', en: 'May the fasting break their fast in your home, and may the righteous eat your food, and may the angels send blessings upon you.', bn: 'আপনার ঘরে রোজাদাররা ইফতার করুক, নেককাররা আপনার খাবার খাক এবং ফেরেশতারা আপনার উপর দোয়া করুক।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua When Someone Insults You While Fasting', arabic: 'إِنِّي صَائِمٌ إِنِّي صَائِمٌ', translit: 'Inni sa\'imun, inni sa\'imun', en: 'I am fasting, I am fasting.', bn: 'আমি রোজাদার, আমি রোজাদার।' },
+        { category: '🌙 Ramadan & Fasting', title: 'Dua for Forgiveness in Ramadan', arabic: 'رَبَّنَا اغْفِرْ لَنَا وَلِوَالِدَيْنَا وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا', translit: 'Rabbanaghfir lana wa liwalidayna warhamhuma kama rabbayani saghira', en: 'Our Lord, forgive us and our parents, and have mercy on them as they raised me when I was small.', bn: 'হে আমাদের রব, আমাদের এবং আমাদের পিতা-মাতাকে ক্ষমা করুন এবং তাদের প্রতি দয়া করুন যেমন তারা আমাকে ছোটবেলায় লালন-পালন করেছেন।' },
 
-        // SLEEP & WAKING
         { category: '😴 Sleep & Waking', title: 'Before Sleeping', arabic: 'بِاسْمِكَ ٱللَّٰهُمَّ أَمُوتُ وَأَحْيَا', translit: 'Bismika Allahumma amootu wa ahya', en: 'In Your name, O Allah, I die and I live.', bn: 'হে আল্লাহ, আপনার নামেই আমি মরি ও বাঁচি।' },
         { category: '😴 Sleep & Waking', title: 'Upon Waking Up', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ ٱلنُّشُورُ', translit: 'Alhamdulillahi alladhi ahyana ba\'da ma amatana wa ilayhin-nushur', en: 'All praise is for Allah who gave us life after death, and to Him is the resurrection.', bn: 'সকল প্রশংসা আল্লাহর, যিনি মৃত্যুর পর আমাদের জীবন দান করেছেন এবং তাঁর কাছেই ফিরে যেতে হবে।' },
         {
@@ -1888,44 +1819,35 @@
           bn: 'আল্লাহ, তিনি ছাড়া কোনো উপাস্য নেই। তিনি চিরঞ্জীব, সবকিছুর ধারক। তাঁকে তন্দ্রা ও নিদ্রা স্পর্শ করে না। আসমান ও জমিনে যা কিছু আছে সবই তাঁর। কে আছে যে তাঁর অনুমতি ছাড়া তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পিছনে যা কিছু আছে। তারা তাঁর জ্ঞানের কিছুই আয়ত্ত করতে পারে না, তবে তিনি যতটুকু চান। তাঁর কুরসি আসমান ও জমিন পরিব্যাপ্ত করে আছে, আর তা রক্ষণাবেক্ষণ তাঁর জন্য কষ্টকর নয়। তিনিই সুউচ্চ, মহান।'
         },
 
-        // EATING
         { category: '🍽️ Eating & Drinking', title: 'Before Eating', arabic: 'بِسْمِ ٱللَّٰهِ وَعَلَىٰ بَرَكَةِ ٱللَّٰهِ', translit: 'Bismillahi wa \'ala barakatillah', en: 'In the name of Allah and with the blessings of Allah.', bn: 'আল্লাহর নামে এবং আল্লাহর বরকতের সাথে।' },
         { category: '🍽️ Eating & Drinking', title: 'After Eating', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ', translit: 'Alhamdulillahi alladhi at\'amana wa saqana wa ja\'alana muslimin', en: 'All praise is for Allah who fed us, gave us drink, and made us Muslims.', bn: 'সকল প্রশংসা আল্লাহর, যিনি আমাদের খাওয়ালেন, পান করালেন এবং মুসলিম বানালেন।' },
         { category: '🍽️ Eating & Drinking', title: 'When Forgetting Bismillah', arabic: 'بِسْمِ ٱللَّٰهِ أَوَّلَهُ وَآخِرَهُ', translit: 'Bismillahi awwalahu wa akhirahu', en: 'In the name of Allah at the beginning and at the end.', bn: 'আল্লাহর নামে শুরুতে এবং শেষে।' },
 
-        // BATHROOM
         { category: '🚿 Bathroom', title: 'Before Entering Toilet', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْخُبُثِ وَٱلْخَبَائِثِ', translit: 'Allahumma inni a\'udhu bika minal-khubuthi wal-khaba\'ith', en: 'O Allah, I seek refuge with You from the male and female devils.', bn: 'হে আল্লাহ, আমি পুরুষ ও নারী শয়তান থেকে আপনার আশ্রয় চাই।' },
         { category: '🚿 Bathroom', title: 'After Leaving Toilet', arabic: 'غُفْرَانَكَ', translit: 'Ghufranak', en: 'I seek Your forgiveness.', bn: 'আমি আপনার ক্ষমা প্রার্থনা করি।' },
 
-        // WUDU
         { category: '🕌 Wudu & Prayer', title: 'Before Wudu', arabic: 'بِسْمِ ٱللَّٰهِ', translit: 'Bismillah', en: 'In the name of Allah.', bn: 'আল্লাহর নামে।' },
         { category: '🕌 Wudu & Prayer', title: 'After Wudu', arabic: 'أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ', translit: 'Ash-hadu an la ilaha illallah wa ash-hadu anna Muhammadan \'abduhu wa rasuluh', en: 'I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.', bn: 'আমি সাক্ষ্য দিচ্ছি যে, আল্লাহ ছাড়া কোনো উপাস্য নেই এবং মুহাম্মদ (সা.) তাঁর বান্দা ও রাসূল।' },
         { category: '🕌 Wudu & Prayer', title: 'Entering the Mosque', arabic: 'ٱللَّٰهُمَّ ٱفْتَحْ لِى أَبْوَابَ رَحْمَتِكَ', translit: 'Allahumma iftah li abwaba rahmatik', en: 'O Allah, open the gates of Your mercy for me.', bn: 'হে আল্লাহ, আমার জন্য আপনার রহমতের দরজা খুলে দিন।' },
         { category: '🕌 Wudu & Prayer', title: 'Leaving the Mosque', arabic: 'ٱللَّٰهُمَّ إِنِّى أَسْأَلُكَ مِنْ فَضْلِكَ', translit: 'Allahumma inni as\'aluka min fadlik', en: 'O Allah, I ask You from Your bounty.', bn: 'হে আল্লাহ, আমি আপনার অনুগ্রহ প্রার্থনা করি।' },
 
-        // HOME & TRAVEL
         { category: '🏠 Home & Travel', title: 'Entering Home', arabic: 'بِسْمِ ٱللَّٰهِ وَلَجْنَا وَبِسْمِ ٱللَّٰهِ خَرَجْنَا وَعَلَىٰ رَبِّنَا تَوَكَّلْنَا', translit: 'Bismillahi walajna wa bismillahi kharajna wa \'ala Rabbina tawakkalna', en: 'In the name of Allah we enter, in the name of Allah we leave, and upon our Lord we rely.', bn: 'আল্লাহর নামে আমরা প্রবেশ করলাম, আল্লাহর নামেই বের হলাম এবং আমাদের রবের উপরই ভরসা করলাম।' },
         { category: '🏠 Home & Travel', title: 'Leaving Home', arabic: 'بِسْمِ ٱللَّٰهِ تَوَكَّلْتُ عَلَى ٱللَّٰهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translit: 'Bismillahi tawakkaltu \'alallah, wa la hawla wa la quwwata illa billah', en: 'In the name of Allah, I place my trust in Allah. There is no might nor power except with Allah.', bn: 'আল্লাহর নামে, আল্লাহর উপরই ভরসা করলাম। আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও ক্ষমতা নেই।' },
         { category: '🏠 Home & Travel', title: 'Travel Dua', arabic: 'سُبْحَٰنَ ٱلَّذِى سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُۥ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنقَلِبُونَ', translit: 'Subhanal-ladhi sakhkhara lana hadha wa ma kunna lahu muqrinin, wa inna ila Rabbina lamunqalibun', en: 'Glory to Him who has subjected this to us, and to our Lord we shall surely return.', bn: 'পবিত্র সেই সত্তা, যিনি এটিকে আমাদের অধীন করে দিয়েছেন, নিশ্চয়ই আমরা আমাদের রবের কাছে ফিরে যাব।' },
 
-        // DISTRESS
         { category: '🛡️ Distress & Protection', title: 'When in Difficulty', arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ ٱلْعَظِيمُ ٱلْحَلِيمُ', translit: 'La ilaha illallahul-\'Azimul-Halim', en: 'There is no god but Allah, the Mighty, the Forbearing.', bn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি মহান ও সহনশীল।' },
         { category: '🛡️ Distress & Protection', title: 'For Anxiety & Sorrow', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْهَمِّ وَٱلْحَزَنِ', translit: 'Allahumma inni a\'udhu bika minal-hammi wal-hazan', en: 'O Allah, I seek refuge with You from anxiety and sorrow.', bn: 'হে আল্লাহ, আমি দুশ্চিন্তা ও দুঃখ থেকে আপনার আশ্রয় চাই।' },
         { category: '🛡️ Distress & Protection', title: 'Seeking Forgiveness', arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ رَبِّى مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ', translit: 'Astaghfirullaha Rabbi min kulli dhanbin wa atubu ilayh', en: 'I seek forgiveness from Allah, my Lord, for every sin, and I turn to Him in repentance.', bn: 'আমি আমার রব আল্লাহর কাছে সব গুনাহের জন্য ক্ষমা চাই এবং তাঁর কাছে তওবা করছি।' },
 
-        // PRAISE
         { category: '✨ Praise & Gratitude', title: 'When Something Good Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى بِنِعْمَتِهِ تَتِمُّ ٱلصَّالِحَاتُ', translit: 'Alhamdulillahi alladhi bi ni\'matihi tatimmus-salihat', en: 'All praise is for Allah by whose favor good things are accomplished.', bn: 'সকল প্রশংসা আল্লাহর, যাঁর নিয়ামতে সকল কল্যাণ সম্পন্ন হয়।' },
         { category: '✨ Praise & Gratitude', title: 'When Something Bad Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ عَلَىٰ كُلِّ حَالٍ', translit: 'Alhamdulillahi \'ala kulli hal', en: 'All praise is for Allah in every situation.', bn: 'সব অবস্থায় আল্লাহর প্রশংসা।' },
 
-        // WEATHER
         { category: '🌧️ Weather & Nature', title: 'When It Rains', arabic: 'ٱللَّٰهُمَّ صَيِّبًا نَافِعًا', translit: 'Allahumma sayyiban nafi\'a', en: 'O Allah, make it a beneficial rain.', bn: 'হে আল্লাহ, এটি উপকারী বৃষ্টি করুন।' },
         { category: '🌧️ Weather & Nature', title: 'When Hearing Thunder', arabic: 'سُبْحَٰنَ ٱلَّذِى يُسَبِّحُ ٱلرَّعْدُ بِحَمْدِهِ وَٱلْمَلَٰئِكَةُ مِنْ خِيفَتِهِ', translit: 'Subhanal-ladhi yusabbihur-ra\'du bi hamdihi wal-mala\'ikatu min khifatih', en: 'Glory to Him whom the thunder glorifies with His praise, and the angels too out of awe of Him.', bn: 'পবিত্র সেই সত্তা, যাঁর প্রশংসায় বজ্রধ্বনি ও ফেরেশতারা তাঁর ভয়ে তাসবীহ পাঠ করে।' },
 
-        // KNOWLEDGE
         { category: '📚 Knowledge', title: 'For Increase in Knowledge', arabic: 'رَبِّ زِدْنِي عِلْمًا', translit: 'Rabbi zidni \'ilma', en: 'My Lord, increase me in knowledge.', bn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন।' },
         { category: '📚 Knowledge', title: 'Before Studying', arabic: 'ٱللَّٰهُمَّ ٱنْفَعْنِى بِمَا عَلَّمْتَنِى وَعَلِّمْنِى مَا يَنْفَعُنِى', translit: 'Allahumma infa\'ni bima \'allamtani wa \'allimni ma yanfa\'uni', en: 'O Allah, benefit me with what You have taught me, and teach me what will benefit me.', bn: 'হে আল্লাহ, আপনি আমাকে যা শিখিয়েছেন তা দিয়ে উপকৃত করুন, এবং যা উপকারী তা শিখিয়ে দিন।' },
 
-        // GENERAL
         { category: '🌟 General', title: 'Sayyidul Istighfar', arabic: 'ٱللَّٰهُمَّ أَنْتَ رَبِّى لَا إِلَٰهَ إِلَّا أَنْتَ خَلَقْتَنِى وَأَنَا عَبْدُكَ', translit: 'Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana \'abduk', en: 'O Allah, You are my Lord, there is no god but You. You created me and I am Your servant.', bn: 'হে আল্লাহ, আপনি আমার রব, আপনি ছাড়া কোনো উপাস্য নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা।' },
         { category: '🌟 General', title: 'Best Dhikr', arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ سُبْحَانَ ٱللَّٰهِ ٱلْعَظِيمِ', translit: 'Subhanallahi wa bi hamdihi, Subhanallahil-\'Azim', en: 'Glory be to Allah and praise Him, glory be to Allah the Magnificent.', bn: 'আল্লাহর প্রশংসাসহ পবিত্রতা, মহান আল্লাহ পবিত্র।' }
       ];
@@ -2015,7 +1937,6 @@
 
       let editingDhikrId = null;
 
-      // ========== SPEECH (English only) ==========
       const speechSupported = 'speechSynthesis' in window;
       let cachedVoices = [];
 
@@ -2113,7 +2034,6 @@
         if (listenAllBtn) listenAllBtn.style.display = 'none';
         if (stopListenBtn) stopListenBtn.style.display = '';
 
-        // English only — no Arabic pronunciation
         if (dua.en && isSpeaking) await speakOne(dua.en, 'en-US', 0.95);
 
         isSpeaking = false;
@@ -2122,7 +2042,6 @@
         if (listenAllBtn) listenAllBtn.style.display = '';
       }
 
-      // ========== CLICK SOUND ==========
       function ensureAudioContext() {
         if (!audioCtx) {
           try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -2272,7 +2191,7 @@
             }
           }
           if (!dhikrs.length) {
-            const olderVersions = ['tasbeeh_dhikrs_v13', 'tasbeeh_dhikrs_v12'];
+            const olderVersions = ['tasbeeh_dhikrs_v14', 'tasbeeh_dhikrs_v13'];
             for (const key of olderVersions) {
               const raw = localStorage.getItem(key);
               if (raw) {
@@ -2885,8 +2804,6 @@
         updateUI();
         closeDhikrModal();
       }
-
-      // ========== EVENT LISTENERS ==========
 
       dhikrSelectDisplay.addEventListener('click', (e) => {
         e.stopPropagation();
