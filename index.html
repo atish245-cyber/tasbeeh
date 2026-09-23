@@ -5,19 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d2b1c">
 
+  <!-- ===== PWA Meta Tags ===== -->
   <meta name="description" content="A beautiful digital Tasbeeh counter with Arabic dhikr, daily duas, English and Bangla meanings, session history, and target tracking.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tasbeeh">
   <meta name="mobile-web-app-capable" content="yes">
 
+  <!-- ===== Developer / Author Info ===== -->
+  <meta name="author" content="Shah Kabir">
+  <meta name="developer" content="Shah Kabir">
+  <meta name="copyright" content="© 2026 Shah Kabir. All rights reserved.">
+
+  <!-- ===== Manifest ===== -->
   <link rel="manifest" href="manifest.json">
+
+  <!-- ===== Icons ===== -->
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <title>Tasbeeh — Dhikr Counter</title>
 
+  <!-- ===== Fonts ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -76,10 +86,9 @@
     }
 
     /* ================================================================
-       SHARED LAYOUT — 100% identical for Tasbeeh and Duas
+       SHARED LAYOUT — identical for Tasbeeh and Duas
        ================================================================ */
 
-    /* Outer shell — same size, padding, blur for both */
     .app-shell {
       background: rgba(13, 43, 28, 0.55);
       backdrop-filter: blur(16px);
@@ -89,19 +98,17 @@
       box-shadow: 0 30px 55px -20px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
       width: 100%;
       max-width: 480px;
-      /* FIXED height — same for Tasbeeh AND Duas */
-      height: min(720px, calc(100dvh - 24px));
+      height: min(760px, calc(100dvh - 24px));
       display: flex;
       flex-direction: column;
       position: relative;
       z-index: 1;
     }
 
-    /* Inner card — same border, radius, background, shadow */
     .app-card {
       background: rgba(13, 43, 28, 0.95);
       border-radius: 40px;
-      padding: 20px 16px 22px;
+      padding: 20px 16px 18px;
       box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.35);
       border: 1px solid #3b6e4b;
       position: relative;
@@ -112,7 +119,6 @@
       overflow: hidden;
     }
 
-    /* Mosque decorative background inside */
     .app-card::before {
       content: '';
       position: absolute;
@@ -142,7 +148,6 @@
       z-index: 2;
     }
 
-    /* Content wrapper — flex layout for both */
     .app-content {
       display: flex;
       flex-direction: column;
@@ -446,9 +451,9 @@
     .count-wrap {
       width: 100%;
       flex: 1 1 auto;
-      min-height: 160px;
+      min-height: 140px;
       padding: 4px 12px;
-      margin: 8px 0 16px;
+      margin: 8px 0 12px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -522,7 +527,7 @@
       background: rgba(15, 46, 29, 0.95);
       padding: 8px 12px;
       border-radius: 60px;
-      margin: 8px 0 16px;
+      margin: 6px 0 12px;
       box-shadow: inset 0 2px 6px #00000055, 0 2px 4px #00000033;
       border: 1px solid #2d5a3b;
       gap: 6px;
@@ -582,7 +587,7 @@
     .progress-ring {
       display: flex;
       justify-content: center;
-      margin: 6px 0 14px;
+      margin: 4px 0 10px;
       flex-shrink: 0;
     }
 
@@ -608,14 +613,14 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 16px 0 6px;
+      margin: 12px 0 4px;
       flex-shrink: 0;
     }
 
     .btn {
       flex: 1 1 0;
       min-width: 100px;
-      padding: 18px 8px;
+      padding: 16px 8px;
       font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: 0.5px;
@@ -643,35 +648,38 @@
       background: #2e7a48;
       box-shadow: 0 8px 0 #164a26, 0 6px 12px #00000055;
       border-color: #8fd49c;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
 
-    .btn-secondary { background: #1f4a2d; font-size: 1.05rem; }
+    .btn-secondary { background: #1f4a2d; font-size: 1rem; }
 
     .btn-warning {
       background: #5e3a1e;
       border-color: #bb8f5a;
       box-shadow: 0 8px 0 #33200e, 0 6px 12px #00000055;
       color: #ffe6c7;
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
+    /* ============ FOOTER + DEVELOPER CREDIT ============ */
     .footer-row {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 8px;
       padding: 0 4px;
       flex-shrink: 0;
+      gap: 6px;
     }
 
     .dhikr-translation {
       font-weight: 500;
       color: #c6e6b8;
       background: rgba(18, 51, 31, 0.95);
-      padding: 8px 16px;
+      padding: 6px 16px;
       border-radius: 20px;
       font-size: 0.82rem;
       border: 1px solid #3f6b4b;
@@ -680,7 +688,7 @@
       line-height: 1.4;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
       overflow: hidden;
       backdrop-filter: blur(6px);
     }
@@ -704,13 +712,32 @@
       text-overflow: ellipsis;
     }
 
+    .developer-credit {
+      text-align: center;
+      font-size: 0.62rem;
+      color: #8fb898;
+      letter-spacing: 0.4px;
+      opacity: 0.9;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      padding: 0 8px;
+    }
+
+    .developer-credit strong {
+      color: #bbf0bb;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
     /* ================================================================
        MODAL — fully opaque outside, identical card inside
        ================================================================ */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      /* FULLY OPAQUE dark background — matches body background gradient */
       background:
         radial-gradient(ellipse at 50% 0%, rgba(159, 223, 159, 0.18), transparent 55%),
         radial-gradient(ellipse at 50% 100%, rgba(46, 122, 72, 0.28), transparent 60%),
@@ -727,7 +754,6 @@
       transition: opacity 0.25s ease;
     }
 
-    /* Islamic pattern on modal overlay too */
     .modal-overlay::before {
       content: '';
       position: absolute;
@@ -742,7 +768,6 @@
 
     .modal-overlay.show { opacity: 1; pointer-events: auto; }
 
-    /* Modal shell is exactly like the main app-shell */
     .modal-overlay .app-shell {
       position: relative;
       z-index: 1;
@@ -1513,14 +1538,14 @@
 
     @media (max-width: 420px) {
       .app-shell { padding: 14px 10px 18px; border-radius: 36px; }
-      .app-card { padding: 16px 12px 20px; border-radius: 32px; }
-      .btn { padding: 15px 6px; font-size: 1.05rem; min-width: 85px; }
-      .btn-primary { font-size: 1.3rem; }
+      .app-card { padding: 16px 12px 14px; border-radius: 32px; }
+      .btn { padding: 14px 6px; font-size: 1.05rem; min-width: 85px; }
+      .btn-primary { font-size: 1.25rem; }
       .target-label { font-size: 0.8rem; }
       .target-input { width: 120px; font-size: 1.05rem; padding: 6px 8px; }
       .dhikr-selected-text { font-size: 0.85rem; }
       .dhikr-selected-arabic { font-size: 1rem; }
-      .dhikr-translation { font-size: 0.75rem; padding: 6px 12px; }
+      .dhikr-translation { font-size: 0.75rem; padding: 5px 12px; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.75rem; }
       .congrats-card { padding: 26px 20px; }
@@ -1534,6 +1559,7 @@
       .dua-detail-arabic { font-size: 1.15rem; line-height: 1.8; }
       .dua-nav-btn { font-size: 0.78rem; padding: 10px 6px; }
       .dua-listen-btn { font-size: 0.75rem; padding: 9px 8px; min-width: 110px; }
+      .developer-credit { font-size: 0.58rem; }
     }
 
     @media (max-width: 340px) {
@@ -1543,15 +1569,17 @@
       .dhikr-selected-arabic { font-size: 0.92rem; }
       .dhikr-translation .en,
       .dhikr-translation .bn { font-size: 0.7rem; }
+      .developer-credit { font-size: 0.54rem; }
     }
 
     @media (max-height: 700px) {
-      .target-row { margin: 6px 0 12px; padding: 6px 12px; }
-      .progress-ring { margin: 4px 0 10px; }
-      .button-grid { margin: 10px 0 4px; }
-      .btn { padding: 14px 6px; }
-      .footer-row { margin-top: 8px; }
-      .count-wrap { margin: 4px 0 10px; }
+      .target-row { margin: 4px 0 10px; padding: 6px 12px; }
+      .progress-ring { margin: 4px 0 8px; }
+      .button-grid { margin: 8px 0 4px; }
+      .btn { padding: 12px 6px; }
+      .footer-row { margin-top: 6px; gap: 4px; }
+      .count-wrap { margin: 4px 0 8px; min-height: 120px; }
+      .developer-credit { font-size: 0.56rem; }
     }
   </style>
 </head>
@@ -1610,7 +1638,7 @@
         </button>
       </div>
 
-      <div class="button-grid" style="margin-top: 6px;">
+      <div class="button-grid" style="margin-top: 4px;">
         <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session">
           <span class="btn-icon">💾</span> Save
         </button>
@@ -1619,11 +1647,13 @@
         </button>
       </div>
 
+      <!-- ============ FOOTER: translation + developer credit ============ -->
       <div class="footer-row">
         <div class="dhikr-translation">
           <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
           <span id="dhikrTranslationBn" class="bn">আল্লাহ পবিত্র, মহান</span>
         </div>
+        <div class="developer-credit">Developed by <strong>Shah Kabir</strong></div>
       </div>
     </div>
   </div>
@@ -1714,7 +1744,7 @@
     </div>
   </div>
 
-  <!-- History modal — same shell + card -->
+  <!-- History modal -->
   <div id="historyModal" class="modal-overlay">
     <div class="app-shell">
       <div class="app-card">
@@ -1731,7 +1761,7 @@
     </div>
   </div>
 
-  <!-- Add/Edit Dhikr modal — same shell + card -->
+  <!-- Add/Edit Dhikr modal -->
   <div id="dhikrModal" class="modal-overlay">
     <div class="app-shell">
       <div class="app-card">
@@ -1778,9 +1808,9 @@
       'use strict';
 
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v15',
-        ACTIVE: 'tasbeeh_active_v15',
-        HISTORY: 'tasbeeh_history_v15',
+        DHIKRS: 'tasbeeh_dhikrs_v16',
+        ACTIVE: 'tasbeeh_active_v16',
+        HISTORY: 'tasbeeh_history_v16',
         SOUND: 'tasbeeh_sound_v1'
       };
 
@@ -2191,7 +2221,7 @@
             }
           }
           if (!dhikrs.length) {
-            const olderVersions = ['tasbeeh_dhikrs_v14', 'tasbeeh_dhikrs_v13'];
+            const olderVersions = ['tasbeeh_dhikrs_v15', 'tasbeeh_dhikrs_v14'];
             for (const key of olderVersions) {
               const raw = localStorage.getItem(key);
               if (raw) {
