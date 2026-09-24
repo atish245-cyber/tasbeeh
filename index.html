@@ -5,29 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d2b1c">
 
-  <!-- ===== PWA Meta Tags ===== -->
   <meta name="description" content="A beautiful digital Tasbeeh counter with Arabic dhikr, daily duas, English and Bangla meanings, session history, and target tracking.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tasbeeh">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <!-- ===== Developer / Author Info ===== -->
   <meta name="author" content="Shah Kabir">
   <meta name="developer" content="Shah Kabir">
   <meta name="copyright" content="© 2026 Shah Kabir. All rights reserved.">
 
-  <!-- ===== Manifest ===== -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- ===== Icons ===== -->
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <title>Tasbeeh — Dhikr Counter</title>
 
-  <!-- ===== Fonts ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -84,10 +78,6 @@
       background-repeat: repeat;
       pointer-events: none;
     }
-
-    /* ================================================================
-       SHARED LAYOUT — identical for Tasbeeh and Duas
-       ================================================================ */
 
     .app-shell {
       background: rgba(13, 43, 28, 0.55);
@@ -155,10 +145,6 @@
       min-height: 0;
       overflow: hidden;
     }
-
-    /* ================================================================
-       MAIN SCREEN — TASBEEH
-       ================================================================ */
 
     .top-bar {
       display: flex;
@@ -663,7 +649,6 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    /* ============ FOOTER + DEVELOPER CREDIT ============ */
     .footer-row {
       display: flex;
       flex-direction: column;
@@ -732,9 +717,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* ================================================================
-       MODAL — fully opaque outside, identical card inside
-       ================================================================ */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -806,10 +788,6 @@
     }
 
     .modal-close:active { background: #2b6e40; }
-
-    /* ================================================================
-       DUAS VIEWS
-       ================================================================ */
 
     .duas-view {
       display: flex;
@@ -1222,10 +1200,6 @@
       transform: none;
     }
 
-    /* ================================================================
-       HISTORY + FORM
-       ================================================================ */
-
     .history-hint {
       font-size: 0.72rem;
       color: #7fa588;
@@ -1369,10 +1343,6 @@
     .dhikr-dropdown::-webkit-scrollbar-thumb,
     .duas-list::-webkit-scrollbar-thumb,
     .dua-detail-body::-webkit-scrollbar-thumb { background: #2d5a3b; border-radius: 3px; }
-
-    /* ================================================================
-       CONGRATS + TOAST
-       ================================================================ */
 
     .congrats-overlay {
       position: fixed;
@@ -1532,10 +1502,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ================================================================
-       RESPONSIVE
-       ================================================================ */
-
     @media (max-width: 420px) {
       .app-shell { padding: 14px 10px 18px; border-radius: 36px; }
       .app-card { padding: 16px 12px 14px; border-radius: 32px; }
@@ -1585,9 +1551,6 @@
 </head>
 <body>
 
-  <!-- ================================================================
-       MAIN SCREEN — Tasbeeh
-       ================================================================ -->
   <div class="app-shell">
     <div class="app-card">
       <div class="top-bar">
@@ -1647,7 +1610,6 @@
         </button>
       </div>
 
-      <!-- ============ FOOTER: translation + developer credit ============ -->
       <div class="footer-row">
         <div class="dhikr-translation">
           <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
@@ -1669,9 +1631,6 @@
     </div>
   </div>
 
-  <!-- ================================================================
-       DUAS MODAL — identical frame to main screen
-       ================================================================ -->
   <div id="duasModal" class="modal-overlay">
     <div class="app-shell">
       <div class="app-card">
@@ -1744,7 +1703,6 @@
     </div>
   </div>
 
-  <!-- History modal -->
   <div id="historyModal" class="modal-overlay">
     <div class="app-shell">
       <div class="app-card">
@@ -1761,7 +1719,6 @@
     </div>
   </div>
 
-  <!-- Add/Edit Dhikr modal -->
   <div id="dhikrModal" class="modal-overlay">
     <div class="app-shell">
       <div class="app-card">
@@ -3048,6 +3005,92 @@
       loadSoundPref();
       updateUI();
       renderDropdown();
+
+    })();
+
+    // ================================================================
+    // ANDROID BACK BUTTON HANDLER
+    // ================================================================
+    // Handles the Android system back button (the ◁ button at the bottom
+    // of the screen on Android devices):
+    //   1. If a modal is open → close the modal
+    //   2. If the dhikr dropdown is open → close the dropdown
+    //   3. Otherwise → exit the app (or go back in history)
+    // ================================================================
+     (function() {
+      'use strict';
+
+      // Push a state so the first back press is captured by us
+      try {
+        history.pushState({ appState: 'root' }, '', location.href);
+      } catch (e) {
+        // ignore
+      }
+
+      function handleBack() {
+        // 1. Check for any open modal (Duas, History, Add/Edit Dhikr)
+        const openModals = document.querySelectorAll('.modal-overlay.show');
+        if (openModals.length > 0) {
+          const topModal = openModals[openModals.length - 1];
+          const closeBtn = topModal.querySelector('.modal-close');
+          if (closeBtn) {
+            closeBtn.click();
+            return true;
+          }
+          topModal.classList.remove('show');
+          return true;
+        }
+
+        // 2. Check for the dhikr dropdown
+        const dropdown = document.getElementById('dhikrDropdown');
+        const selectorDisplay = document.getElementById('dhikrSelectDisplay');
+        if (dropdown && dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+          if (selectorDisplay) selectorDisplay.classList.remove('open');
+          return true;
+        }
+
+        // 3. Nothing to close — try to exit the app
+        return false;
+      }
+
+      window.addEventListener('popstate', function() {
+        const handled = handleBack();
+        if (!handled) {
+          if (window.Android && typeof window.Android.exitApp === 'function') {
+            window.Android.exitApp();
+          } else if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+            try { window.Capacitor.Plugins.App.exitApp(); } catch (e) {}
+          } else if (navigator.app && typeof navigator.app.exitApp === 'function') {
+            navigator.app.exitApp();
+          } else {
+            window.close();
+          }
+        } else {
+          try {
+            history.pushState({ appState: 'root' }, '', location.href);
+          } catch (e) {}
+        }
+      });
+
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (m.type === 'attributes' && m.attributeName === 'class') {
+            const el = m.target;
+            if (el.classList && el.classList.contains('modal-overlay')) {
+              if (el.classList.contains('show')) {
+                try {
+                  history.pushState({ appState: 'modal' }, '', location.href);
+                } catch (e) {}
+              }
+            }
+          }
+        });
+      });
+
+      document.querySelectorAll('.modal-overlay').forEach(function(modal) {
+        observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
+      });
 
     })();
   </script>
