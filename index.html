@@ -154,6 +154,7 @@
       min-height: 26px;
       gap: 4px;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .top-bar-left {
@@ -161,6 +162,12 @@
       gap: 4px;
       align-items: center;
       flex-wrap: wrap;
+    }
+
+    .top-bar-right {
+      display: flex;
+      gap: 4px;
+      align-items: center;
     }
 
     .save-indicator {
@@ -233,10 +240,31 @@
       color: #ffd9a0;
     }
 
+    .exit-btn {
+      background: rgba(94, 40, 30, 0.9);
+      border: 1px solid #d47a5a;
+      color: #ffd9a0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.4px;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .exit-btn:active { transform: scale(0.95); background: rgba(140, 60, 40, 1); }
+
     .dhikr-selector {
       position: relative;
       margin-bottom: 8px;
       z-index: 30;
+      flex-shrink: 0;
     }
 
     .dhikr-select-display {
@@ -246,11 +274,11 @@
       background: rgba(18, 51, 31, 0.92);
       border: 1px solid #3f6b4b;
       border-radius: 24px;
-      padding: 10px 16px;
+      padding: 12px 16px;
       cursor: pointer;
       transition: all 0.15s;
       gap: 8px;
-      min-height: 62px;
+      min-height: 96px;
       backdrop-filter: blur(6px);
     }
 
@@ -265,7 +293,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 3px;
       min-width: 0;
       overflow: hidden;
     }
@@ -283,7 +311,7 @@
     }
 
     .dhikr-selected-arabic {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: #9fdf9f;
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
       direction: rtl;
@@ -294,6 +322,30 @@
       max-width: 100%;
       line-height: 1.3;
       min-height: 1.3em;
+    }
+
+    .dhikr-selected-translation {
+      font-size: 0.72rem;
+      color: #c6e6b8;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.2;
+      font-style: italic;
+    }
+
+    .dhikr-selected-translation-bn {
+      font-size: 0.75rem;
+      color: #9fdf9f;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.2;
+      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
     }
 
     .dhikr-select-arrow {
@@ -363,8 +415,8 @@
     }
 
     .dhikr-option-arabic {
-      font-size: 0.78rem;
-      color: #8fb898;
+      font-size: 0.85rem;
+      color: #9fdf9f;
       margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
@@ -372,6 +424,28 @@
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
       direction: rtl;
       text-align: right;
+    }
+
+    .dhikr-option-translation {
+      font-size: 0.68rem;
+      color: #c6e6b8;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-style: italic;
+      text-align: right;
+    }
+
+    .dhikr-option-translation-bn {
+      font-size: 0.7rem;
+      color: #9fdf9f;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
     }
 
     .dhikr-option-stats {
@@ -434,10 +508,11 @@
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
+    /* Counter area — now grows to push everything else down */
     .count-wrap {
       width: 100%;
       flex: 1 1 auto;
-      min-height: 140px;
+      min-height: 80px;
       padding: 4px 12px;
       margin: 8px 0 12px;
       display: flex;
@@ -506,6 +581,14 @@
     .count-display[data-len="5"] { font-size: clamp(2.2rem, 11vw, 4.5rem); }
     .count-display[data-len="6"] { font-size: clamp(1.9rem, 9vw, 3.8rem); }
 
+    /* ====== BOTTOM STACK — all controls grouped together at the bottom ====== */
+    .bottom-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
     .target-row {
       display: flex;
       align-items: center;
@@ -513,7 +596,6 @@
       background: rgba(15, 46, 29, 0.95);
       padding: 8px 12px;
       border-radius: 60px;
-      margin: 6px 0 12px;
       box-shadow: inset 0 2px 6px #00000055, 0 2px 4px #00000033;
       border: 1px solid #2d5a3b;
       gap: 6px;
@@ -573,7 +655,6 @@
     .progress-ring {
       display: flex;
       justify-content: center;
-      margin: 4px 0 10px;
       flex-shrink: 0;
     }
 
@@ -599,7 +680,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 12px 0 4px;
       flex-shrink: 0;
     }
 
@@ -649,59 +729,20 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    .footer-row {
+    /* Developer credit at the very bottom */
+    .developer-credit-row {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 8px;
-      padding: 0 4px;
+      padding: 4px 4px 0 4px;
       flex-shrink: 0;
-      gap: 6px;
-    }
-
-    .dhikr-translation {
-      font-weight: 500;
-      color: #c6e6b8;
-      background: rgba(18, 51, 31, 0.95);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      border: 1px solid #3f6b4b;
-      max-width: 100%;
-      text-align: center;
-      line-height: 1.4;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      overflow: hidden;
-      backdrop-filter: blur(6px);
-    }
-
-    .dhikr-translation .en {
-      color: #c6e6b8;
-      font-weight: 500;
-      font-size: 0.82rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .dhikr-translation .bn {
-      color: #9fdf9f;
-      font-weight: 500;
-      font-size: 0.82rem;
-      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .developer-credit {
       text-align: center;
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       color: #8fb898;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       opacity: 0.9;
       line-height: 1.2;
       white-space: nowrap;
@@ -1511,9 +1552,8 @@
       .target-input { width: 120px; font-size: 1.05rem; padding: 6px 8px; }
       .dhikr-selected-text { font-size: 0.85rem; }
       .dhikr-selected-arabic { font-size: 1rem; }
-      .dhikr-translation { font-size: 0.75rem; padding: 5px 12px; }
-      .dhikr-translation .en,
-      .dhikr-translation .bn { font-size: 0.75rem; }
+      .dhikr-selected-translation { font-size: 0.65rem; }
+      .dhikr-selected-translation-bn { font-size: 0.68rem; }
       .congrats-card { padding: 26px 20px; }
       .congrats-emoji { font-size: 3.5rem; }
       .congrats-title { font-size: 1.9rem; }
@@ -1522,10 +1562,11 @@
       .floating-heart { font-size: 1.7rem; }
       .top-btn { font-size: 0.65rem; padding: 3px 8px; }
       .sound-btn { font-size: 0.65rem; padding: 3px 7px; }
+      .exit-btn { font-size: 0.65rem; padding: 3px 8px; }
       .dua-detail-arabic { font-size: 1.15rem; line-height: 1.8; }
       .dua-nav-btn { font-size: 0.78rem; padding: 10px 6px; }
       .dua-listen-btn { font-size: 0.75rem; padding: 9px 8px; min-width: 110px; }
-      .developer-credit { font-size: 0.58rem; }
+      .developer-credit { font-size: 0.6rem; }
     }
 
     @media (max-width: 340px) {
@@ -1533,19 +1574,16 @@
       .target-label { font-size: 0.72rem; }
       .dhikr-selected-text { font-size: 0.78rem; }
       .dhikr-selected-arabic { font-size: 0.92rem; }
-      .dhikr-translation .en,
-      .dhikr-translation .bn { font-size: 0.7rem; }
-      .developer-credit { font-size: 0.54rem; }
+      .dhikr-selected-translation { font-size: 0.6rem; }
+      .dhikr-selected-translation-bn { font-size: 0.62rem; }
+      .developer-credit { font-size: 0.56rem; }
     }
 
     @media (max-height: 700px) {
-      .target-row { margin: 4px 0 10px; padding: 6px 12px; }
-      .progress-ring { margin: 4px 0 8px; }
-      .button-grid { margin: 8px 0 4px; }
       .btn { padding: 12px 6px; }
-      .footer-row { margin-top: 6px; gap: 4px; }
-      .count-wrap { margin: 4px 0 8px; min-height: 120px; }
-      .developer-credit { font-size: 0.56rem; }
+      .count-wrap { min-height: 60px; }
+      .dhikr-select-display { min-height: 86px; padding: 8px 14px; }
+      .developer-credit { font-size: 0.58rem; }
     }
   </style>
 </head>
@@ -1559,8 +1597,8 @@
           <button id="duasBtn" class="top-btn" title="Daily Duas">🤲 Duas</button>
           <button id="soundToggleBtn" class="sound-btn" title="Toggle sound">🔊</button>
         </div>
-        <div id="saveIndicator" class="save-indicator">
-          <span class="dot"></span> SAVED
+        <div class="top-bar-right">
+          <button id="exitBtn" class="exit-btn" title="Close application">✕ Exit</button>
         </div>
       </div>
 
@@ -1569,53 +1607,55 @@
           <div class="dhikr-select-center">
             <span id="dhikrSelectedText" class="dhikr-selected-text">Subhanallah</span>
             <span id="dhikrSelectedArabic" class="dhikr-selected-arabic">سُبْحَانَ ٱللَّٰهِ</span>
+            <span id="dhikrSelectedTranslation" class="dhikr-selected-translation">Glory be to Allah</span>
+            <span id="dhikrSelectedTranslationBn" class="dhikr-selected-translation-bn">আল্লাহ পবিত্র, মহান</span>
           </div>
           <span class="dhikr-select-arrow">▼</span>
         </div>
         <div id="dhikrDropdown" class="dhikr-dropdown"></div>
       </div>
 
+      <!-- Counter area grows to push everything below it down -->
       <div id="countWrap" class="count-wrap" title="Tap to count">
         <div id="countDisplay" class="count-display">0</div>
       </div>
 
-      <div class="target-row">
-        <span class="target-label">🎯 Target</span>
-        <div class="target-input-wrap">
-          <input id="targetInput" class="target-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" aria-label="Target count" />
+      <!-- BOTTOM STACK — Target, Progress, Buttons, Credit grouped together -->
+      <div class="bottom-stack">
+        <div class="target-row">
+          <span class="target-label">🎯 Target</span>
+          <div class="target-input-wrap">
+            <input id="targetInput" class="target-input" type="number" min="1" max="999999" step="1" value="33" inputmode="numeric" aria-label="Target count" />
+          </div>
         </div>
-      </div>
 
-      <div class="progress-ring">
-        <div class="ring-track">
-          <div id="progressFill" class="ring-fill" style="width: 0%;"></div>
+        <div class="progress-ring">
+          <div class="ring-track">
+            <div id="progressFill" class="ring-fill" style="width: 0%;"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="button-grid">
-        <button id="incrementBtn" class="btn btn-primary" title="Count (tap or press space)">
-          <span class="btn-icon">📿</span> +1
-        </button>
-        <button id="decrementBtn" class="btn btn-secondary" title="Decrease count">
-          <span class="btn-icon">−</span> -1
-        </button>
-      </div>
-
-      <div class="button-grid" style="margin-top: 4px;">
-        <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session">
-          <span class="btn-icon">💾</span> Save
-        </button>
-        <button id="resetBtn" class="btn btn-warning" title="Reset this dhikr's counter">
-          <span class="btn-icon">↺</span> Reset
-        </button>
-      </div>
-
-      <div class="footer-row">
-        <div class="dhikr-translation">
-          <span id="dhikrTranslationEn" class="en">Glory be to Allah</span>
-          <span id="dhikrTranslationBn" class="bn">আল্লাহ পবিত্র, মহান</span>
+        <div class="button-grid">
+          <button id="incrementBtn" class="btn btn-primary" title="Count (tap or press space)">
+            <span class="btn-icon">📿</span> +1
+          </button>
+          <button id="decrementBtn" class="btn btn-secondary" title="Decrease count">
+            <span class="btn-icon">−</span> -1
+          </button>
         </div>
-        <div class="developer-credit">Developed by <strong>Shah Kabir</strong></div>
+
+        <div class="button-grid">
+          <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session">
+            <span class="btn-icon">💾</span> Save
+          </button>
+          <button id="resetBtn" class="btn btn-warning" title="Reset this dhikr's counter">
+            <span class="btn-icon">↺</span> Reset
+          </button>
+        </div>
+
+        <div class="developer-credit-row">
+          <div class="developer-credit">Developed by <strong>Shah Kabir</strong></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1765,9 +1805,9 @@
       'use strict';
 
       const KEYS = {
-        DHIKRS: 'tasbeeh_dhikrs_v16',
-        ACTIVE: 'tasbeeh_active_v16',
-        HISTORY: 'tasbeeh_history_v16',
+        DHIKRS: 'tasbeeh_dhikrs_v20',
+        ACTIVE: 'tasbeeh_active_v20',
+        HISTORY: 'tasbeeh_history_v20',
         SOUND: 'tasbeeh_sound_v1'
       };
 
@@ -1859,6 +1899,8 @@
       const dhikrSelectDisplay = $('dhikrSelectDisplay');
       const dhikrSelectedText = $('dhikrSelectedText');
       const dhikrSelectedArabic = $('dhikrSelectedArabic');
+      const dhikrSelectedTranslation = $('dhikrSelectedTranslation');
+      const dhikrSelectedTranslationBn = $('dhikrSelectedTranslationBn');
       const dhikrDropdown = $('dhikrDropdown');
       const countWrap = $('countWrap');
       const countDisplay = $('countDisplay');
@@ -1872,8 +1914,7 @@
       const historyBtn = $('historyBtn');
       const duasBtn = $('duasBtn');
       const soundToggleBtn = $('soundToggleBtn');
-      const dhikrTranslationEn = $('dhikrTranslationEn');
-      const dhikrTranslationBn = $('dhikrTranslationBn');
+      const exitBtn = $('exitBtn');
 
       const congratsOverlay = $('congratsOverlay');
       const congratsCount = $('congratsCount');
@@ -2113,6 +2154,27 @@
         else showToast('Sound muted 🔇');
       }
 
+      function exitApp() {
+        try {
+          if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+            window.Capacitor.Plugins.App.exitApp(); return;
+          }
+          if (navigator.app && typeof navigator.app.exitApp === 'function') {
+            navigator.app.exitApp(); return;
+          }
+          if (window.Android && typeof window.Android.exitApp === 'function') {
+            window.Android.exitApp(); return;
+          }
+          if (window.FlutterWebViewBridge && typeof window.FlutterWebViewBridge.postMessage === 'function') {
+            window.FlutterWebViewBridge.postMessage(JSON.stringify({ action: 'exit' })); return;
+          }
+          window.close();
+        } catch (e) {
+          console.warn('Exit failed:', e);
+        }
+        showToast('Press the back button to exit');
+      }
+
       function getActive() { return dhikrs.find(d => d.id === activeId) || dhikrs[0]; }
       function uid() { return 'dhikr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); }
       function sanitizeTarget(raw) {
@@ -2178,7 +2240,7 @@
             }
           }
           if (!dhikrs.length) {
-            const olderVersions = ['tasbeeh_dhikrs_v15', 'tasbeeh_dhikrs_v14'];
+            const olderVersions = ['tasbeeh_dhikrs_v19', 'tasbeeh_dhikrs_v18'];
             for (const key of olderVersions) {
               const raw = localStorage.getItem(key);
               if (raw) {
@@ -2287,8 +2349,8 @@
         targetInput.value = d.target;
         dhikrSelectedText.textContent = d.name;
         dhikrSelectedArabic.textContent = d.arabic || '';
-        dhikrTranslationEn.textContent = d.translation || '';
-        dhikrTranslationBn.textContent = d.translationBn || '';
+        dhikrSelectedTranslation.textContent = d.translation || '';
+        dhikrSelectedTranslationBn.textContent = d.translationBn || '';
 
         if (d.target > 0) {
           let percent = (d.count / d.target) * 100;
@@ -2329,6 +2391,18 @@
             ar.className = 'dhikr-option-arabic';
             ar.textContent = d.arabic;
             info.appendChild(ar);
+          }
+          if (d.translation) {
+            const tr = document.createElement('div');
+            tr.className = 'dhikr-option-translation';
+            tr.textContent = d.translation;
+            info.appendChild(tr);
+          }
+          if (d.translationBn) {
+            const bn = document.createElement('div');
+            bn.className = 'dhikr-option-translation-bn';
+            bn.textContent = d.translationBn;
+            info.appendChild(bn);
           }
           const stats = document.createElement('div');
           stats.className = 'dhikr-option-stats';
@@ -2828,6 +2902,7 @@
       });
 
       if (soundToggleBtn) soundToggleBtn.addEventListener('click', toggleSound);
+      if (exitBtn) exitBtn.addEventListener('click', exitApp);
 
       duasBtn.addEventListener('click', openDuas);
       closeDuasBtn.addEventListener('click', closeDuas);
@@ -3011,37 +3086,21 @@
     // ================================================================
     // ANDROID BACK BUTTON HANDLER
     // ================================================================
-    // Handles the Android system back button (the ◁ button at the bottom
-    // of the screen on Android devices):
-    //   1. If a modal is open → close the modal
-    //   2. If the dhikr dropdown is open → close the dropdown
-    //   3. Otherwise → exit the app (or go back in history)
-    // ================================================================
-     (function() {
+    (function() {
       'use strict';
 
-      // Push a state so the first back press is captured by us
-      try {
-        history.pushState({ appState: 'root' }, '', location.href);
-      } catch (e) {
-        // ignore
-      }
+      try { history.pushState({ appState: 'root' }, '', location.href); } catch (e) {}
 
       function handleBack() {
-        // 1. Check for any open modal (Duas, History, Add/Edit Dhikr)
         const openModals = document.querySelectorAll('.modal-overlay.show');
         if (openModals.length > 0) {
           const topModal = openModals[openModals.length - 1];
           const closeBtn = topModal.querySelector('.modal-close');
-          if (closeBtn) {
-            closeBtn.click();
-            return true;
-          }
+          if (closeBtn) { closeBtn.click(); return true; }
           topModal.classList.remove('show');
           return true;
         }
 
-        // 2. Check for the dhikr dropdown
         const dropdown = document.getElementById('dhikrDropdown');
         const selectorDisplay = document.getElementById('dhikrSelectDisplay');
         if (dropdown && dropdown.classList.contains('show')) {
@@ -3050,26 +3109,25 @@
           return true;
         }
 
-        // 3. Nothing to close — try to exit the app
         return false;
       }
 
       window.addEventListener('popstate', function() {
         const handled = handleBack();
         if (!handled) {
-          if (window.Android && typeof window.Android.exitApp === 'function') {
-            window.Android.exitApp();
-          } else if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+          if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
             try { window.Capacitor.Plugins.App.exitApp(); } catch (e) {}
           } else if (navigator.app && typeof navigator.app.exitApp === 'function') {
             navigator.app.exitApp();
+          } else if (window.Android && typeof window.Android.exitApp === 'function') {
+            window.Android.exitApp();
+          } else if (window.FlutterWebViewBridge && typeof window.FlutterWebViewBridge.postMessage === 'function') {
+            window.FlutterWebViewBridge.postMessage(JSON.stringify({ action: 'exit' }));
           } else {
             window.close();
           }
         } else {
-          try {
-            history.pushState({ appState: 'root' }, '', location.href);
-          } catch (e) {}
+          try { history.pushState({ appState: 'root' }, '', location.href); } catch (e) {}
         }
       });
 
@@ -3079,9 +3137,7 @@
             const el = m.target;
             if (el.classList && el.classList.contains('modal-overlay')) {
               if (el.classList.contains('show')) {
-                try {
-                  history.pushState({ appState: 'modal' }, '', location.href);
-                } catch (e) {}
+                try { history.pushState({ appState: 'modal' }, '', location.href); } catch (e) {}
               }
             }
           }
