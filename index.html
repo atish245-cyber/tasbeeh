@@ -98,7 +98,7 @@
     .app-card {
       background: rgba(13, 43, 28, 0.95);
       border-radius: 40px;
-      padding: 20px 16px 40px; /* Increased bottom padding for footer */
+      padding: 20px 16px 40px;
       box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.35);
       border: 1px solid #3b6e4b;
       position: relative;
@@ -162,12 +162,6 @@
       gap: 4px;
       align-items: center;
       flex-wrap: wrap;
-    }
-
-    .top-bar-right {
-      display: flex;
-      gap: 4px;
-      align-items: center;
     }
 
     .save-indicator {
@@ -240,26 +234,6 @@
       color: #ffd9a0;
     }
 
-    .exit-btn {
-      background: rgba(94, 40, 30, 0.9);
-      border: 1px solid #d47a5a;
-      color: #ffd9a0;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.4px;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-      backdrop-filter: blur(4px);
-    }
-
-    .exit-btn:active { transform: scale(0.95); background: rgba(140, 60, 40, 1); }
-
     .dhikr-selector {
       position: relative;
       margin-bottom: 8px;
@@ -320,8 +294,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
-      line-height: 1.5; /* Increased for better spacing */
-      padding: 2px 0; /* Added padding to prevent clipping */
+      line-height: 1.5;
+      padding: 2px 0;
       min-height: 1.3em;
     }
 
@@ -425,11 +399,10 @@
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
       direction: rtl;
       text-align: right;
-      line-height: 1.4; /* Added for better spacing */
+      line-height: 1.4;
       padding: 1px 0;
     }
 
-    /* HIDDEN IN MENU - Translations are only shown when selected */
     .dhikr-option-translation,
     .dhikr-option-translation-bn {
       display: none;
@@ -495,7 +468,6 @@
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
-    /* Counter area — now grows to push everything else down */
     .count-wrap {
       width: 100%;
       flex: 1 1 auto;
@@ -568,13 +540,12 @@
     .count-display[data-len="5"] { font-size: clamp(2.2rem, 11vw, 4.5rem); }
     .count-display[data-len="6"] { font-size: clamp(1.9rem, 9vw, 3.8rem); }
 
-    /* ====== BOTTOM STACK — all controls grouped together at the bottom ====== */
     .bottom-stack {
       display: flex;
       flex-direction: column;
-      gap: 12px; /* Increased gap */
+      gap: 12px;
       flex-shrink: 0;
-      margin-top: auto; /* Push everything to the bottom */
+      margin-top: auto;
       padding-top: 10px;
     }
 
@@ -590,7 +561,7 @@
       gap: 6px;
       backdrop-filter: blur(6px);
       flex-shrink: 0;
-      margin-bottom: 16px; /* Pushed down more from target bar */
+      margin-bottom: 16px;
     }
 
     .target-label {
@@ -720,10 +691,9 @@
 
     .btn-icon { font-size: 1.4rem; filter: drop-shadow(0 2px 2px black); }
 
-    /* Developer credit pinned to the bottom */
     .developer-credit-row {
       position: absolute;
-      bottom: 8px; /* Pinned near the bottom edge */
+      bottom: 8px;
       left: 0;
       right: 0;
       display: flex;
@@ -731,7 +701,7 @@
       align-items: center;
       padding: 0 4px;
       flex-shrink: 0;
-      pointer-events: none; /* Let clicks pass through if needed */
+      pointer-events: none;
     }
 
     .developer-credit {
@@ -1065,8 +1035,8 @@
       color: #e9f7d6;
       text-align: right;
       direction: rtl;
-      line-height: 2.0; /* Increased line-height for Arabic */
-      padding: 16px 18px; /* Increased padding */
+      line-height: 2.0;
+      padding: 16px 18px;
       background: rgba(13, 43, 28, 0.95);
       border: 1px solid #2d5a3b;
       border-radius: 14px;
@@ -1558,7 +1528,6 @@
       .floating-heart { font-size: 1.7rem; }
       .top-btn { font-size: 0.65rem; padding: 3px 8px; }
       .sound-btn { font-size: 0.65rem; padding: 3px 7px; }
-      .exit-btn { font-size: 0.65rem; padding: 3px 8px; }
       .dua-detail-arabic { font-size: 1.15rem; line-height: 1.8; }
       .dua-nav-btn { font-size: 0.78rem; padding: 10px 6px; }
       .dua-listen-btn { font-size: 0.75rem; padding: 9px 8px; min-width: 110px; }
@@ -1593,9 +1562,8 @@
           <button id="duasBtn" class="top-btn" title="Daily Duas">🤲 Duas</button>
           <button id="soundToggleBtn" class="sound-btn" title="Toggle sound">🔊</button>
         </div>
-        <div class="top-bar-right">
-          <button id="exitBtn" class="exit-btn" title="Close application">✕ Exit</button>
-        </div>
+        <!-- Save Indicator moved to top bar -->
+        <div id="saveIndicator" class="save-indicator"><span class="dot"></span> Saved</div>
       </div>
 
       <div class="dhikr-selector">
@@ -1611,12 +1579,10 @@
         <div id="dhikrDropdown" class="dhikr-dropdown"></div>
       </div>
 
-      <!-- Counter area grows to push everything below it down -->
       <div id="countWrap" class="count-wrap" title="Tap to count">
         <div id="countDisplay" class="count-display">0</div>
       </div>
 
-      <!-- BOTTOM STACK — Target, Progress, Buttons grouped together -->
       <div class="bottom-stack">
         <div class="target-row">
           <span class="target-label">🎯 Target</span>
@@ -1641,7 +1607,7 @@
         </div>
 
         <div class="button-grid">
-          <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session">
+          <button id="saveSessionBtn" class="btn btn-secondary" title="Save this session to history">
             <span class="btn-icon">💾</span> Save
           </button>
           <button id="resetBtn" class="btn btn-warning" title="Reset this dhikr's counter">
@@ -1650,7 +1616,6 @@
         </div>
       </div>
 
-      <!-- Developer credit pinned to the very bottom of the card -->
       <div class="developer-credit-row">
         <div class="developer-credit">Developed by <strong>Shah Kabir</strong></div>
       </div>
@@ -1911,7 +1876,6 @@
       const historyBtn = $('historyBtn');
       const duasBtn = $('duasBtn');
       const soundToggleBtn = $('soundToggleBtn');
-      const exitBtn = $('exitBtn');
 
       const congratsOverlay = $('congratsOverlay');
       const congratsCount = $('congratsCount');
@@ -2076,10 +2040,24 @@
         return audioCtx;
       }
 
+      // Unlock audio on first user interaction
+      function unlockAudio() {
+        const ctx = ensureAudioContext();
+        if (ctx && ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('touchstart', unlockAudio);
+      }
+      document.addEventListener('click', unlockAudio);
+      document.addEventListener('touchstart', unlockAudio);
+
       function playClickSound() {
         if (!soundEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
+        // Resume if suspended
+        if (ctx.state === 'suspended') ctx.resume();
         const now = ctx.currentTime;
         const osc1 = ctx.createOscillator();
         const gain1 = ctx.createGain();
@@ -2107,6 +2085,7 @@
         if (!soundEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
         const now = ctx.currentTime;
         [523.25, 659.25, 783.99].forEach((freq, i) => {
           const osc = ctx.createOscillator();
@@ -2151,27 +2130,6 @@
         else showToast('Sound muted 🔇');
       }
 
-      function exitApp() {
-        try {
-          if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
-            window.Capacitor.Plugins.App.exitApp(); return;
-          }
-          if (navigator.app && typeof navigator.app.exitApp === 'function') {
-            navigator.app.exitApp(); return;
-          }
-          if (window.Android && typeof window.Android.exitApp === 'function') {
-            window.Android.exitApp(); return;
-          }
-          if (window.FlutterWebViewBridge && typeof window.FlutterWebViewBridge.postMessage === 'function') {
-            window.FlutterWebViewBridge.postMessage(JSON.stringify({ action: 'exit' })); return;
-          }
-          window.close();
-        } catch (e) {
-          console.warn('Exit failed:', e);
-        }
-        showToast('Press the back button to exit');
-      }
-
       function getActive() { return dhikrs.find(d => d.id === activeId) || dhikrs[0]; }
       function uid() { return 'dhikr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); }
       function sanitizeTarget(raw) {
@@ -2191,6 +2149,7 @@
 
       let saveTimeout = null;
       function showSaveIndicator() {
+        if (!saveIndicator) return;
         saveIndicator.classList.add('show');
         if (saveTimeout) clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => saveIndicator.classList.remove('show'), 1200);
@@ -2389,8 +2348,6 @@
             ar.textContent = d.arabic;
             info.appendChild(ar);
           }
-          // Translations are now hidden in the dropdown menu
-          
           const stats = document.createElement('div');
           stats.className = 'dhikr-option-stats';
           const cEl = document.createElement('div');
@@ -2889,7 +2846,6 @@
       });
 
       if (soundToggleBtn) soundToggleBtn.addEventListener('click', toggleSound);
-      if (exitBtn) exitBtn.addEventListener('click', exitApp);
 
       duasBtn.addEventListener('click', openDuas);
       closeDuasBtn.addEventListener('click', closeDuas);
