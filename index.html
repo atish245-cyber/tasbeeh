@@ -1503,7 +1503,20 @@
       text-align: left;
       margin-top: 4px;
       flex-shrink: 0;
-      /* Removed max-height and overflow to prevent scrolling */
+    }
+
+    .congrats-hadith-bn {
+      font-size: 0.78rem;
+      color: #c6e6b8;
+      line-height: 1.5;
+      padding: 8px 14px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      border-left: 3px solid #8fd49c;
+      text-align: left;
+      margin-top: 6px;
+      font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
+      flex-shrink: 0;
     }
 
     .congrats-hadith-source {
@@ -1580,6 +1593,7 @@
       .congrats-subtitle { font-size: 0.9rem; }
       .congrats-detail { font-size: 0.75rem; }
       .congrats-hadith { font-size: 0.72rem; padding: 10px 12px; }
+      .congrats-hadith-bn { font-size: 0.72rem; padding: 8px 12px; }
       .congrats-close-btn { padding: 6px 18px; font-size: 0.75rem; }
       .floating-heart { font-size: 1.7rem; }
       .top-btn { font-size: 0.62rem; padding: 3px 8px; }
@@ -1601,6 +1615,7 @@
       .btn { padding: 8px 4px; font-size: 0.85rem; }
       .btn-primary { font-size: 1rem; }
       .congrats-hadith { font-size: 0.68rem; padding: 8px 10px; }
+      .congrats-hadith-bn { font-size: 0.68rem; padding: 6px 10px; }
     }
 
     @media (max-height: 700px) {
@@ -1614,6 +1629,7 @@
       .congrats-emoji { font-size: 2.5rem; }
       .congrats-title { font-size: 1.6rem; }
       .congrats-hadith { font-size: 0.68rem; }
+      .congrats-hadith-bn { font-size: 0.68rem; }
     }
   </style>
 </head>
@@ -1695,6 +1711,7 @@
       <div class="congrats-subtitle">You did it! 🌸</div>
       <div class="congrats-detail">You completed <strong id="congratsCount">33</strong> × <span id="congratsDhikr">Subhanallah</span></div>
       <div id="congratsHadith" class="congrats-hadith"></div>
+      <div id="congratsHadithBn" class="congrats-hadith-bn"></div>
       <button id="congratsCloseBtn" class="congrats-close-btn">Close</button>
     </div>
   </div>
@@ -1844,43 +1861,53 @@
 
       const HADITHS = [
         {
-          text: "Whoever says 'La ilaha illallah wahdahu la sharika lah, lahu-l-mulku wa lahu-l-hamdu wa huwa 'ala kulli shay'in qadir' one hundred times a day, it will be as if he freed ten slaves, one hundred good deeds will be recorded for him, one hundred evil deeds will be erased from his record, and it will be a protection for him from Satan for that day until evening.",
+          en: "Whoever says 'La ilaha illallah wahdahu la sharika lah, lahu-l-mulku wa lahu-l-hamdu wa huwa 'ala kulli shay'in qadir' one hundred times a day, it will be as if he freed ten slaves, one hundred good deeds will be recorded for him, one hundred evil deeds will be erased from his record, and it will be a protection for him from Satan for that day until evening.",
+          bn: "যে ব্যক্তি দিনে একশত বার বলবে: 'লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর' (আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি এক, তাঁর কোনো শরিক নেই, তাঁরই রাজত্ব ও প্রশংসা, এবং তিনি সবকিছুর উপর ক্ষমতাবান) — সে যেন দশজন দাস মুক্ত করল, তার জন্য একশত নেকী লেখা হবে, তার একশত গুনাহ মাফ হবে এবং সেদিন সন্ধ্যা পর্যন্ত শয়তান থেকে সে নিরাপদ থাকবে।",
           source: "Sahih al-Bukhari & Muslim"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi one hundred times a day, his sins will be erased even if they are like the foam of the sea.'",
+          en: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi one hundred times a day, his sins will be erased even if they are like the foam of the sea.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার 'সুবহানাল্লাহি ওয়া বিহামদিহি' বলবে, তার গুনাহসমূহ মাফ হয়ে যাবে, যদিও তা সমুদ্রের ফেনা পরিমাণ হয়।'",
           source: "Sahih al-Bukhari & Muslim"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Two words are light on the tongue, heavy on the scales, and beloved to the Most Merciful: SubhanAllahi wa bihamdihi, SubhanAllahil-'Azim.'",
+          en: "The Prophet (peace be upon him) said: 'Two words are light on the tongue, heavy on the scales, and beloved to the Most Merciful: SubhanAllahi wa bihamdihi, SubhanAllahil-'Azim.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'দুটি বাক্য উচ্চারণে হালকা, আমলের পাল্লায় ভারী এবং দয়াময় আল্লাহর কাছে প্রিয়: সুবহানাল্লাহি ওয়া বিহামদিহি, সুবহানাল্লাহিল আজীম।'",
           source: "Sahih al-Bukhari & Muslim"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Whoever says Astaghfirullaha wa atubu ilayh one hundred times a day, Allah will forgive him even if he has committed sins like the foam of the sea.'",
+          en: "The Prophet (peace be upon him) said: 'Whoever says Astaghfirullaha wa atubu ilayh one hundred times a day, Allah will forgive him even if he has committed sins like the foam of the sea.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার 'আস্তাগফিরুল্লাহা ওয়া আতুবু ইলাইহি' বলবে, আল্লাহ তাকে ক্ষমা করে দেবেন, যদিও তার গুনাহ সমুদ্রের ফেনা পরিমাণ হয়।'",
           source: "Sahih Muslim"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'The most beloved deeds to Allah are four: SubhanAllah, Alhamdulillah, La ilaha illallah, and Allahu Akbar.'",
+          en: "The Prophet (peace be upon him) said: 'The most beloved deeds to Allah are four: SubhanAllah, Alhamdulillah, La ilaha illallah, and Allahu Akbar.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহর কাছে সর্বাধিক প্রিয় আমল চারটি: সুবহানাল্লাহ, আলহামদুলিল্লাহ, লা ইলাহা ইল্লাল্লাহ এবং আল্লাহু আকবার।'",
           source: "Sahih Muslim"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Whoever says La ilaha illallah sincerely from his heart will enter Paradise.'",
+          en: "The Prophet (peace be upon him) said: 'Whoever says La ilaha illallah sincerely from his heart will enter Paradise.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি অন্তর থেকে sincerity সহ 'লা ইলাহা ইল্লাল্লাহ' বলবে, সে জান্নাতে প্রবেশ করবে।'",
           source: "Sahih al-Bukhari"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Remembrance of Allah is the best of deeds, the most pure in the sight of your Lord, the most elevating of your ranks, and better for you than spending gold and silver, and better for you than meeting your enemy and striking their necks.'",
+          en: "The Prophet (peace be upon him) said: 'Remembrance of Allah is the best of deeds, the most pure in the sight of your Lord, the most elevating of your ranks, and better for you than spending gold and silver, and better for you than meeting your enemy and striking their necks.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহর যিকির সর্বোত্তম আমল, তোমাদের প্রভুর কাছে সর্বাধিক পবিত্র, তোমাদের মর্যাদা সর্বাধিক উন্নত করে এবং তোমাদের জন্য সোনা-রূপা ব্যয় করার চেয়েও উত্তম, এমনকি শত্রুর সাথে মিলিত হয়ে তাদের গলা কাটার চেয়েও উত্তম।'",
           source: "Sunan al-Tirmidhi"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi, a palm tree will be planted for him in Paradise.'",
+          en: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi, a palm tree will be planted for him in Paradise.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি 'সুবহানাল্লাহি ওয়া বিহামদিহি' বলবে, তার জন্য জান্নাতে একটি খেজুর গাছ রোপণ করা হবে।'",
           source: "Sunan al-Tirmidhi"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'The difference between the one who remembers his Lord and the one who does not is like the difference between the living and the dead.'",
+          en: "The Prophet (peace be upon him) said: 'The difference between the one who remembers his Lord and the one who does not is like the difference between the living and the dead.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি তার প্রভুর যিকির করে এবং যে করে না, তাদের মধ্যে পার্থক্য জীবিত ও মৃতের মতো।'",
           source: "Sahih al-Bukhari"
         },
         {
-          text: "The Prophet (peace be upon him) said: 'Allah says: I am with My servant when he remembers Me and his lips move with My remembrance.'",
+          en: "The Prophet (peace be upon him) said: 'Allah says: I am with My servant when he remembers Me and his lips move with My remembrance.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহ বলেন: আমি আমার বান্দার সাথে থাকি যখন সে আমাকে স্মরণ করে এবং আমার স্মরণে তার ঠোঁট নড়ে।'",
           source: "Sahih al-Bukhari"
         }
       ];
@@ -1990,6 +2017,7 @@
       const congratsCount = $('congratsCount');
       const congratsDhikr = $('congratsDhikr');
       const congratsHadith = $('congratsHadith');
+      const congratsHadithBn = $('congratsHadithBn');
       const congratsCloseBtn = $('congratsCloseBtn');
       const heartLayer = $('heartLayer');
 
@@ -2395,7 +2423,8 @@
         congratsDhikr.textContent = dhikr.name;
         
         const randomHadith = HADITHS[Math.floor(Math.random() * HADITHS.length)];
-        congratsHadith.innerHTML = `"${randomHadith.text}" <span class="congrats-hadith-source">— ${randomHadith.source}</span>`;
+        congratsHadith.innerHTML = `"${randomHadith.en}" <span class="congrats-hadith-source">— ${randomHadith.source}</span>`;
+        congratsHadithBn.textContent = randomHadith.bn;
 
         congratsOverlay.classList.add('show');
         startHeartRain();
@@ -2405,7 +2434,7 @@
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
           stopHeartRain();
-        }, 10000); // Increased to 10 seconds
+        }, 15000); // 10 seconds
       }
 
       function hideCongratulations() {
@@ -3077,7 +3106,6 @@
       saveDhikrBtn.addEventListener('click', saveDhikrFromModal);
       dhikrModal.addEventListener('click', (e) => { if (e.target === dhikrModal) closeDhikrModal(); });
 
-      // Congrats card close handlers
       if (congratsCloseBtn) {
         congratsCloseBtn.addEventListener('click', hideCongratulations);
       }
