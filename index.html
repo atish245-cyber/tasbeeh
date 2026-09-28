@@ -1541,6 +1541,9 @@
       cursor: pointer;
       transition: all 0.15s;
       flex-shrink: 0;
+      pointer-events: auto;
+      position: relative;
+      z-index: 10;
     }
     .congrats-close-btn:active {
       background: rgba(255, 255, 255, 0.25);
@@ -2434,7 +2437,7 @@
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
           stopHeartRain();
-        }, 15000); // 10 seconds
+        }, 15000); // 15 seconds
       }
 
       function hideCongratulations() {
@@ -3106,12 +3109,23 @@
       saveDhikrBtn.addEventListener('click', saveDhikrFromModal);
       dhikrModal.addEventListener('click', (e) => { if (e.target === dhikrModal) closeDhikrModal(); });
 
+      // Congrats close button handler
       if (congratsCloseBtn) {
-        congratsCloseBtn.addEventListener('click', hideCongratulations);
+        congratsCloseBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          hideCongratulations();
+        });
       }
-      if (congratsOverlay) {
-        congratsOverlay.addEventListener('click', (e) => {
-          if (e.target === congratsOverlay) hideCongratulations();
+
+      // Click on card itself closes
+      const congratsCard = document.querySelector('.congrats-card');
+      if (congratsCard) {
+        congratsCard.addEventListener('click', function(e) {
+          // Only close if clicked directly on the card background, not on buttons or text
+          if (e.target === congratsCard) {
+            hideCongratulations();
+          }
         });
       }
 
