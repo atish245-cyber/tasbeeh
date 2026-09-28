@@ -1562,7 +1562,6 @@
           <button id="duasBtn" class="top-btn" title="Daily Duas">🤲 Duas</button>
           <button id="soundToggleBtn" class="sound-btn" title="Toggle sound">🔊</button>
         </div>
-        <!-- Save Indicator moved to top bar -->
         <div id="saveIndicator" class="save-indicator"><span class="dot"></span> Saved</div>
       </div>
 
@@ -1777,14 +1776,14 @@
       const MAX_HISTORY = 50;
 
       const DEFAULT_DHIKRS = [
-        { id: 'subhanallah',     name: 'Subhanallah',                 arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',                       translationBn: 'আল্লাহ পবিত্র, মহান',                       count: 0, target: 33  },
-        { id: 'alhamdulillah',   name: 'Alhamdulillah',               arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',                 translationBn: 'সকল প্রশংসা আল্লাহর জন্য',                 count: 0, target: 33  },
-        { id: 'allahuakbar',     name: 'Allahu Akbar',                arabic: 'ٱللَّٰهُ أَكْبَرُ',                       translation: 'Allah is the Greatest',                   translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',                       count: 0, target: 34  },
-        { id: 'lailahaillallah', name: 'La ilaha illallah',           arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',               translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',             count: 0, target: 100 },
-        { id: 'astaghfirullah',  name: 'Astaghfirullah',              arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',           translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',               count: 0, target: 100 },
-        { id: 'salawat',         name: 'Allahumma Salli Ala Muhammad', arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',       translation: 'O Allah, send blessings upon Muhammad',    translationBn: 'হে আল্লাহ, মুহাম্মদের উপর রহমত বর্ষণ করুন', count: 0, target: 100 },
-        { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100 },
-        { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100 }
+        { id: 'subhanallah',     name: 'Subhanallah',                 arabic: 'سُبْحَانَ ٱللَّٰهِ',                       translation: 'Glory be to Allah',                       translationBn: 'আল্লাহ পবিত্র, মহান',                       count: 0, target: 33,  baseTarget: 33  },
+        { id: 'alhamdulillah',   name: 'Alhamdulillah',               arabic: 'ٱلْحَمْدُ لِلَّٰهِ',                       translation: 'All praise is for Allah',                 translationBn: 'সকল প্রশংসা আল্লাহর জন্য',                 count: 0, target: 33,  baseTarget: 33  },
+        { id: 'allahuakbar',     name: 'Allahu Akbar',                arabic: 'ٱللَّٰهُ أَكْبَرُ',                       translation: 'Allah is the Greatest',                   translationBn: 'আল্লাহ সর্বশ্রেষ্ঠ',                       count: 0, target: 34,  baseTarget: 34  },
+        { id: 'lailahaillallah', name: 'La ilaha illallah',           arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',             translation: 'There is no god but Allah',               translationBn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই',             count: 0, target: 100, baseTarget: 100 },
+        { id: 'astaghfirullah',  name: 'Astaghfirullah',              arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',           translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',               count: 0, target: 100, baseTarget: 100 },
+        { id: 'salawat',         name: 'Allahumma Salli Ala Muhammad', arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',       translation: 'O Allah, send blessings upon Muhammad',    translationBn: 'হে আল্লাহ, মুহাম্মদের উপর রহমত বর্ষণ করুন', count: 0, target: 100, baseTarget: 100 },
+        { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100, baseTarget: 100 },
+        { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100, baseTarget: 100 }
       ];
 
       const DAILY_DUAS = [
@@ -2040,7 +2039,6 @@
         return audioCtx;
       }
 
-      // Unlock audio on first user interaction
       function unlockAudio() {
         const ctx = ensureAudioContext();
         if (ctx && ctx.state === 'suspended') {
@@ -2056,7 +2054,6 @@
         if (!soundEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
-        // Resume if suspended
         if (ctx.state === 'suspended') ctx.resume();
         const now = ctx.currentTime;
         const osc1 = ctx.createOscillator();
@@ -2192,6 +2189,8 @@
                 if (d.count > MAX_COUNT) d.count = MAX_COUNT;
                 if (d.count < 0) d.count = 0;
                 if (typeof d.translationBn !== 'string') d.translationBn = '';
+                // Ensure baseTarget exists for older saved data
+                if (typeof d.baseTarget !== 'number' || d.baseTarget < 1) d.baseTarget = d.target;
               });
             }
           }
@@ -2207,6 +2206,7 @@
                     dhikrs.forEach(d => {
                       d.target = sanitizeTarget(d.target);
                       if (typeof d.translationBn !== 'string') d.translationBn = '';
+                      if (typeof d.baseTarget !== 'number' || d.baseTarget < 1) d.baseTarget = d.target;
                     });
                     if (!dhikrs.some(d => d.id === 'rabbizidni')) {
                       dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[7])));
@@ -2444,6 +2444,17 @@
           if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
             congratsShownFor = { dhikrId: d.id, target: d.target };
             showCongratulations(d);
+            // Auto-increase target by baseTarget amount
+            setTimeout(() => {
+              if (d.baseTarget && d.baseTarget > 0) {
+                d.target = d.target + d.baseTarget;
+              } else {
+                d.target = d.target * 2;
+              }
+              if (d.target > MAX_COUNT) d.target = MAX_COUNT;
+              updateUI();
+              saveAll();
+            }, 1800);
           }
         }
       }
@@ -2474,6 +2485,7 @@
         }
         upsertHistoryEntry(d);
         d.count = 0;
+        d.target = d.baseTarget || 33;
         congratsShownFor = null;
         updateUI();
         countDisplay.classList.add('pulse');
@@ -2490,7 +2502,9 @@
       function applyTargetFromInput() {
         const d = getActive();
         if (!d) return;
-        d.target = sanitizeTarget(targetInput.value);
+        const newTarget = sanitizeTarget(targetInput.value);
+        d.target = newTarget;
+        d.baseTarget = newTarget;
         targetInput.value = d.target;
         if (congratsShownFor && congratsShownFor.target !== d.target) congratsShownFor = null;
         updateUI();
@@ -2775,7 +2789,7 @@
         dhikrArabicInput.value = d.arabic || '';
         dhikrTranslationInput.value = d.translation || '';
         dhikrTranslationBnInput.value = d.translationBn || '';
-        dhikrTargetInput.value = d.target;
+        dhikrTargetInput.value = d.baseTarget || d.target;
         dhikrModal.classList.add('show');
       }
 
@@ -2796,11 +2810,12 @@
           if (d) {
             d.name = name; d.arabic = arabic; d.translation = translation;
             d.translationBn = translationBn; d.target = targetVal;
+            d.baseTarget = targetVal;
             const h = history.find(x => x.dhikrId === d.id);
             if (h) { h.name = name; saveHistory(); }
           }
         } else {
-          const newDhikr = { id: uid(), name, arabic, translation, translationBn, count: 0, target: targetVal };
+          const newDhikr = { id: uid(), name, arabic, translation, translationBn, count: 0, target: targetVal, baseTarget: targetVal };
           dhikrs.push(newDhikr);
           activeId = newDhikr.id;
         }
