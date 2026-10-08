@@ -98,7 +98,7 @@
     .app-card {
       background: rgba(13, 43, 28, 0.95);
       border-radius: 40px;
-      padding: 20px 16px 40px;
+      padding: 20px 16px 30px;
       box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.35);
       border: 1px solid #3b6e4b;
       position: relative;
@@ -252,7 +252,8 @@
       cursor: pointer;
       transition: all 0.15s;
       gap: 8px;
-      min-height: 80px;
+      max-height: 140px;
+      overflow-y: auto;
       backdrop-filter: blur(6px);
     }
 
@@ -267,7 +268,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 3px;
       min-width: 0;
       overflow: hidden;
     }
@@ -285,42 +286,38 @@
     }
 
     .dhikr-selected-arabic {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #9fdf9f;
       font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif;
       direction: rtl;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       max-width: 100%;
-      line-height: 1.4;
-      padding: 1px 0;
-      min-height: 1.2em;
+      line-height: 1.6;
+      padding: 2px 0;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .dhikr-selected-translation {
       font-size: 0.7rem;
       color: #c6e6b8;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       max-width: 100%;
-      line-height: 1.2;
+      line-height: 1.4;
       font-style: italic;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .dhikr-selected-translation-bn {
       font-size: 0.72rem;
       color: #9fdf9f;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       max-width: 100%;
-      line-height: 1.2;
+      line-height: 1.5;
       font-family: 'Noto Sans Bengali', 'Kalpurush', sans-serif;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .dhikr-select-arrow {
@@ -328,6 +325,8 @@
       font-size: 0.8rem;
       transition: transform 0.2s;
       flex-shrink: 0;
+      align-self: flex-start;
+      padding-top: 6px;
     }
 
     .dhikr-select-display.open .dhikr-select-arrow {
@@ -468,11 +467,11 @@
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
+    /* ============ COUNTER - GRAND MOSQUE DESIGN ============ */
     .count-wrap {
       width: 100%;
-      flex: 1 1 auto;
+      flex: 1;
       min-height: 60px;
-      padding: 4px 12px;
       margin: 4px 0 8px;
       display: flex;
       align-items: center;
@@ -481,72 +480,94 @@
       cursor: pointer;
       border-radius: 20px;
       transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.4s ease;
-      background: rgba(255, 255, 255, 0.02);
+      background: #0a1a2a;
       position: relative;
+      box-shadow:
+        inset 0 0 40px rgba(0, 0, 0, 0.85),
+        0 4px 12px rgba(0, 0, 0, 0.4);
+      border: 1px solid #2a4a35;
     }
 
     .count-wrap:active {
-      background: rgba(159, 223, 159, 0.12);
-      transform: scale(0.99);
+      transform: scale(0.995);
     }
 
     .count-wrap.target-reached {
-      background: rgba(46, 122, 72, 0.15);
-      box-shadow: 0 0 24px rgba(159, 223, 159, 0.4),
-                  inset 0 0 20px rgba(159, 223, 159, 0.15);
+      box-shadow:
+        inset 0 0 40px rgba(0, 0, 0, 0.85),
+        0 0 30px rgba(240, 220, 158, 0.6),
+        0 4px 12px rgba(0, 0, 0, 0.4);
       animation: targetGlow 2.2s ease-in-out infinite;
     }
 
     @keyframes targetGlow {
       0%, 100% {
-        box-shadow: 0 0 20px rgba(159, 223, 159, 0.35),
-                    inset 0 0 18px rgba(159, 223, 159, 0.12);
+        box-shadow:
+          inset 0 0 40px rgba(0, 0, 0, 0.85),
+          0 0 25px rgba(240, 220, 158, 0.5),
+          0 4px 12px rgba(0, 0, 0, 0.4);
       }
       50% {
-        box-shadow: 0 0 34px rgba(159, 223, 159, 0.6),
-                    inset 0 0 24px rgba(159, 223, 159, 0.22);
+        box-shadow:
+          inset 0 0 40px rgba(0, 0, 0, 0.85),
+          0 0 45px rgba(240, 220, 158, 0.85),
+          0 4px 12px rgba(0, 0, 0, 0.4);
       }
     }
 
-    .count-display {
-      font-size: clamp(3rem, 16vw, 6rem);
-      font-weight: 900;
-      text-align: center;
-      color: #e9f7d6;
-      text-shadow: 0 0 26px #a3e0a0, 0 10px 0 #0a1f12;
-      letter-spacing: 1px;
-      line-height: 1;
-      word-break: keep-all;
-      transition: font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s ease, color 0.4s ease;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      display: inline-block;
-      max-width: 100%;
+    .mosque-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
       pointer-events: none;
     }
 
-    .count-display.pulse {
-      transform: scale(1.05);
-      text-shadow: 0 0 45px #d4ffb0, 0 10px 0 #0a1f12;
+    /* ============ COUNTER NUMBER (NO CIRCLE) ============ */
+    .counter-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
     }
-
-    .count-display.target-reached {
-      color: #f4ffd4;
-      text-shadow: 0 0 30px #d4ffb0, 0 10px 0 #0a1f12;
+    .counter-number-text {
+      font-size: 6rem;
+      font-weight: 900;
+      color: #fff8dc;
+      text-shadow:
+        0 0 30px rgba(255, 230, 160, 0.95),
+        0 0 60px rgba(255, 180, 80, 0.7),
+        5px 5px 0 #0a0a0a,
+        -4px -4px 0 #0a0a0a,
+        4px -4px 0 #0a0a0a,
+        -4px 4px 0 #0a0a0a,
+        0 0 12px #0a0a0a;
+      letter-spacing: 2px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      transition: font-size 0.3s ease;
     }
+    .counter-number-text[data-len="3"] { font-size: 5.2rem; }
+    .counter-number-text[data-len="4"] { font-size: 4.2rem; }
+    .counter-number-text[data-len="5"] { font-size: 3.5rem; }
+    .counter-number-text[data-len="6"] { font-size: 2.9rem; }
 
-    .count-display[data-len="3"] { font-size: clamp(2.5rem, 13vw, 5rem); }
-    .count-display[data-len="4"] { font-size: clamp(2rem, 11vw, 4rem); }
-    .count-display[data-len="5"] { font-size: clamp(1.8rem, 9vw, 3.5rem); }
-    .count-display[data-len="6"] { font-size: clamp(1.6rem, 8vw, 3rem); }
+    /* ============ END COUNTER DESIGN ============ */
 
     .bottom-stack {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
-      margin-top: auto;
-      padding-top: 6px;
+      margin-top: 0;
+      padding-bottom: 4px;
     }
 
     .target-row {
@@ -561,7 +582,7 @@
       gap: 6px;
       backdrop-filter: blur(6px);
       flex-shrink: 0;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
     }
 
     .target-label {
@@ -647,9 +668,9 @@
 
     .btn {
       flex: 1 1 0;
-      min-width: 80px;
-      padding: 12px 6px;
-      font-size: 1rem;
+      min-width: 100px;
+      padding: 12px 8px;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       border: none;
@@ -662,7 +683,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 6px;
       border: 1px solid #589b6b;
       text-shadow: 0 2px 0 #0b1f11;
     }
@@ -676,17 +697,17 @@
       background: #2e7a48;
       box-shadow: 0 6px 0 #164a26, 0 4px 8px #00000055;
       border-color: #8fd49c;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
     }
 
-    .btn-secondary { background: #1f4a2d; font-size: 0.9rem; }
+    .btn-secondary { background: #1f4a2d; font-size: 0.95rem; }
 
     .btn-warning {
       background: #5e3a1e;
       border-color: #bb8f5a;
       box-shadow: 0 6px 0 #33200e, 0 4px 8px #00000055;
       color: #ffe6c7;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     .btn-icon { font-size: 1.2rem; filter: drop-shadow(0 2px 2px black); }
@@ -707,7 +728,7 @@
 
     .developer-credit {
       text-align: center;
-      font-size: 0.6rem;
+      font-size: 0.62rem;
       color: #8fb898;
       letter-spacing: 0.5px;
       opacity: 0.9;
@@ -1581,15 +1602,20 @@
 
     @media (max-width: 420px) {
       .app-shell { padding: 10px 8px 12px; border-radius: 32px; }
-      .app-card { padding: 12px 10px 30px; border-radius: 28px; }
-      .btn { padding: 10px 4px; font-size: 0.9rem; min-width: 70px; }
-      .btn-primary { font-size: 1.05rem; }
-      .target-label { font-size: 0.78rem; }
-      .target-input { width: 110px; font-size: 0.95rem; padding: 4px 6px; }
+      .app-card { padding: 12px 10px 26px; border-radius: 28px; }
+      .btn { padding: 10px 4px; font-size: 1rem; min-width: 80px; }
+      .btn-primary { font-size: 1.15rem; }
+      .target-label { font-size: 0.8rem; }
+      .target-input { width: 110px; font-size: 1rem; padding: 5px 6px; }
       .dhikr-selected-text { font-size: 0.8rem; }
-      .dhikr-selected-arabic { font-size: 0.95rem; }
-      .dhikr-selected-translation { font-size: 0.62rem; }
-      .dhikr-selected-translation-bn { font-size: 0.65rem; }
+      .dhikr-selected-arabic { font-size: 0.95rem; line-height: 1.5; }
+      .dhikr-selected-translation { font-size: 0.62rem; line-height: 1.35; }
+      .dhikr-selected-translation-bn { font-size: 0.65rem; line-height: 1.4; }
+      .counter-number-text { font-size: 5rem; }
+      .counter-number-text[data-len="3"] { font-size: 4.2rem; }
+      .counter-number-text[data-len="4"] { font-size: 3.4rem; }
+      .counter-number-text[data-len="5"] { font-size: 2.8rem; }
+      .counter-number-text[data-len="6"] { font-size: 2.3rem; }
       .congrats-card { padding: 22px 16px; }
       .congrats-emoji { font-size: 3rem; }
       .congrats-title { font-size: 1.8rem; }
@@ -1604,7 +1630,7 @@
       .dua-detail-arabic { font-size: 1.1rem; line-height: 1.8; }
       .dua-nav-btn { font-size: 0.75rem; padding: 8px 6px; }
       .dua-listen-btn { font-size: 0.72rem; padding: 8px 6px; min-width: 100px; }
-      .developer-credit { font-size: 0.55rem; }
+      .developer-credit { font-size: 0.56rem; }
     }
 
     @media (max-width: 340px) {
@@ -1614,20 +1640,25 @@
       .dhikr-selected-arabic { font-size: 0.88rem; }
       .dhikr-selected-translation { font-size: 0.58rem; }
       .dhikr-selected-translation-bn { font-size: 0.6rem; }
-      .developer-credit { font-size: 0.52rem; }
-      .btn { padding: 8px 4px; font-size: 0.85rem; }
-      .btn-primary { font-size: 1rem; }
+      .developer-credit { font-size: 0.53rem; }
+      .btn { padding: 8px 4px; font-size: 0.9rem; }
+      .btn-primary { font-size: 1.05rem; }
       .congrats-hadith { font-size: 0.68rem; padding: 8px 10px; }
       .congrats-hadith-bn { font-size: 0.68rem; padding: 6px 10px; }
+      .counter-number-text { font-size: 4rem; }
+      .counter-number-text[data-len="3"] { font-size: 3.4rem; }
+      .counter-number-text[data-len="4"] { font-size: 2.8rem; }
+      .counter-number-text[data-len="5"] { font-size: 2.3rem; }
+      .counter-number-text[data-len="6"] { font-size: 1.9rem; }
     }
 
     @media (max-height: 700px) {
-      .btn { padding: 10px 4px; font-size: 0.9rem; }
+      .btn { padding: 10px 4px; font-size: 1rem; }
       .count-wrap { min-height: 50px; }
-      .dhikr-select-display { min-height: 70px; padding: 8px 12px; }
+      .dhikr-select-display { max-height: 110px; padding: 8px 12px; }
       .developer-credit { font-size: 0.55rem; }
-      .bottom-stack { gap: 8px; }
-      .target-row { margin-bottom: 8px; padding: 5px 10px; }
+      .bottom-stack { gap: 6px; padding-bottom: 2px; }
+      .target-row { margin-bottom: 2px; padding: 5px 10px; }
       .congrats-card { padding: 18px 14px; }
       .congrats-emoji { font-size: 2.5rem; }
       .congrats-title { font-size: 1.6rem; }
@@ -1663,7 +1694,232 @@
       </div>
 
       <div id="countWrap" class="count-wrap" title="Tap to count">
-        <div id="countDisplay" class="count-display">0</div>
+        <!-- Grand Mosque SVG Scene -->
+        <svg class="mosque-svg" viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#0a1a2e"/>
+              <stop offset="50%" stop-color="#0d2440"/>
+              <stop offset="100%" stop-color="#1a1030"/>
+            </linearGradient>
+            <radialGradient id="interiorGlow" cx="50%" cy="65%" r="55%">
+              <stop offset="0%" stop-color="#ffd88a" stop-opacity="0.55"/>
+              <stop offset="50%" stop-color="#ffaa44" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#ffaa44" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="domeGrad" cx="50%" cy="20%" r="70%">
+              <stop offset="0%" stop-color="#5fb890"/>
+              <stop offset="40%" stop-color="#2a7a5a"/>
+              <stop offset="100%" stop-color="#0d3524"/>
+            </radialGradient>
+            <linearGradient id="minaretGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#0a2a1a"/>
+              <stop offset="50%" stop-color="#3a7a5a"/>
+              <stop offset="100%" stop-color="#0a2a1a"/>
+            </linearGradient>
+            <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2a4a35"/>
+              <stop offset="100%" stop-color="#0d2a1a"/>
+            </linearGradient>
+            <linearGradient id="glassBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4a9aff"/>
+              <stop offset="100%" stop-color="#1a3a9a"/>
+            </linearGradient>
+            <linearGradient id="glassGold" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffd86a"/>
+              <stop offset="100%" stop-color="#c88a1a"/>
+            </linearGradient>
+            <linearGradient id="glassEmerald" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4ae090"/>
+              <stop offset="100%" stop-color="#0a8a3a"/>
+            </linearGradient>
+            <linearGradient id="glassRed" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ff5a4a"/>
+              <stop offset="100%" stop-color="#aa1a1a"/>
+            </linearGradient>
+            <pattern id="starsPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <circle cx="10" cy="15" r="0.8" fill="#fff" opacity="0.7"/>
+              <circle cx="40" cy="8" r="0.6" fill="#fff" opacity="0.5"/>
+              <circle cx="25" cy="35" r="1" fill="#fff" opacity="0.6"/>
+              <circle cx="50" cy="45" r="0.7" fill="#fff" opacity="0.5"/>
+              <circle cx="15" cy="52" r="0.9" fill="#fff" opacity="0.7"/>
+              <circle cx="55" cy="25" r="0.5" fill="#fff" opacity="0.4"/>
+            </pattern>
+          </defs>
+
+          <rect width="400" height="420" fill="url(#skyGrad)"/>
+          <rect width="400" height="420" fill="url(#starsPattern)" opacity="0.6"/>
+
+          <!-- Crescent Moon -->
+          <g transform="translate(60 50)">
+            <circle r="14" fill="#fff8dc" opacity="0.9"/>
+            <circle cx="6" cy="-4" r="13" fill="url(#skyGrad)"/>
+          </g>
+
+          <!-- Stars -->
+          <g fill="#fff8dc" opacity="0.8">
+            <circle cx="340" cy="40" r="1.2"/>
+            <circle cx="320" cy="70" r="0.9"/>
+            <circle cx="360" cy="90" r="1"/>
+            <circle cx="90" cy="20" r="1"/>
+          </g>
+
+          <!-- Central Dome -->
+          <path d="M 130 220 Q 130 130 200 90 Q 270 130 270 220 Z"
+                fill="url(#domeGrad)" stroke="#f0dc9e" stroke-width="1.5"/>
+          <g fill="none" stroke="#f0dc9e" stroke-width="0.8" opacity="0.6">
+            <path d="M 200 90 Q 150 160 130 220"/>
+            <path d="M 200 90 Q 175 160 165 220"/>
+            <path d="M 200 90 L 200 220"/>
+            <path d="M 200 90 Q 225 160 235 220"/>
+            <path d="M 200 90 Q 250 160 270 220"/>
+          </g>
+          <g fill="none" stroke="#f0dc9e" stroke-width="0.5" opacity="0.4">
+            <path d="M 145 175 Q 200 160 255 175"/>
+            <path d="M 135 200 Q 200 185 265 200"/>
+          </g>
+          <line x1="200" y1="90" x2="200" y2="70" stroke="#f0dc9e" stroke-width="1.5"/>
+          <circle cx="200" cy="66" r="2" fill="#f0dc9e"/>
+          <path d="M 200 60 A 6 6 0 1 1 200 72 A 5 5 0 0 0 200 62 Z" fill="#f0dc9e"/>
+          <rect x="120" y="220" width="160" height="10" fill="#0d3524" stroke="#f0dc9e" stroke-width="0.8"/>
+          <line x1="120" y1="225" x2="280" y2="225" stroke="#a8843e" stroke-width="0.5"/>
+
+          <!-- Left Minaret -->
+          <g>
+            <rect x="58" y="140" width="24" height="240" fill="url(#minaretGrad)" stroke="#f0dc9e" stroke-width="1"/>
+            <rect x="52" y="200" width="36" height="6" fill="#f0dc9e"/>
+            <rect x="52" y="206" width="36" height="2" fill="#a8843e"/>
+            <path d="M 52 200 L 58 195 L 82 195 L 88 200 Z" fill="#d4b96a"/>
+            <rect x="52" y="290" width="36" height="6" fill="#f0dc9e"/>
+            <rect x="52" y="296" width="36" height="2" fill="#a8843e"/>
+            <path d="M 52 290 L 58 285 L 82 285 L 88 290 Z" fill="#d4b96a"/>
+            <path d="M 58 140 L 70 110 L 82 140 Z" fill="#2a7a5a" stroke="#f0dc9e" stroke-width="1"/>
+            <line x1="70" y1="110" x2="70" y2="95" stroke="#f0dc9e" stroke-width="1"/>
+            <circle cx="70" cy="92" r="2" fill="#f0dc9e"/>
+            <rect x="65" y="170" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+            <rect x="65" y="240" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+            <rect x="65" y="330" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+          </g>
+
+          <!-- Right Minaret -->
+          <g>
+            <rect x="318" y="140" width="24" height="240" fill="url(#minaretGrad)" stroke="#f0dc9e" stroke-width="1"/>
+            <rect x="312" y="200" width="36" height="6" fill="#f0dc9e"/>
+            <rect x="312" y="206" width="36" height="2" fill="#a8843e"/>
+            <path d="M 312 200 L 318 195 L 342 195 L 348 200 Z" fill="#d4b96a"/>
+            <rect x="312" y="290" width="36" height="6" fill="#f0dc9e"/>
+            <rect x="312" y="296" width="36" height="2" fill="#a8843e"/>
+            <path d="M 312 290 L 318 285 L 342 285 L 348 290 Z" fill="#d4b96a"/>
+            <path d="M 318 140 L 330 110 L 342 140 Z" fill="#2a7a5a" stroke="#f0dc9e" stroke-width="1"/>
+            <line x1="330" y1="110" x2="330" y2="95" stroke="#f0dc9e" stroke-width="1"/>
+            <circle cx="330" cy="92" r="2" fill="#f0dc9e"/>
+            <rect x="325" y="170" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+            <rect x="325" y="240" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+            <rect x="325" y="330" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
+          </g>
+
+          <!-- Main Building -->
+          <rect x="90" y="230" width="220" height="150" fill="url(#wallGrad)" stroke="#f0dc9e" stroke-width="1"/>
+          <line x1="90" y1="240" x2="310" y2="240" stroke="#f0dc9e" stroke-width="0.8"/>
+          <line x1="90" y1="243" x2="310" y2="243" stroke="#a8843e" stroke-width="0.4" stroke-dasharray="2 2"/>
+
+          <g fill="none" stroke="#f0dc9e" stroke-width="0.4" opacity="0.5">
+            <path d="M 100 245 L 110 235 L 120 245 L 130 235 L 140 245 L 150 235 L 160 245 L 170 235 L 180 245 L 190 235 L 200 245 L 210 235 L 220 245 L 230 235 L 240 245 L 250 235 L 260 245 L 270 235 L 280 245 L 290 235 L 300 245"/>
+          </g>
+
+          <!-- Main Arch -->
+          <path d="M 130 380 L 130 280 Q 130 250 165 235 Q 190 225 200 210 Q 210 225 235 235 Q 270 250 270 280 L 270 380 Z"
+                fill="#0a1a2a" stroke="#f0dc9e" stroke-width="2.5"/>
+
+          <path d="M 138 380 L 138 285 Q 138 258 170 243 Q 192 233 200 220 Q 208 233 230 243 Q 262 258 262 285 L 262 380 Z"
+                fill="#0a1a2a" stroke="#a8843e" stroke-width="1"/>
+
+          <!-- Top Fan stained glass -->
+          <path d="M 145 285 Q 145 262 175 248 Q 195 240 200 228 Q 205 240 225 248 Q 255 262 255 285 Z"
+                fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8"/>
+          <g fill="none" stroke="#f0dc9e" stroke-width="0.5" opacity="0.7">
+            <path d="M 200 228 L 200 285"/>
+            <path d="M 200 228 L 170 270"/>
+            <path d="M 200 228 L 230 270"/>
+            <path d="M 200 228 L 155 280"/>
+            <path d="M 200 228 L 245 280"/>
+          </g>
+
+          <!-- Rosette -->
+          <circle cx="200" cy="255" r="14" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.8"/>
+          <circle cx="200" cy="255" r="8" fill="#ff5a4a" stroke="#f0dc9e" stroke-width="0.5"/>
+          <circle cx="200" cy="255" r="3" fill="#fff8dc"/>
+          <g fill="#4ae090" stroke="#f0dc9e" stroke-width="0.4">
+            <circle cx="200" cy="240" r="2.5"/>
+            <circle cx="200" cy="270" r="2.5"/>
+            <circle cx="185" cy="255" r="2.5"/>
+            <circle cx="215" cy="255" r="2.5"/>
+            <circle cx="189" cy="244" r="2"/>
+            <circle cx="211" cy="244" r="2"/>
+            <circle cx="189" cy="266" r="2"/>
+            <circle cx="211" cy="266" r="2"/>
+          </g>
+
+          <!-- Row 1 stained glass -->
+          <rect x="147" y="288" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="163" y="288" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="179" y="288" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="195" y="288" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="211" y="288" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="227" y="288" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="243" y="288" width="12" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
+
+          <!-- Row 2 -->
+          <rect x="147" y="310" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="163" y="310" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="179" y="310" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="195" y="310" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="211" y="310" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="227" y="310" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="243" y="310" width="12" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
+
+          <!-- Row 3 -->
+          <rect x="147" y="332" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="163" y="332" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="179" y="332" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="195" y="332" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="211" y="332" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="227" y="332" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
+          <rect x="243" y="332" width="12" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
+
+          <!-- Side windows -->
+          <g>
+            <rect x="100" y="260" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
+            <rect x="100" y="320" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
+            <line x1="100" y1="285" x2="120" y2="285" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="110" y1="260" x2="110" y2="310" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="100" y1="345" x2="120" y2="345" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="110" y1="320" x2="110" y2="370" stroke="#f0dc9e" stroke-width="0.4"/>
+          </g>
+          <g>
+            <rect x="280" y="260" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
+            <rect x="280" y="320" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
+            <line x1="280" y1="285" x2="300" y2="285" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="290" y1="260" x2="290" y2="310" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="280" y1="345" x2="300" y2="345" stroke="#f0dc9e" stroke-width="0.4"/>
+            <line x1="290" y1="320" x2="290" y2="370" stroke="#f0dc9e" stroke-width="0.4"/>
+          </g>
+
+          <!-- Steps and ground -->
+          <rect x="90" y="380" width="220" height="6" fill="#0a2a1a" stroke="#f0dc9e" stroke-width="0.5"/>
+          <rect x="85" y="386" width="230" height="6" fill="#0d2a1a" stroke="#f0dc9e" stroke-width="0.5"/>
+          <rect x="80" y="392" width="240" height="6" fill="#0a1a0a" stroke="#f0dc9e" stroke-width="0.5"/>
+          <rect x="0" y="398" width="400" height="22" fill="#050a05"/>
+          <line x1="0" y1="398" x2="400" y2="398" stroke="#f0dc9e" stroke-width="0.5" opacity="0.4"/>
+
+          <!-- Interior glow -->
+          <ellipse cx="200" cy="270" rx="180" ry="140" fill="url(#interiorGlow)" opacity="0.7"/>
+        </svg>
+
+        <!-- Counter number (no circle) -->
+        <div class="counter-number">
+          <span id="countDisplay" class="counter-number-text">0</span>
+        </div>
       </div>
 
       <div class="bottom-stack">
@@ -1923,7 +2179,8 @@
         { id: 'astaghfirullah',  name: 'Astaghfirullah',              arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',                   translation: 'I seek forgiveness from Allah',           translationBn: 'আমি আল্লাহর কাছে ক্ষমা চাই',               count: 0, target: 100, baseTarget: 100 },
         { id: 'salawat',         name: 'Allahumma Salli Ala Muhammad', arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',       translation: 'O Allah, send blessings upon Muhammad',    translationBn: 'হে আল্লাহ, মুহাম্মদের উপর রহমত বর্ষণ করুন', count: 0, target: 100, baseTarget: 100 },
         { id: 'lahawla',         name: 'La hawla wa la quwwata',      arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ', translation: 'No power except with Allah',             translationBn: 'আল্লাহর সাহায্য ছাড়া কোনো শক্তি নেই',       count: 0, target: 100, baseTarget: 100 },
-        { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100, baseTarget: 100 }
+        { id: 'rabbizidni',      name: 'Rabbi Zidni Ilma',            arabic: 'رَبِّ زِدْنِي عِلْمًا',                    translation: 'My Lord, increase me in knowledge',       translationBn: 'হে আমার প্রভু, আমার জ্ঞান বাড়িয়ে দিন',      count: 0, target: 100, baseTarget: 100 },
+        { id: 'allahu_latif',    name: 'Allahu Latifun bi Ibadihi',   arabic: '{ ٱللَّهُ لَطِیفُۢ بِعِبَادِهِۦ یَرۡزُقُ مَن یَشَاۤءُۖ وَهُوَ ٱلۡقَوِیُّ ٱلۡعَزِیزُ }', translation: 'Allah is Subtle with His servants; He gives provisions to whom He wills. And He is the Powerful, the Exalted in Might.', translationBn: 'আল্লাহ তাঁর বান্দাদের প্রতি অত্যন্ত স্নেহশীল; তিনি যাকে ইচ্ছা রিযিক দান করেন। তিনি শক্তিশালী, পরাক্রমশালী।', count: 0, target: 70, baseTarget: 70 }
       ];
 
       const DAILY_DUAS = [
@@ -1966,6 +2223,13 @@
         { category: '🛡️ Distress & Protection', title: 'When in Difficulty', arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ ٱلْعَظِيمُ ٱلْحَلِيمُ', translit: 'La ilaha illallahul-\'Azimul-Halim', en: 'There is no god but Allah, the Mighty, the Forbearing.', bn: 'আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি মহান ও সহনশীল।' },
         { category: '🛡️ Distress & Protection', title: 'For Anxiety & Sorrow', arabic: 'ٱللَّٰهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ ٱلْهَمِّ وَٱلْحَزَنِ', translit: 'Allahumma inni a\'udhu bika minal-hammi wal-hazan', en: 'O Allah, I seek refuge with You from anxiety and sorrow.', bn: 'হে আল্লাহ, আমি দুশ্চিন্তা ও দুঃখ থেকে আপনার আশ্রয় চাই।' },
         { category: '🛡️ Distress & Protection', title: 'Seeking Forgiveness', arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ رَبِّى مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ', translit: 'Astaghfirullaha Rabbi min kulli dhanbin wa atubu ilayh', en: 'I seek forgiveness from Allah, my Lord, for every sin, and I turn to Him in repentance.', bn: 'আমি আমার রব আল্লাহর কাছে সব গুনাহের জন্য ক্ষমা চাই এবং তাঁর কাছে তওবা করছি।' },
+
+        { category: '💰 Wealth & Provision', title: 'Sufficient with Halal (Kifayat)', arabic: 'اَللَّهُمَّ اكْفِنِيْ بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِيْ بِفَضْلِكَ عَمَّنْ سِوَاكَ', translit: 'Allahumma-kfini bi halalika \'an haramika wa aghnini bi fadlika \'amman siwak', en: 'O Allah, suffice me with what You have made lawful, so I do not need what You have made unlawful, and make me independent of all others besides You by Your grace.', bn: 'হে আল্লাহ, আপনার হালাল দ্বারা আমাকে যথেষ্ট করুন, যাতে হারামের প্রয়োজন না হয়; এবং আপনার অনুগ্রহে আমাকে অন্য সবার থেকে স্বাধীন করুন।' },
+        { category: '💰 Wealth & Provision', title: 'Beneficial Knowledge & Good Provision', arabic: 'اَللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا ، وَرِزْقًا طَيِّبًا ، وَعَمَلًا مُتَقَبَّلًا', translit: 'Allahumma inni as\'aluka \'ilman nafi\'an, wa rizqan tayyiban, wa \'amalan mutaqabbalan', en: 'O Allah, I ask You for beneficial knowledge, goodly provision and acceptable deeds.', bn: 'হে আল্লাহ, আমি আপনার কাছে উপকারী জ্ঞান, পবিত্র রিযিক এবং গ্রহণযোগ্য আমল প্রার্থনা করি।' },
+        { category: '💰 Wealth & Provision', title: 'Best Provision (Khayr ar-Rizq)', arabic: 'اَللَّهُمَّ ارْزُقْنِيْ رِزْقًا حَلَالًا طَيِّبًا وَأَغْنِنِيْ عَنْ حَرَامِكَ', translit: 'Allahumma-rzuqni rizqan halalan tayyiban wa aghnini \'an haramik', en: 'O Allah, provide me with lawful and good provision, and make me independent of what You have made unlawful.', bn: 'হে আল্লাহ, আমাকে হালাল ও পবিত্র রিযিক দান করুন এবং হারাম থেকে স্বাধীন করুন।' },
+        { category: '💰 Wealth & Provision', title: 'Dua of Musa (a.s.) for Provision', arabic: 'رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ', translit: 'Rabbi inni lima anzalta ilayya min khayrin faqir', en: 'My Lord, indeed I am, for whatever good You would send down to me, in need.', bn: 'হে আমার রব, আপনি আমার প্রতি যে কল্যাণ নাযিল করবেন, নিশ্চয়ই আমি তার মুখাপেক্ষী।' },
+        { category: '💰 Wealth & Provision', title: 'Increase in Rizq through Shukr', arabic: 'اَللَّهُمَّ أَعِنِّيْ عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ', translit: 'Allahumma a\'inni \'ala dhikrika wa shukrika wa husni \'ibadatik', en: 'O Allah, help me to remember You, to thank You, and to worship You in the best manner.', bn: 'হে আল্লাহ, আপনার স্মরণ, আপনার শোকর এবং আপনার উত্তম ইবাদতের জন্য আমাকে সাহায্য করুন।' },
+        { category: '💰 Wealth & Provision', title: 'Dua for Barakah in Wealth', arabic: 'اَللَّهُمَّ بَارِكْ لَنَا فِيْ أَمْوَالِنَا وَأَوْلَادِنَا وَاجْعَلْنَا مِنَ الشَّاكِرِيْنَ', translit: 'Allahumma barik lana fi amwalina wa awladina waj\'alna minash-shakirin', en: 'O Allah, bless us in our wealth and our children, and make us among the grateful.', bn: 'হে আল্লাহ, আমাদের সম্পদ ও সন্তান-সন্ততিতে বরকত দিন এবং আমাদের কৃতজ্ঞদের অন্তর্ভুক্ত করুন।' },
 
         { category: '✨ Praise & Gratitude', title: 'When Something Good Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ ٱلَّذِى بِنِعْمَتِهِ تَتِمُّ ٱلصَّالِحَاتُ', translit: 'Alhamdulillahi alladhi bi ni\'matihi tatimmus-salihat', en: 'All praise is for Allah by whose favor good things are accomplished.', bn: 'সকল প্রশংসা আল্লাহর, যাঁর নিয়ামতে সকল কল্যাণ সম্পন্ন হয়।' },
         { category: '✨ Praise & Gratitude', title: 'When Something Bad Happens', arabic: 'ٱلْحَمْدُ لِلَّٰهِ عَلَىٰ كُلِّ حَالٍ', translit: 'Alhamdulillahi \'ala kulli hal', en: 'All praise is for Allah in every situation.', bn: 'সব অবস্থায় আল্লাহর প্রশংসা।' },
@@ -2334,6 +2598,9 @@
                 if (typeof d.translationBn !== 'string') d.translationBn = '';
                 if (typeof d.baseTarget !== 'number' || d.baseTarget < 1) d.baseTarget = d.target;
               });
+              if (!dhikrs.some(d => d.id === 'allahu_latif')) {
+                dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[DEFAULT_DHIKRS.length - 1])));
+              }
             }
           }
           if (!dhikrs.length) {
@@ -2352,6 +2619,9 @@
                     });
                     if (!dhikrs.some(d => d.id === 'rabbizidni')) {
                       dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[7])));
+                    }
+                    if (!dhikrs.some(d => d.id === 'allahu_latif')) {
+                      dhikrs.push(JSON.parse(JSON.stringify(DEFAULT_DHIKRS[DEFAULT_DHIKRS.length - 1])));
                     }
                     break;
                   }
@@ -2437,7 +2707,7 @@
         congratsHideTimer = setTimeout(() => {
           congratsOverlay.classList.remove('show');
           stopHeartRain();
-        }, 15000); // 15 seconds
+        }, 15000);
       }
 
       function hideCongratulations() {
@@ -2470,16 +2740,8 @@
         const reached = d.count >= d.target && d.target > 0;
         if (reached) {
           countWrap.classList.add('target-reached');
-          countDisplay.classList.add('target-reached');
-          targetInput.style.background = '#3b8b4b';
-          targetInput.style.color = '#fff9e6';
-          targetInput.style.borderColor = '#dcf5c0';
         } else {
           countWrap.classList.remove('target-reached');
-          countDisplay.classList.remove('target-reached');
-          targetInput.style.background = '#1f4f30';
-          targetInput.style.color = '#dcf5c0';
-          targetInput.style.borderColor = '#6fa87f';
         }
       }
 
@@ -2597,7 +2859,6 @@
           if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
             congratsShownFor = { dhikrId: d.id, target: d.target };
             showCongratulations(d);
-            // Auto-increase target by baseTarget amount
             setTimeout(() => {
               if (d.baseTarget && d.baseTarget > 0) {
                 d.target = d.target + d.baseTarget;
@@ -3109,7 +3370,6 @@
       saveDhikrBtn.addEventListener('click', saveDhikrFromModal);
       dhikrModal.addEventListener('click', (e) => { if (e.target === dhikrModal) closeDhikrModal(); });
 
-      // Congrats close button handler
       if (congratsCloseBtn) {
         congratsCloseBtn.addEventListener('click', function(e) {
           e.preventDefault();
@@ -3118,11 +3378,9 @@
         });
       }
 
-      // Click on card itself closes
       const congratsCard = document.querySelector('.congrats-card');
       if (congratsCard) {
         congratsCard.addEventListener('click', function(e) {
-          // Only close if clicked directly on the card background, not on buttons or text
           if (e.target === congratsCard) {
             hideCongratulations();
           }
