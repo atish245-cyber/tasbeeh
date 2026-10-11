@@ -241,19 +241,21 @@
       flex-shrink: 0;
     }
 
-  .dhikr-select-display {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(18, 51, 31, 0.92);
-  border: 1px solid #3f6b4b;
-  border-radius: 24px;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: all 0.15s;
-  gap: 8px;
-  backdrop-filter: blur(6px);
-}
+    .dhikr-select-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(18, 51, 31, 0.92);
+      border: 1px solid #3f6b4b;
+      border-radius: 24px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      gap: 8px;
+      max-height: 140px;
+      overflow-y: auto;
+      backdrop-filter: blur(6px);
+    }
 
     .dhikr-select-display:active {
       background: rgba(26, 68, 41, 0.95);
@@ -465,7 +467,7 @@
     .dhikr-add-btn:hover { background: rgba(46, 122, 72, 0.7); }
     .dhikr-add-btn:active { transform: scale(0.98); }
 
-    /* ============ COUNTER - GRAND MOSQUE DESIGN ============ */
+    /* ============ COUNTER - STATIC BACKGROUND + MOVING NUMBER ============ */
     .count-wrap {
       width: 100%;
       flex: 1;
@@ -477,17 +479,13 @@
       overflow: hidden;
       cursor: pointer;
       border-radius: 20px;
-      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.4s ease;
+      transition: box-shadow 0.4s ease;
       background: #0a1a2a;
       position: relative;
       box-shadow:
         inset 0 0 40px rgba(0, 0, 0, 0.85),
         0 4px 12px rgba(0, 0, 0, 0.4);
       border: 1px solid #2a4a35;
-    }
-
-    .count-wrap:active {
-      transform: scale(0.995);
     }
 
     .count-wrap.target-reached {
@@ -513,6 +511,7 @@
       }
     }
 
+    /* Static mosque scene - does NOT move */
     .mosque-svg {
       position: absolute;
       inset: 0;
@@ -520,9 +519,10 @@
       height: 100%;
       display: block;
       pointer-events: none;
+      z-index: 1;
     }
 
-    /* ============ COUNTER NUMBER (NO CIRCLE) ============ */
+    /* Counter number wrapper - this moves on click */
     .counter-number {
       position: absolute;
       top: 50%;
@@ -534,7 +534,22 @@
       align-items: center;
       justify-content: center;
       padding: 6px 14px;
+      transition: transform 0.1s ease-out;
+      will-change: transform;
     }
+
+    /* Movement animation when user clicks - REDUCED 60% */
+    .counter-number.moving {
+      animation: counterMove 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes counterMove {
+      0%   { transform: translate(-50%, -50%) scale(1) translateY(0); }
+      35%  { transform: translate(-50%, -50%) scale(1.05) translateY(-4px); }
+      65%  { transform: translate(-50%, -50%) scale(0.98) translateY(1px); }
+      100% { transform: translate(-50%, -50%) scale(1) translateY(0); }
+    }
+
     .counter-number-text {
       font-size: 6rem;
       font-weight: 900;
@@ -1692,7 +1707,7 @@
       </div>
 
       <div id="countWrap" class="count-wrap" title="Tap to count">
-        <!-- Grand Mosque SVG Scene -->
+        <!-- Grand Mosque SVG Scene (STATIC) -->
         <svg class="mosque-svg" viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1748,13 +1763,11 @@
           <rect width="400" height="420" fill="url(#skyGrad)"/>
           <rect width="400" height="420" fill="url(#starsPattern)" opacity="0.6"/>
 
-          <!-- Crescent Moon -->
           <g transform="translate(60 50)">
             <circle r="14" fill="#fff8dc" opacity="0.9"/>
             <circle cx="6" cy="-4" r="13" fill="url(#skyGrad)"/>
           </g>
 
-          <!-- Stars -->
           <g fill="#fff8dc" opacity="0.8">
             <circle cx="340" cy="40" r="1.2"/>
             <circle cx="320" cy="70" r="0.9"/>
@@ -1762,7 +1775,6 @@
             <circle cx="90" cy="20" r="1"/>
           </g>
 
-          <!-- Central Dome -->
           <path d="M 130 220 Q 130 130 200 90 Q 270 130 270 220 Z"
                 fill="url(#domeGrad)" stroke="#f0dc9e" stroke-width="1.5"/>
           <g fill="none" stroke="#f0dc9e" stroke-width="0.8" opacity="0.6">
@@ -1782,7 +1794,6 @@
           <rect x="120" y="220" width="160" height="10" fill="#0d3524" stroke="#f0dc9e" stroke-width="0.8"/>
           <line x1="120" y1="225" x2="280" y2="225" stroke="#a8843e" stroke-width="0.5"/>
 
-          <!-- Left Minaret -->
           <g>
             <rect x="58" y="140" width="24" height="240" fill="url(#minaretGrad)" stroke="#f0dc9e" stroke-width="1"/>
             <rect x="52" y="200" width="36" height="6" fill="#f0dc9e"/>
@@ -1799,7 +1810,6 @@
             <rect x="65" y="330" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
           </g>
 
-          <!-- Right Minaret -->
           <g>
             <rect x="318" y="140" width="24" height="240" fill="url(#minaretGrad)" stroke="#f0dc9e" stroke-width="1"/>
             <rect x="312" y="200" width="36" height="6" fill="#f0dc9e"/>
@@ -1816,7 +1826,6 @@
             <rect x="325" y="330" width="10" height="14" fill="#ffd86a" opacity="0.8" rx="5"/>
           </g>
 
-          <!-- Main Building -->
           <rect x="90" y="230" width="220" height="150" fill="url(#wallGrad)" stroke="#f0dc9e" stroke-width="1"/>
           <line x1="90" y1="240" x2="310" y2="240" stroke="#f0dc9e" stroke-width="0.8"/>
           <line x1="90" y1="243" x2="310" y2="243" stroke="#a8843e" stroke-width="0.4" stroke-dasharray="2 2"/>
@@ -1825,14 +1834,12 @@
             <path d="M 100 245 L 110 235 L 120 245 L 130 235 L 140 245 L 150 235 L 160 245 L 170 235 L 180 245 L 190 235 L 200 245 L 210 235 L 220 245 L 230 235 L 240 245 L 250 235 L 260 245 L 270 235 L 280 245 L 290 235 L 300 245"/>
           </g>
 
-          <!-- Main Arch -->
           <path d="M 130 380 L 130 280 Q 130 250 165 235 Q 190 225 200 210 Q 210 225 235 235 Q 270 250 270 280 L 270 380 Z"
                 fill="#0a1a2a" stroke="#f0dc9e" stroke-width="2.5"/>
 
           <path d="M 138 380 L 138 285 Q 138 258 170 243 Q 192 233 200 220 Q 208 233 230 243 Q 262 258 262 285 L 262 380 Z"
                 fill="#0a1a2a" stroke="#a8843e" stroke-width="1"/>
 
-          <!-- Top Fan stained glass -->
           <path d="M 145 285 Q 145 262 175 248 Q 195 240 200 228 Q 205 240 225 248 Q 255 262 255 285 Z"
                 fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8"/>
           <g fill="none" stroke="#f0dc9e" stroke-width="0.5" opacity="0.7">
@@ -1843,7 +1850,6 @@
             <path d="M 200 228 L 245 280"/>
           </g>
 
-          <!-- Rosette -->
           <circle cx="200" cy="255" r="14" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.8"/>
           <circle cx="200" cy="255" r="8" fill="#ff5a4a" stroke="#f0dc9e" stroke-width="0.5"/>
           <circle cx="200" cy="255" r="3" fill="#fff8dc"/>
@@ -1858,7 +1864,6 @@
             <circle cx="211" cy="266" r="2"/>
           </g>
 
-          <!-- Row 1 stained glass -->
           <rect x="147" y="288" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="163" y="288" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="179" y="288" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
@@ -1867,7 +1872,6 @@
           <rect x="227" y="288" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="243" y="288" width="12" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
 
-          <!-- Row 2 -->
           <rect x="147" y="310" width="14" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="163" y="310" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="179" y="310" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
@@ -1876,7 +1880,6 @@
           <rect x="227" y="310" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="243" y="310" width="12" height="20" fill="url(#glassGold)" stroke="#f0dc9e" stroke-width="0.6"/>
 
-          <!-- Row 3 -->
           <rect x="147" y="332" width="14" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="163" y="332" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="179" y="332" width="14" height="20" fill="url(#glassEmerald)" stroke="#f0dc9e" stroke-width="0.6"/>
@@ -1885,7 +1888,6 @@
           <rect x="227" y="332" width="14" height="20" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.6"/>
           <rect x="243" y="332" width="12" height="20" fill="url(#glassRed)" stroke="#f0dc9e" stroke-width="0.6"/>
 
-          <!-- Side windows -->
           <g>
             <rect x="100" y="260" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
             <rect x="100" y="320" width="20" height="50" fill="url(#glassBlue)" stroke="#f0dc9e" stroke-width="0.8" rx="2"/>
@@ -1903,19 +1905,17 @@
             <line x1="290" y1="320" x2="290" y2="370" stroke="#f0dc9e" stroke-width="0.4"/>
           </g>
 
-          <!-- Steps and ground -->
           <rect x="90" y="380" width="220" height="6" fill="#0a2a1a" stroke="#f0dc9e" stroke-width="0.5"/>
           <rect x="85" y="386" width="230" height="6" fill="#0d2a1a" stroke="#f0dc9e" stroke-width="0.5"/>
           <rect x="80" y="392" width="240" height="6" fill="#0a1a0a" stroke="#f0dc9e" stroke-width="0.5"/>
           <rect x="0" y="398" width="400" height="22" fill="#050a05"/>
           <line x1="0" y1="398" x2="400" y2="398" stroke="#f0dc9e" stroke-width="0.5" opacity="0.4"/>
 
-          <!-- Interior glow -->
           <ellipse cx="200" cy="270" rx="180" ry="140" fill="url(#interiorGlow)" opacity="0.7"/>
         </svg>
 
-        <!-- Counter number (no circle) -->
-        <div class="counter-number">
+        <!-- Counter number (moves on click) -->
+        <div class="counter-number" id="counterNumber">
           <span id="countDisplay" class="counter-number-text">0</span>
         </div>
       </div>
@@ -2119,12 +2119,12 @@
       const HADITHS = [
         {
           en: "Whoever says 'La ilaha illallah wahdahu la sharika lah, lahu-l-mulku wa lahu-l-hamdu wa huwa 'ala kulli shay'in qadir' one hundred times a day, it will be as if he freed ten slaves, one hundred good deeds will be recorded for him, one hundred evil deeds will be erased from his record, and it will be a protection for him from Satan for that day until evening.",
-          bn: "যে ব্যক্তি দিনে একশত বার বলবে: 'লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর' (আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি এক, তাঁর কোনো শরিক নেই, তাঁরই রাজত্ব ও প্রশংসা, এবং তিনি সবকিছুর উপর ক্ষমতাবান) — সে যেন দশজন দাস মুক্ত করল, তার জন্য একশত নেকী লেখা হবে, তার একশত গুনাহ মাফ হবে এবং সেদিন সন্ধ্যা পর্যন্ত শয়তান থেকে সে নিরাপদ থাকবে।",
+          bn: "যে ব্যক্তি দিনে একশত বার বলবে: 'লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর' — সে যেন দশজন দাস মুক্ত করল, তার জন্য একশত নেকী লেখা হবে, তার একশত গুনাহ মাফ হবে এবং সেদিন সন্ধ্যা পর্যন্ত শয়তান থেকে সে নিরাপদ থাকবে।",
           source: "Sahih al-Bukhari & Muslim"
         },
         {
           en: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi one hundred times a day, his sins will be erased even if they are like the foam of the sea.'",
-          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার 'সুবহানাল্লাহি ওয়া বিহামদিহি' বলবে, তার গুনাহসমূহ মাফ হয়ে যাবে, যদিও তা সমুদ্রের ফেনা পরিমাণ হয়।'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার সুবহানাল্লাহি ওয়া বিহামদিহি বলবে, তার গুনাহসমূহ মাফ হয়ে যাবে, যদিও তা সমুদ্রের ফেনা পরিমাণ হয়।'",
           source: "Sahih al-Bukhari & Muslim"
         },
         {
@@ -2134,7 +2134,7 @@
         },
         {
           en: "The Prophet (peace be upon him) said: 'Whoever says Astaghfirullaha wa atubu ilayh one hundred times a day, Allah will forgive him even if he has committed sins like the foam of the sea.'",
-          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার 'আস্তাগফিরুল্লাহা ওয়া আতুবু ইলাইহি' বলবে, আল্লাহ তাকে ক্ষমা করে দেবেন, যদিও তার গুনাহ সমুদ্রের ফেনা পরিমাণ হয়।'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দিনে একশত বার আস্তাগফিরুল্লাহা ওয়া আতুবু ইলাইহি বলবে, আল্লাহ তাকে ক্ষমা করে দেবেন, যদিও তার গুনাহ সমুদ্রের ফেনা পরিমাণ হয়।'",
           source: "Sahih Muslim"
         },
         {
@@ -2144,17 +2144,17 @@
         },
         {
           en: "The Prophet (peace be upon him) said: 'Whoever says La ilaha illallah sincerely from his heart will enter Paradise.'",
-          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি অন্তর থেকে sincerity সহ 'লা ইলাহা ইল্লাল্লাহ' বলবে, সে জান্নাতে প্রবেশ করবে।'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি অন্তর থেকে ইখলাসের সাথে লা ইলাহা ইল্লাল্লাহ বলবে, সে জান্নাতে প্রবেশ করবে।'",
           source: "Sahih al-Bukhari"
         },
         {
           en: "The Prophet (peace be upon him) said: 'Remembrance of Allah is the best of deeds, the most pure in the sight of your Lord, the most elevating of your ranks, and better for you than spending gold and silver, and better for you than meeting your enemy and striking their necks.'",
-          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহর যিকির সর্বোত্তম আমল, তোমাদের প্রভুর কাছে সর্বাধিক পবিত্র, তোমাদের মর্যাদা সর্বাধিক উন্নত করে এবং তোমাদের জন্য সোনা-রূপা ব্যয় করার চেয়েও উত্তম, এমনকি শত্রুর সাথে মিলিত হয়ে তাদের গলা কাটার চেয়েও উত্তম।'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহর যিকির সর্বোত্তম আমল, তোমাদের প্রভুর কাছে সর্বাধিক পবিত্র, তোমাদের মর্যাদা সর্বাধিক উন্নত করে এবং তোমাদের জন্য সোনা-রূপা ব্যয় করার চেয়েও উত্তম।'",
           source: "Sunan al-Tirmidhi"
         },
         {
           en: "The Prophet (peace be upon him) said: 'Whoever says SubhanAllahi wa bihamdihi, a palm tree will be planted for him in Paradise.'",
-          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি 'সুবহানাল্লাহি ওয়া বিহামদিহি' বলবে, তার জন্য জান্নাতে একটি খেজুর গাছ রোপণ করা হবে।'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি সুবহানাল্লাহি ওয়া বিহামদিহি বলবে, তার জন্য জান্নাতে একটি খেজুর গাছ রোপণ করা হবে।'",
           source: "Sunan al-Tirmidhi"
         },
         {
@@ -2166,6 +2166,56 @@
           en: "The Prophet (peace be upon him) said: 'Allah says: I am with My servant when he remembers Me and his lips move with My remembrance.'",
           bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহ বলেন: আমি আমার বান্দার সাথে থাকি যখন সে আমাকে স্মরণ করে এবং আমার স্মরণে তার ঠোঁট নড়ে।'",
           source: "Sahih al-Bukhari"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'The most beloved of deeds to Allah are those that are most consistent, even if they are small.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহর কাছে সর্বাধিক প্রিয় আমল হলো তা, যা নিয়মিত করা হয়, যদিও তা পরিমাণে কম হয়।'",
+          source: "Sahih al-Bukhari & Muslim"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Take advantage of five before five: your youth before your old age, your health before your illness, your riches before your poverty, your free time before your preoccupation, and your life before your death.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'পাঁচটি বিষয়ের আগে পাঁচটি বিষয়কে কাজে লাগাও: তোমার বার্ধক্যের আগে যৌবন, অসুস্থতার আগে সুস্থতা, দারিদ্র্যের আগে সম্পদ, ব্যস্ততার আগে অবসর, এবং মৃত্যুর আগে জীবন।'",
+          source: "Al-Hakim, Al-Bayhaqi"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'The best of you are those who have the best manners and character.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'তোমাদের মধ্যে সর্বোত্তম ব্যক্তি সেই, যার চরিত্র ও আচরণ সর্বোত্তম।'",
+          source: "Sahih al-Bukhari"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'None of you truly believes until he loves for his brother what he loves for himself.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'তোমাদের কেউ ততক্ষণ পর্যন্ত পূর্ণ মুমিন হতে পারবে না, যতক্ষণ না সে তার ভাইয়ের জন্য তা-ই পছন্দ করে, যা সে নিজের জন্য পছন্দ করে।'",
+          source: "Sahih al-Bukhari & Muslim"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Whoever believes in Allah and the Last Day, let him speak good or remain silent.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি আল্লাহ ও শেষ দিনের উপর ঈমান রাখে, সে যেন ভালো কথা বলে অথবা চুপ থাকে।'",
+          source: "Sahih al-Bukhari & Muslim"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Do not be people without minds of your own, saying, if others treat us well we will treat them well, and if they do wrong we will do wrong; but accustom yourselves to do good if people do good, and not to do wrong if they do evil.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'তোমরা এমন লোক হয়ো না, যাদের নিজস্ব বিবেক নেই। যদি অন্যরা ভালো করে, আমরাও ভালো করব; আর যদি অন্যরা অন্যায় করে, আমরাও অন্যায় করব। বরং নিজেদের অভ্যস্ত করো — মানুষ ভালো করলে ভালো করতে, আর তারা অন্যায় করলে অন্যায় না করতে।'",
+          source: "Sunan al-Tirmidhi"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Charity does not decrease wealth. No one forgives another except that Allah increases his honor, and no one humbles himself for the sake of Allah except that Allah raises him.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'সদকা সম্পদ কমায় না। কেউ ক্ষমা করলে আল্লাহ তার সম্মান বাড়িয়ে দেন, এবং কেউ আল্লাহর জন্য বিনয়ী হলে আল্লাহ তাকে উঁচু করে দেন।'",
+          source: "Sahih Muslim"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Whoever relieves a believer's distress in this world, Allah will relieve his distress on the Day of Judgment. Whoever covers a Muslim's faults, Allah will cover his faults in this world and the Hereafter.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'যে ব্যক্তি দুনিয়াতে কোনো মুমিনের কষ্ট দূর করে, আল্লাহ কিয়ামতের দিন তার কষ্ট দূর করবেন। যে ব্যক্তি কোনো মুসলিমের দোষ গোপন করে, আল্লাহ দুনিয়া ও আখিরাতে তার দোষ গোপন করবেন।'",
+          source: "Sahih Muslim"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'The best among you are those who are best to their families, and I am the best among you to my family.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'তোমাদের মধ্যে সর্বোত্তম ব্যক্তি সেই, যে তার পরিবারের প্রতি সর্বোত্তম আচরণ করে; আর আমি আমার পরিবারের প্রতি তোমাদের মধ্যে সর্বোত্তম।'",
+          source: "Sunan al-Tirmidhi"
+        },
+        {
+          en: "The Prophet (peace be upon him) said: 'Allah does not look at your appearance or your wealth, but He looks at your hearts and your deeds.'",
+          bn: "রাসূলুল্লাহ (সা.) বলেছেন: 'আল্লাহ তোমাদের চেহারা বা সম্পদের দিকে তাকান না, বরং তিনি তোমাদের অন্তর ও আমলের দিকে তাকান।'",
+          source: "Sahih Muslim"
         }
       ];
 
@@ -2267,6 +2317,7 @@
       const dhikrDropdown = $('dhikrDropdown');
       const countWrap = $('countWrap');
       const countDisplay = $('countDisplay');
+      const counterNumber = $('counterNumber');
       const targetInput = $('targetInput');
       const progressFill = $('progressFill');
       const incrementBtn = $('incrementBtn');
@@ -2743,6 +2794,14 @@
         }
       }
 
+      function animateCounterNumber() {
+        if (!counterNumber) return;
+        counterNumber.classList.remove('moving');
+        void counterNumber.offsetWidth;
+        counterNumber.classList.add('moving');
+        setTimeout(() => counterNumber.classList.remove('moving'), 400);
+      }
+
       function renderDropdown() {
         dhikrDropdown.innerHTML = '';
         dhikrs.forEach(d => {
@@ -2851,7 +2910,10 @@
         if (d.count < MAX_COUNT) d.count++;
         const wasBelowTarget = (d.count - 1) < d.target;
         const nowAtTarget = d.count >= d.target;
-        updateUI(); pulseDisplay(); saveDebounced(); playClickSound();
+        updateUI();
+        animateCounterNumber();
+        saveDebounced();
+        playClickSound();
         if (navigator.vibrate) navigator.vibrate(10);
         if (wasBelowTarget && nowAtTarget && d.target > 0) {
           if (!congratsShownFor || congratsShownFor.dhikrId !== d.id || congratsShownFor.target !== d.target) {
@@ -2878,12 +2940,11 @@
           d.count--;
           if (d.count < d.target) congratsShownFor = null;
           updateUI();
-          countDisplay.classList.add('pulse');
-          setTimeout(() => countDisplay.classList.remove('pulse'), 100);
-          saveDebounced(); playClickSound();
+          animateCounterNumber();
+          saveDebounced();
+          playClickSound();
         } else {
-          countDisplay.classList.add('pulse');
-          setTimeout(() => countDisplay.classList.remove('pulse'), 100);
+          animateCounterNumber();
         }
       }
 
@@ -2891,8 +2952,7 @@
         const d = getActive();
         if (!d) return;
         if (d.count === 0) {
-          countDisplay.classList.add('pulse');
-          setTimeout(() => countDisplay.classList.remove('pulse'), 200);
+          animateCounterNumber();
           return;
         }
         upsertHistoryEntry(d);
@@ -2900,15 +2960,9 @@
         d.target = d.baseTarget || 33;
         congratsShownFor = null;
         updateUI();
-        countDisplay.classList.add('pulse');
-        setTimeout(() => countDisplay.classList.remove('pulse'), 200);
+        animateCounterNumber();
         saveAll();
         if (navigator.vibrate) navigator.vibrate([20, 30, 20]);
-      }
-
-      function pulseDisplay() {
-        countDisplay.classList.add('pulse');
-        setTimeout(() => countDisplay.classList.remove('pulse'), 150);
       }
 
       function applyTargetFromInput() {
